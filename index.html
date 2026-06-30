@@ -700,7 +700,7 @@
     .seg {
       position: relative; isolation: isolate;
       display: grid; grid-template-columns: 1fr 1fr;
-      max-width: 460px; margin-bottom: 1.5rem;
+      max-width: 460px; margin-bottom: 0.75rem;
       border: 1px solid rgba(189,165,98,0.28); border-radius: 9999px;
       background: rgba(235,235,235,0.03);
     }
@@ -724,15 +724,14 @@
 
     /* ── Palco: flex column — toggle no topo, painéis no meio (grid-area), detalhes no rodapé ── */
     .service-stage { display: flex; flex-direction: column; overflow: hidden; }
-    .service-stage-head { padding: 1.75rem 2.5rem 1.25rem; }
+    .service-stage-head { padding: 1rem 2.5rem 0.5rem; }
     .service-panels-grid { display: grid; }
-    .service-stage-foot { padding: 1.25rem 2.5rem 1.75rem; border-top: 1px solid rgba(189,165,98,0.12); }
-    .service-right { display: flex; flex-direction: column; gap: 1.25rem; }
+    .service-right { display: grid; grid-template-columns: 120px 1fr; gap: 1.25rem; align-items: start; }
     .service-panel {
       grid-area: 1 / 1;
-      display: grid; grid-template-columns: minmax(0, 560px) minmax(280px, 340px);
-      justify-content: space-between; align-items: center;
-      gap: 2.5rem; padding: 2.25rem 2.5rem;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+      justify-content: space-between; align-items: start;
+      gap: 2.5rem; padding: 1.25rem 2.5rem 2rem;
       transition: opacity 0.42s ease, transform 0.42s ease;
     }
     .service-panel[aria-hidden="true"] {
@@ -793,10 +792,10 @@
       border: 1px solid rgba(189,165,98,0.3); border-radius: 9999px;
     }
     .service-price {
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(189,165,98,0.18);
+      padding-left: 1.25rem;
+      border-left: 1px solid rgba(189,165,98,0.18);
     }
-    .price-row { display: flex; align-items: baseline; gap: 0.45rem; }
+    .price-row { display: flex; flex-direction: column; align-items: flex-start; gap: 0.1rem; }
     .price-val {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(2.25rem, 5vw, 3rem);
@@ -820,7 +819,7 @@
     .service-cta { margin-top: 1.5rem; align-self: flex-start; }
 
     /* detalhes expandível — pílula clicável óbvia */
-    .service-details { max-width: none; }
+    .service-details { max-width: none; margin-top: 1.5rem; }
     .service-details summary {
       cursor: pointer; list-style: none; width: fit-content;
       display: inline-flex; align-items: center; gap: 0.6rem;
@@ -944,9 +943,9 @@
       .reel-grid     { grid-template-columns: 1fr; gap: 2.5rem; }
       .reel-lead     { max-width: 56ch; }
       .timeline-track { gap: 1rem; }
-      .service-stage-head { padding: 1.5rem 2rem 1rem; }
-      .service-stage-foot { padding: 1rem 2rem 1.5rem; }
+      .service-stage-head { padding: 1rem 2rem 0.5rem; }
       .service-panel { grid-template-columns: minmax(0, 1fr) 280px; gap: 2rem; padding: 2rem; }
+      .service-right { grid-template-columns: 120px 1fr; }
       .service-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
       .service-header-r { border-left: none; padding-left: 0; border-top: 2px solid var(--c-oxblood); padding-top: 1.25rem; }
       .about-split   { grid-template-columns: 1fr; min-height: 0; }
@@ -1033,9 +1032,9 @@
       .wrap { padding: 0 1.25rem; }
       .hero-h1 { font-size: clamp(2rem, 10vw, 3rem); }
       .photo-grid { grid-template-columns: 1fr; }
-      .service-stage-head { padding: 1.25rem 1.25rem 0.75rem; }
-      .service-stage-foot { padding: 0.75rem 1.25rem 1.25rem; }
+      .service-stage-head { padding: 1rem 1.25rem 0.5rem; }
       .service-panel { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 1.25rem; }
+      .service-right { grid-template-columns: 1fr; }
       .service-facade { max-width: 260px; margin: 0 auto; width: 100%; }
       .reel-title, .process-title, .format-title,
       .about-title, .videos-title {
@@ -1222,6 +1221,13 @@
               <span>Gancho</span><span>Retenção</span><span>Clareza + CTA</span>
             </div>
             <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20criativos." target="_blank" rel="noopener">Orçar Criativos</a>
+            <details class="service-details">
+              <summary>Como funciona · o que entra</summary>
+              <div class="service-details-body">
+                <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
+                <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
+              </div>
+            </details>
           </div>
           <div class="service-right">
             <div class="service-facade">
@@ -1249,6 +1255,13 @@
               <span>Ritmo</span><span>Color grading</span><span>Sound design</span>
             </div>
             <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20reels." target="_blank" rel="noopener">Orçar Reels</a>
+            <details class="service-details">
+              <summary>Como funciona · o que entra</summary>
+              <div class="service-details-body">
+                <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
+                <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
+              </div>
+            </details>
           </div>
           <div class="service-right">
             <div class="service-facade">
@@ -1269,16 +1282,6 @@
           </div>
         </div>
 
-      </div>
-
-      <div class="service-stage-foot">
-        <details class="service-details">
-          <summary>Como funciona · o que entra</summary>
-          <div class="service-details-body">
-            <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
-            <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
-          </div>
-        </details>
       </div>
 
     </div>
