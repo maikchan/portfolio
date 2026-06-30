@@ -327,12 +327,7 @@
       text-transform: uppercase; color: var(--c-brass);
       line-height: 1.6;
     }
-    .reel-caption {
-      display: block; margin-top: 0.9rem;
-      font-family: 'Geist Mono', monospace;
-      font-size: 0.6rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--c-paper-dim);
-    }
+
     .reel-box {
       position: relative;
       width: 100%; padding-bottom: 75%; /* showreel 4:3 */
@@ -450,13 +445,7 @@
       position: relative; padding-left: 1.25rem;
       border-left: 2px solid rgba(189,165,98,0.28); /* in-point do clipe */
     }
-    .clip-tc { /* timecode no lugar do 01/02/03 — numeração nativa do editor */
-      display: block;
-      font-family: 'Geist Mono', monospace;
-      font-size: 0.78rem; font-weight: 600;
-      letter-spacing: 0.08em; color: var(--c-brass);
-      margin-bottom: 0.95rem;
-    }
+
     .clip-name {
       font-family: 'Oswald', sans-serif;
       font-size: 1.15rem; font-weight: 600;
@@ -498,7 +487,7 @@
       display: flex; align-items: center;
       padding: 4.5rem clamp(1.5rem, 5vw, 5rem);
     }
-    .about-body-inner { max-width: 600px; }
+    .about-body-inner { max-width: 100%; }
     .about-title {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(2rem, 4vw, 3.5rem);
@@ -513,23 +502,6 @@
       margin-bottom: 1.1rem;
     }
     .about-body p strong { color: var(--c-paper); font-weight: 600; }
-    .about-stats {
-      display: flex; gap: 2.5rem;
-      margin-top: 2.25rem; padding-top: 2rem;
-      border-top: 1px solid rgba(235,235,235,0.1);
-    }
-    .stat-val {
-      font-family: 'Oswald', sans-serif;
-      font-size: 2.25rem; font-weight: 700;
-      color: var(--c-brass); line-height: 1;
-    }
-    .stat-lbl {
-      font-family: 'Geist Mono', monospace;
-      font-size: 0.62rem; letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(235,235,235,0.4);
-      margin-top: 0.4rem;
-    }
 
     /* ══════════════════════════════════════
        VÍDEOS
@@ -747,12 +719,15 @@
       transition: color 0.3s ease;
     }
     .seg-btn .seg-name { font-size: 0.8rem; font-weight: 600; }
-    .seg-btn .seg-price { font-size: 0.7rem; opacity: 0.85; }
     .seg-btn[aria-selected="true"] { color: var(--c-navy); }
     .seg-btn:not([aria-selected="true"]):hover { color: var(--c-paper); }
 
-    /* ── Palco: os dois painéis dividem a MESMA célula (sem pulo de altura) ── */
-    .service-stage { display: grid; overflow: hidden; }
+    /* ── Palco: flex column — toggle no topo, painéis no meio (grid-area), detalhes no rodapé ── */
+    .service-stage { display: flex; flex-direction: column; overflow: hidden; }
+    .service-stage-head { padding: 1.75rem 2.5rem 1.25rem; }
+    .service-panels-grid { display: grid; }
+    .service-stage-foot { padding: 1.25rem 2.5rem 1.75rem; border-top: 1px solid rgba(189,165,98,0.12); }
+    .service-right { display: flex; flex-direction: column; gap: 1.25rem; }
     .service-panel {
       grid-area: 1 / 1;
       display: grid; grid-template-columns: minmax(0, 560px) minmax(280px, 340px);
@@ -818,7 +793,7 @@
       border: 1px solid rgba(189,165,98,0.3); border-radius: 9999px;
     }
     .service-price {
-      margin-top: 1.75rem; padding-top: 1.5rem;
+      padding-top: 1.25rem;
       border-top: 1px solid rgba(189,165,98,0.18);
     }
     .price-row { display: flex; align-items: baseline; gap: 0.45rem; }
@@ -845,7 +820,7 @@
     .service-cta { margin-top: 1.5rem; align-self: flex-start; }
 
     /* detalhes expandível — pílula clicável óbvia */
-    .service-details { margin-top: 1.75rem; max-width: 760px; }
+    .service-details { max-width: none; }
     .service-details summary {
       cursor: pointer; list-style: none; width: fit-content;
       display: inline-flex; align-items: center; gap: 0.6rem;
@@ -969,6 +944,8 @@
       .reel-grid     { grid-template-columns: 1fr; gap: 2.5rem; }
       .reel-lead     { max-width: 56ch; }
       .timeline-track { gap: 1rem; }
+      .service-stage-head { padding: 1.5rem 2rem 1rem; }
+      .service-stage-foot { padding: 1rem 2rem 1.5rem; }
       .service-panel { grid-template-columns: minmax(0, 1fr) 280px; gap: 2rem; padding: 2rem; }
       .service-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
       .service-header-r { border-left: none; padding-left: 0; border-top: 2px solid var(--c-oxblood); padding-top: 1.25rem; }
@@ -1044,12 +1021,11 @@
         border-left: none; padding: 0 0 1.85rem 1.6rem;
       }
       .clip:last-child { padding-bottom: 0; }
-      .clip::before { /* nó na espinha, alinhado ao timecode */
+      .clip::before { /* nó na espinha, alinhado ao nome do clip */
         content: ''; position: absolute; left: -7px; top: 3px;
         width: 12px; height: 12px; border-radius: 50%;
         background: var(--c-bg); border: 2px solid var(--c-brass);
       }
-      .clip-tc { margin-bottom: 0.5rem; }
     }
 
     /* ── Small mobile — ≤640px ── */
@@ -1057,9 +1033,10 @@
       .wrap { padding: 0 1.25rem; }
       .hero-h1 { font-size: clamp(2rem, 10vw, 3rem); }
       .photo-grid { grid-template-columns: 1fr; }
+      .service-stage-head { padding: 1.25rem 1.25rem 0.75rem; }
+      .service-stage-foot { padding: 0.75rem 1.25rem 1.25rem; }
       .service-panel { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 1.25rem; }
       .service-facade { max-width: 260px; margin: 0 auto; width: 100%; }
-      .about-stats { flex-wrap: wrap; gap: 1.5rem; }
       .reel-title, .process-title, .format-title,
       .about-title, .videos-title {
         font-size: clamp(1.75rem, 8vw, 2.5rem);
@@ -1161,7 +1138,6 @@
             <span class="reel-label">Assistir ao showreel</span>
           </button>
         </div>
-        <span class="reel-caption">Showreel 2026 · 4:3 · 1:16</span>
       </div>
     </div>
   </div>
@@ -1182,7 +1158,6 @@
       <ol class="timeline-track">
 
         <li class="clip">
-          <span class="clip-tc">00:00</span>
           <h3 class="clip-name">Briefing</h3>
           <p class="clip-desc">
             Você manda o material e o contexto. Entendo rápido, sem reuniões longas. Defino prazo e começo.
@@ -1190,7 +1165,6 @@
         </li>
 
         <li class="clip">
-          <span class="clip-tc">00:01</span>
           <h3 class="clip-name">Entrega</h3>
           <p class="clip-desc">
             Primeira versão acompanhada das decisões criativas. Revisão por texto, todos os pontos de uma vez — sem vai-e-vem, sem achismo.
@@ -1198,7 +1172,6 @@
         </li>
 
         <li class="clip">
-          <span class="clip-tc">00:02</span>
           <h3 class="clip-name">Em série</h3>
           <p class="clip-desc">
             Projetos com volume têm amostra de aprovação no caminho. Você nunca é surpreendido na entrega final.
@@ -1226,77 +1199,89 @@
         </p>
       </div>
     </div>
-    <div class="seg reveal" role="tablist" aria-label="Escolha o formato" data-active="criativos">
-      <span class="seg-thumb" aria-hidden="true"></span>
-      <button class="seg-btn" role="tab" id="tab-criativos" aria-controls="panel-criativos" aria-selected="true">
-        <span class="seg-name">Criativos</span><span class="seg-price">R$300</span>
-      </button>
-      <button class="seg-btn" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="false" tabindex="-1">
-        <span class="seg-name">Reels</span><span class="seg-price">R$200</span>
-      </button>
-    </div>
-
     <div class="service-stage card-surface reveal">
 
-      <div class="service-panel" id="panel-criativos" role="tabpanel" aria-labelledby="tab-criativos" aria-hidden="false">
-        <div class="service-body">
-          <p class="service-headline">Criativo fraco queima verba: o CPL dispara antes de a oferta aparecer.</p>
-          <div class="service-chips">
-            <span>Gancho</span><span>Retenção</span><span>Clareza + CTA</span>
-          </div>
-          <div class="service-price">
-            <div class="price-row">
-              <span class="price-val">R$300</span>
-              <span class="price-unit">/ peça</span>
-            </div>
-            <p class="price-note">1 conceito + <strong>3 variações de gancho</strong> para teste A/B — as variações são o produto.</p>
-            <div class="price-pack">10 peças / mês · <strong>R$3.000</strong></div>
-          </div>
-          <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20criativos." target="_blank" rel="noopener">Orçar Criativos</a>
-        </div>
-        <div class="service-facade">
-          <span class="play-ring" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg></span>
-          <span class="play-label" aria-hidden="true">Ver criativo</span>
-          <span class="facade-tag" aria-hidden="true">Criativo · 9:16 · tráfego pago</span>
-          <button class="video-facade" type="button" aria-label="Assistir exemplo de criativo"
-                  data-src="https://player.vimeo.com/video/1204975863?color=BDA562&title=0&byline=0&portrait=0&autoplay=1"></button>
+      <div class="service-stage-head">
+        <div class="seg" role="tablist" aria-label="Escolha o formato" data-active="criativos">
+          <span class="seg-thumb" aria-hidden="true"></span>
+          <button class="seg-btn" role="tab" id="tab-criativos" aria-controls="panel-criativos" aria-selected="true">
+            <span class="seg-name">Criativos</span>
+          </button>
+          <button class="seg-btn" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="false" tabindex="-1">
+            <span class="seg-name">Reels</span>
+          </button>
         </div>
       </div>
 
-      <div class="service-panel" id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" aria-hidden="true">
-        <div class="service-body">
-          <p class="service-headline">Reel é identidade em movimento — o que impressiona é o que fica.</p>
-          <div class="service-chips">
-            <span>Ritmo</span><span>Color grading</span><span>Sound design</span>
-          </div>
-          <div class="service-price">
-            <div class="price-row">
-              <span class="price-val">R$200</span>
-              <span class="price-unit">/ reel · até 60s</span>
+      <div class="service-panels-grid">
+
+        <div class="service-panel" id="panel-criativos" role="tabpanel" aria-labelledby="tab-criativos" aria-hidden="false">
+          <div class="service-body">
+            <p class="service-headline">Criativo fraco queima verba: o CPL dispara antes de a oferta aparecer.</p>
+            <div class="service-chips">
+              <span>Gancho</span><span>Retenção</span><span>Clareza + CTA</span>
             </div>
-            <p class="price-note"><strong>Tudo incluído</strong> — da decupagem à capa, sem extra escondido.</p>
-            <div class="price-pack">15 reels / mês · <strong>R$3.000</strong></div>
+            <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20criativos." target="_blank" rel="noopener">Orçar Criativos</a>
           </div>
-          <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20reels." target="_blank" rel="noopener">Orçar Reels</a>
+          <div class="service-right">
+            <div class="service-facade">
+              <span class="play-ring" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg></span>
+              <span class="play-label" aria-hidden="true">Ver criativo</span>
+              <span class="facade-tag" aria-hidden="true">Criativo · 9:16 · tráfego pago</span>
+              <button class="video-facade" type="button" aria-label="Assistir exemplo de criativo"
+                      data-src="https://player.vimeo.com/video/1204975863?color=BDA562&title=0&byline=0&portrait=0&autoplay=1"></button>
+            </div>
+            <div class="service-price">
+              <div class="price-row">
+                <span class="price-val">R$300</span>
+                <span class="price-unit">/ peça</span>
+              </div>
+              <p class="price-note">1 conceito + <strong>3 variações de gancho</strong> para teste A/B — as variações são o produto.</p>
+              <div class="price-pack">10 peças / mês · <strong>R$3.000</strong></div>
+            </div>
+          </div>
         </div>
-        <div class="service-facade">
-          <span class="play-ring" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg></span>
-          <span class="play-label" aria-hidden="true">Ver reel</span>
-          <span class="facade-tag" aria-hidden="true">Reel · 9:16 · orgânico</span>
-          <button class="video-facade" type="button" aria-label="Assistir exemplo de reel"
-                  data-src="https://player.vimeo.com/video/1204966430?color=BDA562&title=0&byline=0&portrait=0&autoplay=1"></button>
+
+        <div class="service-panel" id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" aria-hidden="true">
+          <div class="service-body">
+            <p class="service-headline">Reel é identidade em movimento — o que impressiona é o que fica.</p>
+            <div class="service-chips">
+              <span>Ritmo</span><span>Color grading</span><span>Sound design</span>
+            </div>
+            <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20reels." target="_blank" rel="noopener">Orçar Reels</a>
+          </div>
+          <div class="service-right">
+            <div class="service-facade">
+              <span class="play-ring" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg></span>
+              <span class="play-label" aria-hidden="true">Ver reel</span>
+              <span class="facade-tag" aria-hidden="true">Reel · 9:16 · orgânico</span>
+              <button class="video-facade" type="button" aria-label="Assistir exemplo de reel"
+                      data-src="https://player.vimeo.com/video/1204966430?color=BDA562&title=0&byline=0&portrait=0&autoplay=1"></button>
+            </div>
+            <div class="service-price">
+              <div class="price-row">
+                <span class="price-val">R$200</span>
+                <span class="price-unit">/ reel · até 60s</span>
+              </div>
+              <p class="price-note"><strong>Tudo incluído</strong> — da decupagem à capa, sem extra escondido.</p>
+              <div class="price-pack">15 reels / mês · <strong>R$3.000</strong></div>
+            </div>
+          </div>
         </div>
+
+      </div>
+
+      <div class="service-stage-foot">
+        <details class="service-details">
+          <summary>Como funciona · o que entra</summary>
+          <div class="service-details-body">
+            <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
+            <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
+          </div>
+        </details>
       </div>
 
     </div>
-
-    <details class="service-details reveal">
-      <summary>Como funciona · o que entra</summary>
-      <div class="service-details-body">
-        <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
-        <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
-      </div>
-    </details>
   </div>
 </section>
 
@@ -1330,20 +1315,6 @@
           Trabalho com sound design, color grading e direção de curtas-metragens autorais.
           Fluente em inglês e português.
         </p>
-        <div class="about-stats">
-          <div>
-            <div class="stat-val">500+</div>
-            <div class="stat-lbl">Vídeos entregues</div>
-          </div>
-          <div>
-            <div class="stat-val">BR&nbsp;+&nbsp;EXT</div>
-            <div class="stat-lbl">Clientes</div>
-          </div>
-          <div>
-            <div class="stat-val">2</div>
-            <div class="stat-lbl">Idiomas</div>
-          </div>
-        </div>
       </div>
     </div>
 
