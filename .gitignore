@@ -1,0 +1,9 @@
+node_modules/
+test-results/
+playwright-report/
+.env
+
+# Utilitários temporários de screenshot/preview (gerados durante o design)
+tests/_shot.spec.ts
+_logoview.html
+shots/

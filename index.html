@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maikon Winter — Editor e Colorista</title>
+  <meta name="description" content="Editor e colorista com background completo em produção audiovisual. Criativos, VSLs, Reels e YouTube — Brasil e exterior."/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="apple-touch-icon" sizes="192x192" href="assets/favicon-192.png"/>
+  <link rel="manifest" href="site.webmanifest"/>
+  <meta name="theme-color" content="#0a0b0d"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Space+Grotesk:wght@400;600&family=Geist+Mono:wght@600&display=swap"/>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Geist+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Brand tokens ── */
+    :root {
+      --c-bg:         #050505;  /* base near-black cinematográfica */
+      --c-surface:    #0e1620;  /* superfície elevada (cards/painéis) */
+      --c-navy:       #1B2C3B;
+      --c-olive:      #3D3C32;
+      --c-paper:      #EBEBEB;
+      --c-paper-dim:  #9aa3ac;
+      --c-brass:      #BDA562;
+      --c-brass-light:#d8c084;
+      --c-brass-dark: #8a7641;
+      --c-oxblood:    #66140E;
+    }
+
+    /* ── Reset / base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--c-bg);
+      color: var(--c-paper);
+      font-family: 'Space Grotesk', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* ── Grão de filme — textura cinematográfica sutil ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 9998;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    ::-webkit-scrollbar { display: none; }
+    body { -ms-overflow-style: none; scrollbar-width: none; }
+    ::selection { background: var(--c-brass); color: var(--c-navy); }
+    a { text-decoration: none; }
+
+    /* ── Keyline + eyebrow ── */
+    .keyline {
+      display: block;
+      width: 64px; height: 4px;
+      background-color: var(--c-oxblood);
+      margin-bottom: 1.25rem;
+    }
+    .eyebrow {
+      display: block;
+      color: var(--c-brass);
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.75rem;
+      background-color: var(--c-brass);
+      color: var(--c-navy);
+      border: none; border-radius: 9999px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; text-transform: uppercase;
+      font-size: 0.75rem; letter-spacing: 0.1em;
+      cursor: pointer; transition: all 0.18s ease;
+    }
+    .btn-primary:hover {
+      background-color: var(--c-brass-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(189,165,98,0.35);
+    }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background-color: transparent;
+      color: var(--c-paper);
+      border: 1px solid rgba(189,165,98,0.45);
+      border-radius: 9999px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; text-transform: uppercase;
+      font-size: 0.75rem; letter-spacing: 0.08em;
+      cursor: pointer; transition: all 0.18s ease;
+    }
+    .btn-secondary:hover {
+      background-color: rgba(189,165,98,0.1);
+      border-color: var(--c-brass);
+    }
+
+    /* ── Card surface ── */
+    .card-surface {
+      background-color: var(--c-olive);
+      border: 1px solid rgba(235,235,235,0.07);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      border-radius: 1rem;
+    }
+    .card-surface.is-interactive { transition: all 0.18s ease; cursor: pointer; }
+    .card-surface.is-interactive:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+      border-color: rgba(189,165,98,0.35);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(28px); filter: blur(6px); }
+      to   { opacity: 1; transform: translateY(0);    filter: blur(0);   }
+    }
+    @keyframes beam-drop {
+      0%   { transform: translateY(-100%); opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.7; }
+      100% { transform: translateY(100%);  opacity: 0; }
+    }
+    .hero-animate { animation: fadeSlideIn 0.85s ease both; }
+    .delay-1 { animation-delay: 0.12s; }
+    .delay-2 { animation-delay: 0.26s; }
+    .delay-3 { animation-delay: 0.42s; }
+    .delay-4 { animation-delay: 0.58s; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Beam border (vertical) ── */
+    .beam-v {
+      position: absolute; top: 0; bottom: 0; left: 0; width: 1px;
+      background: rgba(235,235,235,0.04); overflow: hidden;
+    }
+    .beam-v::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent, var(--c-brass), transparent);
+      transform: translateY(-100%);
+      animation: beam-drop 6s cubic-bezier(0.4,0,0.2,1) infinite;
+    }
+
+    /* ── Layout helpers ── */
+    .wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ══════════════════════════════════════
+       HERO — split layout with photo
+    ══════════════════════════════════════ */
+    .hero-photo {
+      position: absolute;
+      top: 0; right: 0;
+      width: 52%; height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      will-change: transform, filter;
+    }
+    /* Dissolução suave do fundo preto → foto; gradiente cobre a zona do texto, não toda a foto */
+    .hero-photo::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(to right,
+          #050505                    0%,
+          rgba(5,5,5,0.97)           3%,
+          rgba(5,5,5,0.88)           8%,
+          rgba(5,5,5,0.68)          15%,
+          rgba(5,5,5,0.40)          22%,
+          rgba(5,5,5,0.14)          30%,
+          rgba(5,5,5,0.03)          37%,
+          transparent               44%
+        ),
+        linear-gradient(to top,
+          #050505                    0%,
+          rgba(5,5,5,0.80)           5%,
+          rgba(5,5,5,0.20)          14%,
+          transparent               28%
+        ),
+        linear-gradient(to bottom,
+          rgba(5,5,5,0.50)           0%,
+          transparent               16%
+        );
+    }
+
+    /* ══════════════════════════════════════
+       NAV
+    ══════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.25rem 2rem 1.25rem max(2.5rem, 5vw);
+      display: flex; justify-content: space-between; align-items: center;
+      background: transparent;
+    }
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600; font-size: 1.1rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--c-paper);
+    }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      color: rgba(235,235,235,0.55);
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--c-brass); }
+    .nav-cta { display: flex; align-items: center; }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 9rem 2rem 5rem max(2.5rem, 5vw);
+      position: relative; overflow: hidden;
+      background-color: #050505;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 60% at 74% 44%, rgba(40,35,28,0.14) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 1160px; margin: 0; width: 100%; position: relative; z-index: 2; will-change: transform, opacity; }
+    .hero-content { max-width: 700px; }
+    .hero-tag {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem; font-weight: 600;
+      color: var(--c-brass);
+      text-transform: uppercase; letter-spacing: 0.16em;
+      margin-bottom: 1.75rem;
+    }
+    .hero-h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 700; line-height: 0.95;
+      text-transform: uppercase;
+      color: var(--c-paper);
+      margin-bottom: 0.15em;
+    }
+    .hero-h1 .gradient-text {
+      background: linear-gradient(135deg, var(--c-brass-light) 0%, var(--c-brass) 50%, var(--c-brass-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      color: rgba(235,235,235,0.65);
+      max-width: 480px;
+      line-height: 1.65;
+      margin: 1.75rem 0 2.5rem;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+    }
+    .hero-footnote {
+      margin-top: 4rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.1em;
+      color: rgba(235,235,235,0.28);
+      text-transform: uppercase;
+    }
+    .hero-footnote strong { color: rgba(189,165,98,0.7); font-weight: 600; }
+
+    /* ══════════════════════════════════════
+       REEL
+    ══════════════════════════════════════ */
+    #reel {
+      background-color: #131d26;
+      border-top: 1px solid rgba(235,235,235,0.05);
+      border-bottom: 1px solid rgba(235,235,235,0.05);
+      padding: 5rem 0;
+    }
+    .reel-header { margin-bottom: 2.5rem; }
+    .reel-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 600; text-transform: uppercase;
+      color: var(--c-paper); line-height: 1.05;
+    }
+    /* Showreel — layout em duas colunas (texto | vídeo) */
+    .reel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .reel-lead {
+      margin-top: 1.5rem;
+      color: var(--c-paper-dim);
+      font-size: 1.05rem; line-height: 1.7;
+      max-width: 42ch;
+    }
+    .reel-tags {
+      margin-top: 1.75rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.66rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--c-brass);
+      line-height: 1.6;
+    }
+    .reel-caption {
+      display: block; margin-top: 0.9rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--c-paper-dim);
+    }
+    .reel-box {
+      position: relative;
+      width: 100%; padding-bottom: 75%; /* showreel 4:3 */
+      background-color: #0d1720;
+      border-radius: 1.25rem;
+      border: 1px solid rgba(189,165,98,0.12);
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .reel-box iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    .reel-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1.25rem;
+    }
+    .reel-play {
+      width: 80px; height: 80px; border-radius: 50%;
+      border: 1.5px solid rgba(189,165,98,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .reel-play:hover {
+      border-color: rgba(189,165,98,0.7);
+      background: rgba(189,165,98,0.06);
+    }
+    .reel-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(235,235,235,0.2);
+    }
+    /* Facade do showreel — carrega o player Vimeo só no clique (performance) */
+    .reel-facade {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1.25rem;
+      width: 100%; background: none; border: none; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .reel-facade .reel-play svg { fill: var(--c-brass); margin-left: 4px; }
+    .reel-facade .reel-label { color: rgba(235,235,235,0.5); transition: color 0.2s; }
+    .reel-facade:hover .reel-label { color: var(--c-brass); }
+    .reel-facade:hover .reel-play {
+      border-color: rgba(189,165,98,0.7);
+      background: rgba(189,165,98,0.08);
+      transform: scale(1.05);
+    }
+    .reel-facade .reel-play { transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+
+    /* ══════════════════════════════════════
+       PROCESSO — linha do tempo (NLE)
+       Assinatura: régua de timecode + playhead.
+       60 fundo escuro · 30 paper/clipe · 10 brass
+    ══════════════════════════════════════ */
+    #process { padding: 6rem 0; }
+    /* cabeçalho ancorado no terço superior-esquerdo */
+    .process-head { max-width: 34rem; margin-bottom: 3.5rem; }
+    .process-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 600; text-transform: uppercase;
+      color: var(--c-paper); line-height: 1.05;
+      margin: 0;
+    }
+
+    .timeline { position: relative; }
+
+    /* ── playhead: cabeça de leitura varrendo a timeline ── */
+    .playhead {
+      position: absolute; top: 0; bottom: 0; left: 6%;
+      width: 2px; z-index: 3; pointer-events: none;
+      background: linear-gradient(to bottom,
+        var(--c-brass) 0%, rgba(189,165,98,0.18) 72%, transparent 100%);
+      box-shadow: 0 0 16px rgba(189,165,98,0.45);
+      animation: playhead-scrub 9s cubic-bezier(0.4,0,0.2,1) infinite;
+    }
+    .playhead::before { /* alça triangular no topo */
+      content: ''; position: absolute; top: -3px; left: 50%;
+      transform: translateX(-50%);
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid var(--c-brass);
+    }
+    @keyframes playhead-scrub {
+      0%   { left: 4%;  opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { left: 96%; opacity: 0; }
+    }
+
+    /* ── régua: linha-base + ticks de timecode ── */
+    .timeline-ruler {
+      position: relative; height: 16px;
+      border-bottom: 2px solid rgba(235,235,235,0.12);
+    }
+    .timeline-ruler::before { /* ticks curtos subindo da base */
+      content: ''; position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(to right,
+        rgba(235,235,235,0.16) 0, rgba(235,235,235,0.16) 1px,
+        transparent 1px, transparent 38px);
+      -webkit-mask: linear-gradient(to bottom, transparent 45%, #000 45%);
+              mask: linear-gradient(to bottom, transparent 45%, #000 45%);
+    }
+
+    /* ── clipes na trilha (ordenados = sequência real) ── */
+    .timeline-track {
+      list-style: none; margin: 0; padding: 1.9rem 0 0;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .clip {
+      position: relative; padding-left: 1.25rem;
+      border-left: 2px solid rgba(189,165,98,0.28); /* in-point do clipe */
+    }
+    .clip-tc { /* timecode no lugar do 01/02/03 — numeração nativa do editor */
+      display: block;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.08em; color: var(--c-brass);
+      margin-bottom: 0.95rem;
+    }
+    .clip-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--c-paper); margin: 0 0 0.6rem;
+    }
+    .clip-desc {
+      font-size: 0.875rem; line-height: 1.7; margin: 0;
+      color: rgba(235,235,235,0.55);
+    }
+
+    /* ══════════════════════════════════════
+       SOBRE — zona NAVY, composição assimétrica (terços)
+    ══════════════════════════════════════ */
+    #about {
+      /* navy dominante com profundidade (luz cinematográfica) */
+      background: linear-gradient(155deg, #1c2e3e 0%, #0e1620 72%);
+      border-top: 1px solid rgba(235,235,235,0.05);
+    }
+    .about-split {
+      display: grid;
+      grid-template-columns: 38% 1fr;  /* imagem no terço · texto nos dois terços */
+      align-items: stretch;
+      min-height: 600px;
+    }
+    .about-media {
+      position: relative; margin: 0; overflow: hidden;
+      border-right: 2px solid var(--c-oxblood);  /* espinha — eco da keyline do hero */
+    }
+    .about-media img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+    }
+    .about-media::after {  /* feather da borda p/ fundir a foto no navy */
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 66%, rgba(14,22,32,0.9) 100%);
+    }
+    .about-body {
+      display: flex; align-items: center;
+      padding: 4.5rem clamp(1.5rem, 5vw, 5rem);
+    }
+    .about-body-inner { max-width: 600px; }
+    .about-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 600; text-transform: uppercase;
+      color: var(--c-paper); line-height: 1.05;
+      margin-bottom: 1.75rem;
+    }
+    .about-body p {
+      font-size: 0.925rem;
+      color: rgba(235,235,235,0.7);
+      line-height: 1.8;
+      margin-bottom: 1.1rem;
+    }
+    .about-body p strong { color: var(--c-paper); font-weight: 600; }
+    .about-stats {
+      display: flex; gap: 2.5rem;
+      margin-top: 2.25rem; padding-top: 2rem;
+      border-top: 1px solid rgba(235,235,235,0.1);
+    }
+    .stat-val {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.25rem; font-weight: 700;
+      color: var(--c-brass); line-height: 1;
+    }
+    .stat-lbl {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(235,235,235,0.4);
+      margin-top: 0.4rem;
+    }
+
+    /* ══════════════════════════════════════
+       VÍDEOS
+    ══════════════════════════════════════ */
+    #videos { padding: 5rem 0; }
+    .videos-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 600; text-transform: uppercase;
+      color: var(--c-paper); line-height: 1.05;
+      margin-bottom: 3rem;
+    }
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    .video-card { border-radius: 1rem; overflow: hidden; display: flex; flex-direction: column; }
+    /* Caixa vertical 9:16 (reels e criativos) */
+    .video-embed {
+      position: relative; width: 100%; padding-bottom: 177.78%;
+      background-color: #0d1720; overflow: hidden;
+    }
+    .video-embed iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    /* Facade do card — carrega o player Vimeo só no clique */
+    .video-facade {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; padding: 0;
+      background: none; border: none; cursor: pointer;
+      overflow: hidden; -webkit-tap-highlight-color: transparent;
+    }
+    .video-facade img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.45s ease, filter 0.3s ease;
+    }
+    .video-facade::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(5,5,5,0.45), transparent 42%);
+    }
+    .video-facade:hover img { transform: scale(1.045); filter: brightness(1.04); }
+    .video-play {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px; height: 56px; border-radius: 50%; z-index: 2;
+      border: 1.5px solid rgba(235,235,235,0.6);
+      background: rgba(5,5,5,0.32); backdrop-filter: blur(3px);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .video-play svg { fill: var(--c-paper); margin-left: 3px; transition: fill 0.2s; }
+    .video-facade:hover .video-play {
+      border-color: var(--c-brass); background: rgba(189,165,98,0.18);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .video-facade:hover .video-play svg { fill: var(--c-brass); }
+    .video-info { padding: 1.1rem 1.25rem 1.35rem; }
+    .video-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--c-paper); margin-bottom: 0.35rem;
+    }
+    .video-meta {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-paper-dim);
+    }
+
+    /* ══════════════════════════════════════
+       CONTATO
+    ══════════════════════════════════════ */
+    #contact {
+      background: linear-gradient(160deg, #131d26 0%, var(--c-navy) 60%);
+      border-top: 1px solid rgba(235,235,235,0.06);
+      padding: 6rem 0 5rem;
+      text-align: center;
+    }
+    .contact-h {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.25rem, 5vw, 4.5rem);
+      font-weight: 700; text-transform: uppercase;
+      color: var(--c-paper); line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+    .contact-sub {
+      font-size: 1rem;
+      color: rgba(235,235,235,0.45);
+      margin-bottom: 2.75rem;
+    }
+    .wa-btn {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 2.5rem;
+      background-color: var(--c-brass);
+      color: var(--c-navy);
+      border-radius: 9999px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 0.875rem;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      transition: all 0.18s ease;
+    }
+    .wa-btn:hover {
+      background-color: var(--c-brass-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(189,165,98,0.35);
+    }
+    .wa-btn svg { flex-shrink: 0; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center; padding: 2.5rem 2rem;
+      border-top: 1px solid rgba(235,235,235,0.04);
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(235,235,235,0.18);
+    }
+
+    /* ── Redes sociais ── */
+    .social-cluster {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 1rem; margin-top: 2.75rem;
+    }
+    .social-label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--c-paper-dim);
+    }
+    .social-row { display: flex; gap: 0.9rem; justify-content: center; }
+    .social-link {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(235,235,235,0.12);
+      color: var(--c-paper-dim);
+      transition: color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+    .social-link:hover {
+      color: var(--c-brass);
+      border-color: rgba(189,165,98,0.55);
+      transform: translateY(-2px);
+    }
+    .social-link svg { width: 18px; height: 18px; fill: currentColor; }
+    /* Variante compacta no rodapé */
+    .footer-social { display: flex; gap: 1.25rem; justify-content: center; margin-bottom: 1.5rem; }
+    .footer-social a {
+      color: rgba(235,235,235,0.3);
+      transition: color 0.18s ease, transform 0.18s ease;
+      display: inline-flex;
+    }
+    .footer-social a:hover { color: var(--c-brass); transform: translateY(-2px); }
+    .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
+    .footer-mark {
+      display: block; height: 86px; width: auto;
+      margin: 0 auto 1.75rem; opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+    .footer-mark:hover { opacity: 1; }
+
+    /* ══════════════════════════════════════
+       FORMATOS — criativos + reels
+    ══════════════════════════════════════ */
+    #formats {
+      /* zona navy (profundidade vertical) */
+      background: linear-gradient(180deg, #17232f 0%, #101a24 100%);
+      border-top: 1px solid rgba(235,235,235,0.05);
+      padding: 5rem 0;
+    }
+    /* Cabeçalho editorial assimétrico (título nos dois terços · intro no terço) */
+    .service-header {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3rem; align-items: end;
+      margin-bottom: 3rem;
+    }
+    .format-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 600; text-transform: uppercase;
+      color: var(--c-paper); line-height: 1.05;
+    }
+    .service-header-r {
+      border-left: 2px solid var(--c-oxblood);  /* espinha — continuidade com hero/sobre */
+      padding-left: 1.5rem; padding-bottom: 0.4rem;
+    }
+    .service-intro {
+      margin: 0;
+      color: var(--c-paper-dim);
+      font-size: 1rem; line-height: 1.7;
+    }
+    .service-intro strong { color: var(--c-brass); font-weight: 600; }
+
+    /* ── Toggle segmentado (Criativos / Reels) ── */
+    .seg {
+      position: relative; isolation: isolate;
+      display: grid; grid-template-columns: 1fr 1fr;
+      max-width: 460px; margin-bottom: 1.5rem;
+      border: 1px solid rgba(189,165,98,0.28); border-radius: 9999px;
+      background: rgba(235,235,235,0.03);
+    }
+    .seg-thumb {
+      position: absolute; z-index: -1; top: 4px; bottom: 4px; left: 4px;
+      width: calc(50% - 4px);
+      background: var(--c-brass); border-radius: 9999px;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .seg[data-active="reels"] .seg-thumb { transform: translateX(100%); }
+    .seg-btn {
+      display: flex; align-items: baseline; justify-content: center; gap: 0.5rem;
+      padding: 0.85rem 1rem; background: none; border: none; cursor: pointer;
+      font-family: 'Geist Mono', monospace; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--c-paper-dim);
+      transition: color 0.3s ease;
+    }
+    .seg-btn .seg-name { font-size: 0.8rem; font-weight: 600; }
+    .seg-btn .seg-price { font-size: 0.7rem; opacity: 0.85; }
+    .seg-btn[aria-selected="true"] { color: var(--c-navy); }
+    .seg-btn:not([aria-selected="true"]):hover { color: var(--c-paper); }
+
+    /* ── Palco: os dois painéis dividem a MESMA célula (sem pulo de altura) ── */
+    .service-stage { display: grid; overflow: hidden; }
+    .service-panel {
+      grid-area: 1 / 1;
+      display: grid; grid-template-columns: minmax(0, 560px) minmax(280px, 340px);
+      justify-content: space-between; align-items: center;
+      gap: 2.5rem; padding: 2.25rem 2.5rem;
+      transition: opacity 0.42s ease, transform 0.42s ease;
+    }
+    .service-panel[aria-hidden="true"] {
+      opacity: 0; transform: translateY(12px);
+      pointer-events: none; visibility: hidden;
+    }
+    .service-panel[aria-hidden="false"] { opacity: 1; transform: none; }
+
+    /* box de play estilizado 9:16 — facade (carrega o Vimeo só no clique) */
+    .service-facade {
+      position: relative; width: 100%; aspect-ratio: 9 / 16;
+      overflow: hidden; border-radius: 0.9rem;
+      border: 1px solid rgba(189,165,98,0.22);
+      background:
+        radial-gradient(130% 110% at 50% 12%, rgba(27,44,59,0.5), transparent 62%),
+        #0a0e14;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+    }
+    .service-facade .play-ring {
+      width: 72px; height: 72px; border-radius: 50%;
+      border: 1.5px solid rgba(189,165,98,0.4);
+      display: grid; place-items: center;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .service-facade .play-ring svg { fill: var(--c-brass); margin-left: 4px; }
+    .service-facade .play-label {
+      font-family: 'Geist Mono', monospace; font-size: 0.64rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(235,235,235,0.55); transition: color 0.2s;
+    }
+    .service-facade:hover .play-ring {
+      border-color: rgba(189,165,98,0.75);
+      background: rgba(189,165,98,0.08); transform: scale(1.05);
+    }
+    .service-facade:hover .play-label { color: var(--c-brass); }
+    .service-facade .facade-tag {
+      position: absolute; left: 0.9rem; bottom: 0.85rem;
+      font-family: 'Geist Mono', monospace; font-size: 0.56rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-paper-dim);
+    }
+    .service-facade .video-facade { z-index: 2; } /* overlay clicável transparente */
+    .service-facade iframe {
+      position: absolute; inset: 0; z-index: 3;
+      width: 100%; height: 100%; border: none;
+    }
+
+    .service-body { display: flex; flex-direction: column; justify-content: center; max-width: 560px; }
+    .service-headline {
+      font-size: 1.05rem; line-height: 1.5; color: var(--c-paper);
+      font-weight: 500; margin: 0 0 1.25rem;
+    }
+    .service-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .service-chips span {
+      font-family: 'Geist Mono', monospace; font-size: 0.64rem;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-paper);
+      padding: 0.42rem 0.8rem;
+      border: 1px solid rgba(189,165,98,0.3); border-radius: 9999px;
+    }
+    .service-price {
+      margin-top: 1.75rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(189,165,98,0.18);
+    }
+    .price-row { display: flex; align-items: baseline; gap: 0.45rem; }
+    .price-val {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.25rem, 5vw, 3rem);
+      font-weight: 700; line-height: 1; color: var(--c-paper);
+    }
+    .price-unit {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.78rem; color: var(--c-paper-dim);
+    }
+    .price-note {
+      font-size: 0.85rem; line-height: 1.55;
+      color: rgba(235,235,235,0.6); margin: 0.7rem 0 0;
+    }
+    .price-note strong { color: var(--c-brass); font-weight: 600; }
+    .price-pack {
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--c-paper-dim); margin-top: 0.85rem;
+    }
+    .price-pack strong { color: var(--c-paper); }
+    .service-cta { margin-top: 1.5rem; align-self: flex-start; }
+
+    /* detalhes expandível — pílula clicável óbvia */
+    .service-details { margin-top: 1.75rem; max-width: 760px; }
+    .service-details summary {
+      cursor: pointer; list-style: none; width: fit-content;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.65rem 1.15rem; border-radius: 9999px;
+      border: 1px solid rgba(189,165,98,0.4);
+      background: rgba(189,165,98,0.05);
+      font-family: 'Geist Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-brass);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .service-details summary:hover {
+      background: rgba(189,165,98,0.12); border-color: var(--c-brass);
+    }
+    .service-details summary::-webkit-details-marker { display: none; }
+    .service-details summary::after {
+      content: '+'; font-size: 1rem; line-height: 1; color: var(--c-brass);
+      transition: transform 0.25s ease;
+    }
+    .service-details[open] summary::after { transform: rotate(45deg); }
+    .service-details-body { margin-top: 1.1rem; }
+    .service-details-body p {
+      font-size: 0.82rem; line-height: 1.7; color: var(--c-paper-dim);
+      margin: 0 0 0.75rem;
+    }
+    .service-details-body p:last-child { margin-bottom: 0; }
+    .service-details-body strong { color: rgba(235,235,235,0.82); font-weight: 600; }
+
+    /* ── Focus visible ── */
+    :focus-visible {
+      outline: 2px solid var(--c-brass);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+    a:focus-visible, button:focus-visible { border-radius: 4px; }
+
+    /* ── Hamburger ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 44px; height: 44px;
+      padding: 13px 10px;
+      background: none; border: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--c-paper);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+      pointer-events: none;
+    }
+    .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Nav drawer ── */
+    .nav-drawer {
+      position: fixed; inset: 0; z-index: 99;
+      background: rgba(5,5,5,0.97);
+      backdrop-filter: blur(12px);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2rem;
+      /* padding-top empurra conteúdo abaixo da barra da nav (z-index:100) */
+      padding-top: 4.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .nav-drawer.is-open { opacity: 1; pointer-events: all; }
+    .drawer-link {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.25rem, 9vw, 3rem);
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-paper);
+      min-height: 44px; display: flex; align-items: center;
+      transition: color 0.2s;
+    }
+    .drawer-link:hover, .drawer-link:active { color: var(--c-brass); }
+    .drawer-cta { margin-top: 1rem; }
+    /* Landscape pequeno (phones): reduz links para caber na altura */
+    @media (max-height: 500px) {
+      /* landscape de celular: alinha ao topo + rola, senão links sobem sob a nav */
+      .nav-drawer {
+        justify-content: flex-start;
+        gap: 0.4rem;
+        padding-top: 4.25rem; padding-bottom: 1.5rem;
+        overflow-y: auto;
+      }
+      .drawer-link { font-size: 1.35rem; }
+      .drawer-cta { margin-top: 0.5rem; }
+    }
+
+    /* ── Touch targets 44px — global, não só mobile ── */
+    .btn-primary, .btn-secondary, .wa-btn { min-height: 44px; }
+    /* ── Desabilita hover cards em touch real ── */
+    @media (hover: none) and (pointer: coarse) {
+      .card-surface.is-interactive:hover {
+        transform: none;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+        border-color: rgba(235,235,235,0.07);
+      }
+      .card-surface.is-interactive:active { transform: scale(0.98); }
+    }
+
+    /* ── prefers-reduced-motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-animate { animation: none; opacity: 1; transform: none; }
+      .reveal { transition: none; opacity: 1; transform: none; }
+      .beam-v::after { animation: none; }
+      .playhead { animation: none; left: 6%; }
+      .seg-thumb, .service-panel { transition: none; }
+    }
+
+    /* ── Tablet — ≤900px ── */
+    @media (max-width: 900px) {
+      .hero-content  { max-width: 100%; }
+      .reel-grid     { grid-template-columns: 1fr; gap: 2.5rem; }
+      .reel-lead     { max-width: 56ch; }
+      .timeline-track { gap: 1rem; }
+      .service-panel { grid-template-columns: minmax(0, 1fr) 280px; gap: 2rem; padding: 2rem; }
+      .service-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
+      .service-header-r { border-left: none; padding-left: 0; border-top: 2px solid var(--c-oxblood); padding-top: 1.25rem; }
+      .about-split   { grid-template-columns: 1fr; min-height: 0; }
+      .about-media   { aspect-ratio: 16 / 10; border-right: none; border-bottom: 2px solid var(--c-oxblood); }
+      .about-media::after { background: linear-gradient(180deg, transparent 70%, rgba(14,22,32,0.9) 100%); }
+      .about-body    { padding: 2.75rem 1.5rem; }
+      .videos-grid   { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── Mobile nav + hero — ≤768px ── */
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+
+      #hero {
+        padding: 33vh 1.5rem 3rem 1.5rem; /* 33vh → bloco de texto no nível da cabeça */
+        min-height: 100svh;
+        justify-content: flex-start;
+      }
+      .hero-photo {
+        width: 100%; height: 100%;
+        opacity: 1;
+      }
+      /* rosto espelhado para a direita — poster móvel */
+      .hero-photo img {
+        object-position: 24% center;
+        filter: brightness(1.35);
+        transform: scaleX(-1);
+      }
+      /* scrim duplo: esquerda escura (texto legível) + topo claro (rosto respira) */
+      .hero-photo::before {
+        background:
+          linear-gradient(to right, rgba(5,5,5,0.90) 0%, rgba(5,5,5,0.74) 44%, transparent 70%),
+          linear-gradient(to top,
+            #050505 0%,
+            rgba(5,5,5,0.97) 35%,
+            rgba(5,5,5,0.55) 50%,
+            rgba(5,5,5,0.06) 64%,
+            transparent 82%);
+      }
+      /* flex-column compacto — h1 + tag + botões agrupados no nível da cabeça */
+      .hero-content {
+        max-width: 85%;
+        display: flex; flex-direction: column;
+        gap: 0.4rem;
+      }
+      .hero-h1 { font-size: clamp(1.9rem, 8.5vw, 3rem); order: 1; margin-bottom: 0.1rem; }
+      /* tag abaixo do h1, menor para caber em 1 linha */
+      .hero-tag {
+        order: 2;
+        font-size: 0.56rem;
+        letter-spacing: 0.07em;
+        white-space: nowrap;
+        margin-bottom: 0.3rem;
+      }
+      .hero-sub { display: none; order: 99; }
+      .hero-actions { order: 3; flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 0.6rem; margin-top: 0.2rem; }
+      .hero-actions .btn-primary  { padding: 0.65rem 1.1rem; font-size: 0.65rem; white-space: nowrap; }
+      .hero-actions .btn-secondary { padding: 0.62rem 1rem; font-size: 0.65rem; white-space: nowrap; }
+      .hero-footnote { display: none; } /* extinto */
+
+      #reel, #process, #formats, #about, #videos { padding: 3.5rem 0; }
+      #contact { padding: 4rem 0 3.5rem; }
+
+      /* Processo: timeline horizontal → vertical (espinha + nós) */
+      .timeline-ruler, .playhead { display: none; }
+      .timeline-track {
+        grid-template-columns: 1fr; gap: 0; padding-top: 0;
+        border-left: 2px solid rgba(189,165,98,0.28);
+      }
+      .clip {
+        border-left: none; padding: 0 0 1.85rem 1.6rem;
+      }
+      .clip:last-child { padding-bottom: 0; }
+      .clip::before { /* nó na espinha, alinhado ao timecode */
+        content: ''; position: absolute; left: -7px; top: 3px;
+        width: 12px; height: 12px; border-radius: 50%;
+        background: var(--c-bg); border: 2px solid var(--c-brass);
+      }
+      .clip-tc { margin-bottom: 0.5rem; }
+    }
+
+    /* ── Small mobile — ≤640px ── */
+    @media (max-width: 640px) {
+      .wrap { padding: 0 1.25rem; }
+      .hero-h1 { font-size: clamp(2rem, 10vw, 3rem); }
+      .photo-grid { grid-template-columns: 1fr; }
+      .service-panel { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 1.25rem; }
+      .service-facade { max-width: 260px; margin: 0 auto; width: 100%; }
+      .about-stats { flex-wrap: wrap; gap: 1.5rem; }
+      .reel-title, .process-title, .format-title,
+      .about-title, .videos-title {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+      }
+    }
+
+    /* ── Very small — ≤400px ── */
+    @media (max-width: 400px) {
+      nav { padding: 0.875rem 1.25rem; }
+      .hero-h1 { font-size: clamp(2.25rem, 14vw, 3.5rem); }
+      .btn-primary, .btn-secondary { font-size: 0.7rem; padding: 0.75rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+<!-- ══ NAV ══════════════════════════════ -->
+<nav>
+  <a class="nav-logo" href="#">Maikon Winter</a>
+  <ul class="nav-links">
+    <li><a href="#reel">Showreel</a></li>
+    <li><a href="#process">Processo</a></li>
+    <li><a href="#formats">Serviços</a></li>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#videos">Trabalhos</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a class="btn-primary" href="https://wa.me/5547996553649" target="_blank" rel="noopener">Falar no WhatsApp</a>
+  </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-drawer">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação">
+  <a class="drawer-link" href="#reel">Showreel</a>
+  <a class="drawer-link" href="#process">Processo</a>
+  <a class="drawer-link" href="#formats">Serviços</a>
+  <a class="drawer-link" href="#about">Sobre</a>
+  <a class="drawer-link" href="#videos">Trabalhos</a>
+  <a class="btn-primary drawer-cta" href="https://wa.me/5547996553649" target="_blank" rel="noopener">Falar no WhatsApp</a>
+</div>
+</header>
+
+<main>
+<!-- ══ HERO ══════════════════════════════ -->
+<section>
+  <div id="hero">
+    <div class="hero-photo">
+      <img src="assets/hero.jpg" alt="Maikon Winter — Editor e Colorista" width="1080" height="1080" fetchpriority="high" decoding="async"/>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <p class="hero-tag hero-animate">Editor &amp; Colorista · Reels · Criativos · VSLs</p>
+        <h1 class="hero-h1 hero-animate delay-1">
+          Do roteiro<br><span class="gradient-text">à entrega.</span>
+        </h1>
+        <p class="hero-sub hero-animate delay-2">
+          Reels e criativos que prendem nos primeiros segundos e convertem —
+          para marcas e agências que levam produção a sério. Edição, color e
+          sound design, do briefing à entrega.
+        </p>
+        <div class="hero-actions hero-animate delay-3">
+          <a class="btn-primary" href="#reel">Ver Showreel</a>
+          <a class="btn-secondary" href="https://wa.me/5547996553649" target="_blank" rel="noopener">Me chama no WhatsApp</a>
+        </div>
+      </div>
+      <p class="hero-footnote hero-animate delay-4">
+        <strong>+500 vídeos</strong> entregues &nbsp;·&nbsp; Criativos · VSLs · Reels · YouTube &nbsp;·&nbsp; Brasil e exterior
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SHOWREEL ══════════════════════════ -->
+<section id="reel">
+  <div class="wrap">
+    <div class="reel-grid">
+      <div class="reel-text reveal">
+        <span class="keyline"></span>
+        <span class="eyebrow">Showreel</span>
+        <h2 class="reel-title">O trabalho<br>fala por si.</h2>
+        <p class="reel-lead">
+          Aprendi cinematografia como ofício — não como atalho pra fazer conteúdo.
+          Composição de quadro, color grading, sound design e narrativa entram como
+          padrão mínimo, não como diferencial. É a diferença que o espectador sente
+          antes de saber nomear.
+        </p>
+        <p class="reel-tags">Captação · Edição · Color grading · Sound design · Narrativa</p>
+      </div>
+      <div class="reel-media reveal">
+        <div class="reel-box">
+          <button class="reel-facade" id="reel-facade" type="button" aria-label="Assistir ao showreel"
+                  data-src="https://player.vimeo.com/video/1204975032?color=BDA562&title=0&byline=0&portrait=0&autoplay=1">
+            <span class="reel-play" aria-hidden="true">
+              <svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg>
+            </span>
+            <span class="reel-label">Assistir ao showreel</span>
+          </button>
+        </div>
+        <span class="reel-caption">Showreel 2026 · 4:3 · 1:16</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROCESSO ══════════════════════════ -->
+<section id="process">
+  <div class="wrap">
+    <div class="process-head reveal">
+      <span class="keyline"></span>
+      <span class="eyebrow">Processo</span>
+      <h2 class="process-title">Como funciona.</h2>
+    </div>
+
+    <div class="timeline reveal">
+      <span class="playhead" aria-hidden="true"></span>
+      <div class="timeline-ruler" aria-hidden="true"></div>
+      <ol class="timeline-track">
+
+        <li class="clip">
+          <span class="clip-tc">00:00</span>
+          <h3 class="clip-name">Briefing</h3>
+          <p class="clip-desc">
+            Você manda o material e o contexto. Entendo rápido, sem reuniões longas. Defino prazo e começo.
+          </p>
+        </li>
+
+        <li class="clip">
+          <span class="clip-tc">00:01</span>
+          <h3 class="clip-name">Entrega</h3>
+          <p class="clip-desc">
+            Primeira versão acompanhada das decisões criativas. Revisão por texto, todos os pontos de uma vez — sem vai-e-vem, sem achismo.
+          </p>
+        </li>
+
+        <li class="clip">
+          <span class="clip-tc">00:02</span>
+          <h3 class="clip-name">Em série</h3>
+          <p class="clip-desc">
+            Projetos com volume têm amostra de aprovação no caminho. Você nunca é surpreendido na entrega final.
+          </p>
+        </li>
+
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVIÇOS & PREÇOS ══════════════════ -->
+<section id="formats">
+  <div class="wrap">
+    <div class="service-header reveal">
+      <div class="service-header-l">
+        <span class="keyline"></span>
+        <span class="eyebrow">Serviços &amp; Preços</span>
+        <h2 class="format-title">O que eu entrego,<br>e quanto custa.</h2>
+      </div>
+      <div class="service-header-r">
+        <p class="service-intro">
+          Dois formatos, preço transparente. O valor não está só no corte — está em
+          fazer a peça <strong>performar</strong>. Avulso ou pacote mensal recorrente.
+        </p>
+      </div>
+    </div>
+    <div class="seg reveal" role="tablist" aria-label="Escolha o formato" data-active="criativos">
+      <span class="seg-thumb" aria-hidden="true"></span>
+      <button class="seg-btn" role="tab" id="tab-criativos" aria-controls="panel-criativos" aria-selected="true">
+        <span class="seg-name">Criativos</span><span class="seg-price">R$300</span>
+      </button>
+      <button class="seg-btn" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="false" tabindex="-1">
+        <span class="seg-name">Reels</span><span class="seg-price">R$200</span>
+      </button>
+    </div>
+
+    <div class="service-stage card-surface reveal">
+
+      <div class="service-panel" id="panel-criativos" role="tabpanel" aria-labelledby="tab-criativos" aria-hidden="false">
+        <div class="service-body">
+          <p class="service-headline">Criativo fraco queima verba: o CPL dispara antes de a oferta aparecer.</p>
+          <div class="service-chips">
+            <span>Gancho</span><span>Retenção</span><span>Clareza + CTA</span>
+          </div>
+          <div class="service-price">
+            <div class="price-row">
+              <span class="price-val">R$300</span>
+              <span class="price-unit">/ peça</span>
+            </div>
+            <p class="price-note">1 conceito + <strong>3 variações de gancho</strong> para teste A/B — as variações são o produto.</p>
+            <div class="price-pack">10 peças / mês · <strong>R$3.000</strong></div>
+          </div>
+          <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20criativos." target="_blank" rel="noopener">Orçar Criativos</a>
+        </div>
+        <div class="service-facade">
+          <span class="play-ring" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg></span>
+          <span class="play-label" aria-hidden="true">Ver criativo</span>
+          <span class="facade-tag" aria-hidden="true">Criativo · 9:16 · tráfego pago</span>
+          <button class="video-facade" type="button" aria-label="Assistir exemplo de criativo"
+                  data-src="https://player.vimeo.com/video/1204975863?color=BDA562&title=0&byline=0&portrait=0&autoplay=1"></button>
+        </div>
+      </div>
+
+      <div class="service-panel" id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" aria-hidden="true">
+        <div class="service-body">
+          <p class="service-headline">Reel é identidade em movimento — o que impressiona é o que fica.</p>
+          <div class="service-chips">
+            <span>Ritmo</span><span>Color grading</span><span>Sound design</span>
+          </div>
+          <div class="service-price">
+            <div class="price-row">
+              <span class="price-val">R$200</span>
+              <span class="price-unit">/ reel · até 60s</span>
+            </div>
+            <p class="price-note"><strong>Tudo incluído</strong> — da decupagem à capa, sem extra escondido.</p>
+            <div class="price-pack">15 reels / mês · <strong>R$3.000</strong></div>
+          </div>
+          <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20reels." target="_blank" rel="noopener">Orçar Reels</a>
+        </div>
+        <div class="service-facade">
+          <span class="play-ring" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg></span>
+          <span class="play-label" aria-hidden="true">Ver reel</span>
+          <span class="facade-tag" aria-hidden="true">Reel · 9:16 · orgânico</span>
+          <button class="video-facade" type="button" aria-label="Assistir exemplo de reel"
+                  data-src="https://player.vimeo.com/video/1204966430?color=BDA562&title=0&byline=0&portrait=0&autoplay=1"></button>
+        </div>
+      </div>
+
+    </div>
+
+    <details class="service-details reveal">
+      <summary>Como funciona · o que entra</summary>
+      <div class="service-details-body">
+        <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
+        <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ══ SOBRE — zona navy, composição assimétrica ══ -->
+<section id="about">
+  <div class="about-split">
+
+    <figure class="about-media reveal">
+      <img src="assets/Background%20Main.jpeg" alt="Maikon Winter na suíte de edição e cor" width="2752" height="1536" loading="lazy" decoding="async"/>
+    </figure>
+
+    <div class="about-body reveal">
+      <div class="about-body-inner">
+        <span class="keyline"></span>
+        <span class="eyebrow">Background</span>
+        <h2 class="about-title">Produção de ponta<br>a ponta.</h2>
+        <p>
+          Passei anos produzindo conteúdo em contextos diferentes: canal autoral, agências,
+          produtoras, e como filmmaker fixo em empresa de audiovisual —
+          onde entregava <strong>criativos, VSLs e reels para múltiplos clientes</strong>
+          com prazos simultâneos. Aprendi a funcionar dentro de um fluxo exigente
+          antes de trabalhar para agências.
+        </p>
+        <p>
+          Atuei com canais do YouTube, agências de marketing, criadores de conteúdo e empresas
+          <strong>no Brasil e no exterior</strong> — com foco em storytelling, ritmo dinâmico,
+          retenção de audiência e identidade visual marcante.
+        </p>
+        <p>
+          Domino DaVinci Resolve, Premiere Pro, After Effects e Photoshop.
+          Trabalho com sound design, color grading e direção de curtas-metragens autorais.
+          Fluente em inglês e português.
+        </p>
+        <div class="about-stats">
+          <div>
+            <div class="stat-val">500+</div>
+            <div class="stat-lbl">Vídeos entregues</div>
+          </div>
+          <div>
+            <div class="stat-val">BR&nbsp;+&nbsp;EXT</div>
+            <div class="stat-lbl">Clientes</div>
+          </div>
+          <div>
+            <div class="stat-val">2</div>
+            <div class="stat-lbl">Idiomas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ TRABALHOS ══════════════════════════ -->
+<section id="videos">
+  <div class="wrap">
+    <span class="keyline reveal"></span>
+    <span class="eyebrow reveal">Portfólio</span>
+    <h2 class="videos-title reveal">Trabalhos recentes.</h2>
+    <div class="videos-grid">
+
+      <div class="card-surface video-card reveal">
+        <div class="video-embed">
+          <button class="video-facade" type="button" aria-label="Assistir: Criativo 01"
+                  data-title="Criativo 01 — Maikon Winter"
+                  data-src="https://player.vimeo.com/video/1204975863?color=BDA562&title=0&byline=0&portrait=0&autoplay=1">
+            <img src="assets/work/criativo-1.jpg" alt="Criativo vertical para tráfego pago — edição Maikon Winter" width="540" height="960" loading="lazy" decoding="async"/>
+            <span class="video-play" aria-hidden="true"><svg width="16" height="20" viewBox="0 0 16 20"><path d="M16 10 0 20V0z"/></svg></span>
+          </button>
+        </div>
+        <div class="video-info">
+          <div class="video-name">Criativo 01</div>
+          <div class="video-meta">Criativo · Tráfego pago · 9:16</div>
+        </div>
+      </div>
+
+      <div class="card-surface video-card reveal">
+        <div class="video-embed">
+          <button class="video-facade" type="button" aria-label="Assistir: Criativo 02"
+                  data-title="Criativo 02 — Maikon Winter"
+                  data-src="https://player.vimeo.com/video/1204976265?color=BDA562&title=0&byline=0&portrait=0&autoplay=1">
+            <img src="assets/work/criativo-2.jpg" alt="Criativo vertical para tráfego pago — edição Maikon Winter" width="540" height="960" loading="lazy" decoding="async"/>
+            <span class="video-play" aria-hidden="true"><svg width="16" height="20" viewBox="0 0 16 20"><path d="M16 10 0 20V0z"/></svg></span>
+          </button>
+        </div>
+        <div class="video-info">
+          <div class="video-name">Criativo 02</div>
+          <div class="video-meta">Criativo · Tráfego pago · 9:16</div>
+        </div>
+      </div>
+
+      <div class="card-surface video-card reveal">
+        <div class="video-embed">
+          <button class="video-facade" type="button" aria-label="Assistir: Reel 01"
+                  data-title="Reel 01 — Maikon Winter"
+                  data-src="https://player.vimeo.com/video/1204966430?color=BDA562&title=0&byline=0&portrait=0&autoplay=1">
+            <img src="assets/work/reel-1.jpg" alt="Reel vertical para feed de marca — edição Maikon Winter" width="540" height="960" loading="lazy" decoding="async"/>
+            <span class="video-play" aria-hidden="true"><svg width="16" height="20" viewBox="0 0 16 20"><path d="M16 10 0 20V0z"/></svg></span>
+          </button>
+        </div>
+        <div class="video-info">
+          <div class="video-name">Reel 01</div>
+          <div class="video-meta">Reel · Orgânico · 9:16</div>
+        </div>
+      </div>
+
+      <div class="card-surface video-card reveal">
+        <div class="video-embed">
+          <button class="video-facade" type="button" aria-label="Assistir: Reel 02"
+                  data-title="Reel 02 — Maikon Winter"
+                  data-src="https://player.vimeo.com/video/1204975376?color=BDA562&title=0&byline=0&portrait=0&autoplay=1">
+            <img src="assets/work/reel-2.jpg" alt="Reel vertical editorial para feed — edição Maikon Winter" width="540" height="960" loading="lazy" decoding="async"/>
+            <span class="video-play" aria-hidden="true"><svg width="16" height="20" viewBox="0 0 16 20"><path d="M16 10 0 20V0z"/></svg></span>
+          </button>
+        </div>
+        <div class="video-info">
+          <div class="video-name">Reel 02</div>
+          <div class="video-meta">Reel · Orgânico · 9:16</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTATO ══════════════════════════════ -->
+<section id="contact">
+  <div class="wrap">
+    <h2 class="contact-h reveal">
+      Trabalho com quem<br>leva produção a sério.
+    </h2>
+    <p class="contact-sub reveal">Me manda mensagem. Respondo em até 24h.</p>
+    <div class="reveal">
+      <a class="wa-btn" href="https://wa.me/5547996553649" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+    <div class="social-cluster reveal">
+      <span class="social-label">Acompanhe o trabalho</span>
+      <div class="social-row">
+        <a class="social-link" href="https://www.instagram.com/maikchan.jpg/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a class="social-link" href="https://www.youtube.com/@maik_chan" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a class="social-link" href="https://www.linkedin.com/in/wintermaik/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <img class="footer-mark" src="assets/mage-lockup-brass.png" alt="Mage Films" width="400" height="562" loading="lazy" decoding="async"/>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/maikchan.jpg/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://www.youtube.com/@maik_chan" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/wintermaik/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+    </a>
+  </div>
+  © 2026 Maikon Winter · Editor e Colorista · Balneário Camboriú, SC
+</footer>
+
+<script>
+  // ── Reveal on scroll ─────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  // ── Showreel facade — carrega o iframe do Vimeo só no clique ──
+  (function () {
+    const f = document.getElementById('reel-facade');
+    if (!f) return;
+    f.addEventListener('click', () => {
+      const ifr = document.createElement('iframe');
+      ifr.src = f.getAttribute('data-src');
+      ifr.title = 'Showreel — Maikon Winter';
+      ifr.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+      ifr.setAttribute('allowfullscreen', '');
+      f.replaceWith(ifr);
+    });
+  }());
+
+  // ── Facades dos cards de trabalho (Vimeo só no clique) ──
+  (function () {
+    document.querySelectorAll('.video-facade').forEach((f) => {
+      f.addEventListener('click', () => {
+        const ifr = document.createElement('iframe');
+        ifr.src = f.getAttribute('data-src');
+        ifr.title = f.getAttribute('data-title') || 'Vídeo — Maikon Winter';
+        ifr.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        ifr.setAttribute('allowfullscreen', '');
+        f.replaceWith(ifr);
+      });
+    });
+  }());
+
+  // ── Serviços: toggle Criativos / Reels ────────────────────
+  (function () {
+    const seg = document.querySelector('.seg[role="tablist"]');
+    if (!seg) return;
+    const tabs = [...seg.querySelectorAll('[role="tab"]')];
+
+    function select(tab) {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.setAttribute('aria-hidden', String(!on));
+      });
+      seg.dataset.active = tab.id === 'tab-reels' ? 'reels' : 'criativos';
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        select(next); next.focus();
+      });
+    });
+  }());
+
+  // ── Hamburger / nav drawer ────────────────────────────────
+  (function () {
+    const btn    = document.getElementById('nav-hamburger');
+    const drawer = document.getElementById('nav-drawer');
+    if (!btn || !drawer) return;
+
+    function getFocusable() {
+      return [...drawer.querySelectorAll('a[href], button:not([disabled])')];
+    }
+
+    function trapFocus(e) {
+      const focusable = getFocusable();
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.key !== 'Tab') return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+    function handleDocEscape(e) {
+      if (e.key === 'Escape') { closeDrawer(); btn.focus(); }
+    }
+
+    function openDrawer() {
+      drawer.classList.add('is-open');
+      btn.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      drawer.addEventListener('keydown', trapFocus);
+      document.addEventListener('keydown', handleDocEscape);
+      requestAnimationFrame(() => getFocusable()[0]?.focus());
+    }
+    function closeDrawer() {
+      drawer.classList.remove('is-open');
+      btn.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      drawer.removeEventListener('keydown', trapFocus);
+      document.removeEventListener('keydown', handleDocEscape);
+    }
+
+    btn.addEventListener('click', () =>
+      drawer.classList.contains('is-open') ? closeDrawer() : openDrawer()
+    );
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+  }());
+
+  // ── Hero — parallax · fade · face dim ────────────────────
+  // Desativado em touch (performance + sem scroll momentum equivalente)
+  (function () {
+    'use strict';
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isTouch || prefersReduced) return;
+
+    const hero  = document.getElementById('hero');
+    const inner = hero.querySelector('.hero-inner');
+    const imgEl = hero.querySelector('.hero-photo img');
+    if (!imgEl) return;
+    let raf = null;
+
+    function update() {
+      raf = null;
+      const sy = window.scrollY;
+      const hh = hero.offsetHeight;
+      if (sy > hh * 1.1) return;
+
+      const p = Math.max(0, Math.min(sy / hh, 1));
+
+      imgEl.style.transform = `translateY(${sy * 0.30}px)`;
+
+      const textOp = Math.max(0, 1 - p * 1.67);
+      inner.style.transform = `translateY(${-sy * 0.07}px)`;
+      inner.style.opacity   = textOp.toFixed(3);
+
+      const bri = (0.35 + textOp * 0.65).toFixed(3);
+      const sat = (0.75 + textOp * 0.25).toFixed(3);
+      imgEl.style.filter = `brightness(${bri}) saturate(${sat})`;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    }, { passive: true });
+
+    update();
+  }());
+</script>
+
+</body>
+</html>
