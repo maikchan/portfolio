@@ -460,36 +460,31 @@
     }
 
     /* ══════════════════════════════════════
-       SOBRE — zona NAVY, composição assimétrica (terços)
+       SOBRE — 3 fotos + manifesto fundido
     ══════════════════════════════════════ */
     #about {
-      /* navy dominante com profundidade (luz cinematográfica) */
       background: linear-gradient(155deg, #1c2e3e 0%, #0e1620 72%);
       border-top: 1px solid rgba(235,235,235,0.05);
+      padding: 5rem 0;
     }
-    .about-split {
+    .about-photos {
       display: grid;
-      grid-template-columns: 38% 1fr;  /* imagem no terço · texto nos dois terços */
-      align-items: stretch;
-      min-height: 460px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 3.5rem;
     }
-    .about-media {
-      position: relative; margin: 0; overflow: hidden;
-      border-right: 2px solid var(--c-oxblood);  /* espinha — eco da keyline do hero */
+    .about-photo {
+      margin: 0; overflow: hidden;
+      height: clamp(190px, 20vw, 290px);
     }
-    .about-media img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%; object-fit: cover; object-position: center;
+    .about-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      transition: transform 0.5s ease;
     }
-    .about-media::after {  /* feather da borda p/ fundir a foto no navy */
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent 66%, rgba(14,22,32,0.9) 100%);
-    }
-    .about-body {
-      display: flex; align-items: center;
-      padding: 3rem clamp(1.5rem, 5vw, 5rem);
-    }
-    .about-body-inner { max-width: 100%; }
+    .about-photo:hover img { transform: scale(1.04); }
+    .about-content { max-width: 820px; }
     .about-title {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(2rem, 4vw, 3.5rem);
@@ -497,13 +492,37 @@
       color: var(--c-paper); line-height: 1.05;
       margin-bottom: 1.75rem;
     }
-    .about-body p {
+    .about-body-text {
       font-size: 0.925rem;
       color: rgba(235,235,235,0.7);
       line-height: 1.8;
       margin-bottom: 1.1rem;
     }
-    .about-body p strong { color: var(--c-paper); font-weight: 600; }
+    .about-body-text strong { color: var(--c-paper); font-weight: 600; }
+    .about-divider {
+      width: 36px; height: 1px;
+      background: var(--c-oxblood);
+      margin: 2.75rem 0;
+    }
+    .about-manifesto {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+      text-transform: none;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
+      color: rgba(235,235,235,0.6);
+      margin-bottom: 0.6em;
+    }
+    .about-punch {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+      text-transform: none;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
+      color: var(--c-paper);
+    }
 
     /* ══════════════════════════════════════
        VÍDEOS
@@ -583,7 +602,7 @@
     #contact {
       background: #050505;
       border-top: 1px solid rgba(235,235,235,0.06);
-      padding: 7rem max(2.5rem, 5vw) 5.5rem;
+      padding: 5rem max(2.5rem, 5vw) 5rem;
     }
     .contact-manifesto {
       font-family: 'Space Grotesk', sans-serif;
@@ -972,10 +991,8 @@
       .plans-grid { gap: 0.85rem; }
       .plan-card { padding: 1.5rem 1.15rem; }
       .plan-badge { right: 1rem; }
-      .about-split   { grid-template-columns: 1fr; min-height: 0; }
-      .about-media   { aspect-ratio: 16 / 10; border-right: none; border-bottom: 2px solid var(--c-oxblood); }
-      .about-media::after { background: linear-gradient(180deg, transparent 70%, rgba(14,22,32,0.9) 100%); }
-      .about-body    { padding: 2.75rem 1.5rem; }
+      .about-photos  { grid-template-columns: repeat(3, 1fr); }
+      .about-photo   { height: clamp(120px, 28vw, 190px); }
       .videos-grid   { grid-template-columns: repeat(2, 1fr); }
     }
 
@@ -1031,8 +1048,7 @@
       .hero-actions .btn-secondary { padding: 0.62rem 1rem; font-size: 0.65rem; white-space: nowrap; }
       .hero-footnote { display: none; } /* extinto */
 
-      #reel, #process, #formats, #about, #videos { padding: 3.5rem 0; }
-      #contact { padding: 4rem 0 3.5rem; }
+      #reel, #process, #formats, #about, #videos, #contact { padding: 3.5rem 0; }
 
       /* Processo: timeline horizontal → vertical (espinha + nós) */
       .timeline-ruler, .playhead { display: none; }
@@ -1428,37 +1444,52 @@
   </div>
 </section>
 
-<!-- ══ SOBRE — zona navy, composição assimétrica ══ -->
+<!-- ══ SOBRE — 3 fotos + manifesto fundido ══ -->
 <section id="about">
-  <div class="about-split">
+  <div class="wrap">
 
-    <figure class="about-media reveal">
-      <img src="assets/Background%20Main.jpeg" alt="Maikon Winter na suíte de edição e cor" width="2752" height="1536" loading="lazy" decoding="async"/>
-    </figure>
+    <div class="about-photos">
+      <figure class="about-photo reveal">
+        <img src="assets/Background%20Main.jpeg" alt="Maikon Winter na suíte de edição e cor" width="2752" height="1536" loading="lazy" decoding="async"/>
+      </figure>
+      <figure class="about-photo reveal">
+        <img src="assets/Background%202.jpg" alt="Setup de edição" width="1920" height="1080" loading="lazy" decoding="async"/>
+      </figure>
+      <figure class="about-photo reveal">
+        <img src="assets/Background%203.jpg" alt="Ambiente de trabalho" width="1920" height="1080" loading="lazy" decoding="async"/>
+      </figure>
+    </div>
 
-    <div class="about-body reveal">
-      <div class="about-body-inner">
-        <span class="keyline"></span>
-        <span class="eyebrow">Background</span>
-        <h2 class="about-title">Produção de ponta<br>a ponta.</h2>
-        <p>
-          Passei anos produzindo conteúdo em contextos diferentes: canal autoral, agências,
-          produtoras, e como filmmaker fixo em empresa de audiovisual —
-          onde entregava <strong>criativos, VSLs e reels para múltiplos clientes</strong>
-          com prazos simultâneos. Aprendi a funcionar dentro de um fluxo exigente
-          antes de trabalhar para agências.
-        </p>
-        <p>
-          Atuei com canais do YouTube, agências de marketing, criadores de conteúdo e empresas
-          <strong>no Brasil e no exterior</strong> — com foco em storytelling, ritmo dinâmico,
-          retenção de audiência e identidade visual marcante.
-        </p>
-        <p>
-          Domino DaVinci Resolve, Premiere Pro, After Effects e Photoshop.
-          Trabalho com sound design, color grading e direção de curtas-metragens autorais.
-          Fluente em inglês e português.
-        </p>
-      </div>
+    <div class="about-content reveal">
+      <span class="keyline"></span>
+      <span class="eyebrow">Background</span>
+      <h2 class="about-title">Produção de ponta<br>a ponta.</h2>
+      <p class="about-body-text">
+        Passei anos produzindo conteúdo em contextos diferentes: canal autoral, agências,
+        produtoras, e como filmmaker fixo em empresa de audiovisual —
+        onde entregava <strong>criativos, VSLs e reels para múltiplos clientes</strong>
+        com prazos simultâneos. Aprendi a funcionar dentro de um fluxo exigente
+        antes de trabalhar para agências.
+      </p>
+      <p class="about-body-text">
+        Atuei com canais do YouTube, agências de marketing, criadores de conteúdo e empresas
+        <strong>no Brasil e no exterior</strong> — com foco em storytelling, ritmo dinâmico,
+        retenção de audiência e identidade visual marcante.
+      </p>
+      <p class="about-body-text">
+        Domino DaVinci Resolve, Premiere Pro, After Effects e Photoshop.
+        Trabalho com sound design, color grading e direção de curtas-metragens autorais.
+        Fluente em inglês e português.
+      </p>
+      <div class="about-divider"></div>
+      <p class="about-manifesto">
+        Sou editor e colorista — filmmaker de formação, editor por escolha.
+        Aprendi produção dentro de um fluxo exigente, antes de trabalhar para agências.
+        Do roteiro à entrega.
+      </p>
+      <p class="about-punch">
+        Trabalho com quem leva produção a sério.
+      </p>
     </div>
 
   </div>
@@ -1467,14 +1498,6 @@
 <!-- ══ CONTATO ══════════════════════════════ -->
 <section id="contact">
   <div class="wrap">
-    <p class="contact-manifesto reveal">
-      Sou editor e colorista — filmmaker de formação, editor por escolha.
-      Aprendi produção dentro de um fluxo exigente, antes de trabalhar para agências.
-      Do roteiro à entrega.
-    </p>
-    <p class="contact-punch reveal">
-      Trabalho com quem leva produção a sério.
-    </p>
     <div class="contact-cta reveal">
       <a class="wa-btn" href="https://wa.me/5547996553649" target="_blank" rel="noopener">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
