@@ -1002,51 +1002,53 @@
       .nav-links, .nav-cta { display: none; }
       .nav-hamburger { display: flex; }
 
+      /* pôster mobile: foto full-bleed, rosto visível em cima, texto ancorado embaixo */
       #hero {
-        padding: 33vh 1.5rem 3rem 1.5rem; /* 33vh → bloco de texto no nível da cabeça */
+        padding: 6rem 1.5rem 3.25rem 1.5rem;
         min-height: 100svh;
-        justify-content: flex-start;
+        justify-content: flex-end; /* conteúdo colado na base — zero vazio morto */
       }
       .hero-photo {
         width: 100%; height: 100%;
         opacity: 1;
       }
-      /* rosto espelhado para a direita — poster móvel */
+      /* rosto no terço superior, bem iluminado, sem espelhamento */
       .hero-photo img {
-        object-position: 24% center;
-        filter: brightness(1.35);
-        transform: scaleX(-1);
+        object-position: 50% 18%;
+        filter: brightness(1.15) contrast(1.02);
+        transform: none;
       }
-      /* scrim duplo: esquerda escura (texto legível) + topo claro (rosto respira) */
+      /* scrim só na base: rosto respira em cima, texto legível embaixo */
       .hero-photo::before {
         background:
-          linear-gradient(to right, rgba(5,5,5,0.90) 0%, rgba(5,5,5,0.74) 44%, transparent 70%),
           linear-gradient(to top,
             #050505 0%,
-            rgba(5,5,5,0.97) 35%,
-            rgba(5,5,5,0.55) 50%,
-            rgba(5,5,5,0.06) 64%,
-            transparent 82%);
+            rgba(5,5,5,0.96) 22%,
+            rgba(5,5,5,0.70) 38%,
+            rgba(5,5,5,0.20) 55%,
+            transparent 72%),
+          linear-gradient(to bottom,
+            rgba(5,5,5,0.55) 0%,
+            transparent 22%);
       }
-      /* flex-column compacto — h1 + tag + botões agrupados no nível da cabeça */
       .hero-content {
-        max-width: 85%;
+        max-width: 100%;
         display: flex; flex-direction: column;
-        gap: 0.4rem;
+        gap: 0.5rem;
       }
-      .hero-h1 { font-size: clamp(1.9rem, 8.5vw, 3rem); order: 1; margin-bottom: 0.1rem; }
-      /* tag abaixo do h1, menor para caber em 1 linha */
+      .hero-h1 { font-size: clamp(2.4rem, 12vw, 3.4rem); order: 1; margin-bottom: 0.15rem; }
+      /* tag acima do h1 — hierarquia de pôster */
       .hero-tag {
-        order: 2;
-        font-size: 0.56rem;
-        letter-spacing: 0.07em;
+        order: 0;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
         white-space: nowrap;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.4rem;
       }
       .hero-sub { display: none; order: 99; }
-      .hero-actions { order: 3; flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 0.6rem; margin-top: 0.2rem; }
-      .hero-actions .btn-primary  { padding: 0.65rem 1.1rem; font-size: 0.65rem; white-space: nowrap; }
-      .hero-actions .btn-secondary { padding: 0.62rem 1rem; font-size: 0.65rem; white-space: nowrap; }
+      .hero-actions { order: 3; flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 0.6rem; margin-top: 0.6rem; }
+      .hero-actions .btn-primary  { padding: 0.8rem 1.15rem; font-size: 0.68rem; white-space: nowrap; }
+      .hero-actions .btn-secondary { padding: 0.78rem 1.05rem; font-size: 0.68rem; white-space: nowrap; }
       .hero-footnote { display: none; } /* extinto */
 
       #reel, #process, #formats, #about, #videos, #contact { padding: 3.5rem 0; }
