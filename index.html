@@ -722,38 +722,39 @@
     .seg-btn[aria-selected="true"] { color: var(--c-navy); }
     .seg-btn:not([aria-selected="true"]):hover { color: var(--c-paper); }
 
-    /* ── Controles: toggle de formato + toggle de período ── */
-    .plan-controls {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-    .plan-controls .seg { margin-bottom: 0; }
+    /* ── Toggle de formato (Criativos / Reels) — centralizado, destacado ── */
+    .plan-format-toggle { display: flex; justify-content: center; margin-bottom: 1.25rem; }
+    .plan-format-toggle .seg { margin-bottom: 0; }
+
+    /* ── Toggle de período (Mensal / Trimestral) — discreto, centralizado ── */
+    .plan-billing-toggle { display: flex; justify-content: center; margin-bottom: 2rem; }
     .bill-seg {
       position: relative; isolation: isolate;
-      display: inline-flex; padding: 4px;
-      border: 1px solid rgba(189,165,98,0.28); border-radius: 9999px;
-      background: rgba(235,235,235,0.03);
+      display: inline-flex; padding: 3px;
+      border: 1px solid rgba(235,235,235,0.1); border-radius: 9999px;
+      background: rgba(235,235,235,0.02);
     }
     .bill-thumb {
-      position: absolute; z-index: -1; top: 4px; bottom: 4px; left: 4px;
-      width: calc(50% - 4px);
-      background: rgba(189,165,98,0.14);
-      border: 1px solid rgba(189,165,98,0.4); border-radius: 9999px;
+      position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px;
+      width: calc(50% - 3px);
+      background: rgba(235,235,235,0.06);
+      border: 1px solid rgba(189,165,98,0.28); border-radius: 9999px;
       transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
     }
     .bill-seg[data-active="trimestral"] .bill-thumb { transform: translateX(100%); }
     .bill-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
-      min-height: 44px; padding: 0.6rem 1.15rem; background: none; border: none; cursor: pointer;
-      font-family: 'Geist Mono', monospace; font-size: 0.72rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-paper-dim);
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+      min-height: 44px; padding: 0.4rem 1rem; background: none; border: none; cursor: pointer;
+      font-family: 'Geist Mono', monospace; font-size: 0.64rem; font-weight: 600;
+      letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-paper-dim);
       white-space: nowrap; transition: color 0.3s ease;
     }
     .bill-btn[aria-pressed="true"] { color: var(--c-brass); }
     .bill-btn:not([aria-pressed="true"]):hover { color: var(--c-paper); }
     .bill-off {
-      font-size: 0.58rem; padding: 0.15rem 0.45rem; border-radius: 9999px;
-      background: var(--c-oxblood); color: var(--c-paper); letter-spacing: 0.05em;
+      font-size: 0.54rem; padding: 0.12rem 0.4rem; border-radius: 9999px;
+      background: rgba(189,165,98,0.16); color: var(--c-brass);
+      border: 1px solid rgba(189,165,98,0.3); letter-spacing: 0.04em;
     }
 
     /* ── Grade de planos: 2 painéis empilhados (crossfade) ── */
@@ -833,9 +834,9 @@
     .plan-list-hl { color: var(--c-brass); font-weight: 500; }
 
     /* ── Estado de billing: mostra/oculta preço e linha extra ── */
-    #formats[data-billing="avulso"] [data-bill-show="trimestral"],
-    #formats[data-billing="trimestral"] [data-bill-show="avulso"],
-    #formats[data-billing="avulso"] [data-bill-only="trimestral"] { display: none; }
+    #formats[data-billing="mensal"] [data-bill-show="trimestral"],
+    #formats[data-billing="trimestral"] [data-bill-show="mensal"],
+    #formats[data-billing="mensal"] [data-bill-only="trimestral"] { display: none; }
     .service-details-body strong { color: rgba(235,235,235,0.82); font-weight: 600; }
 
     /* ── Focus visible ── */
@@ -1023,7 +1024,7 @@
       .wrap { padding: 0 1.25rem; }
       .hero-h1 { font-size: clamp(2rem, 10vw, 3rem); }
       .photo-grid { grid-template-columns: 1fr; }
-      .plan-controls { flex-direction: column; align-items: flex-start; gap: 0.85rem; }
+      .plan-billing-toggle { margin-bottom: 1.5rem; }
       .plans-grid { grid-template-columns: 1fr; gap: 1.5rem; max-width: 420px; }
       .plan-card { padding: 1.75rem 1.4rem; }
       .plan-card--featured { order: -1; }
@@ -1247,7 +1248,7 @@
 </section>
 
 <!-- ══ SERVIÇOS & PREÇOS ══════════════════ -->
-<section id="formats" data-billing="avulso">
+<section id="formats" data-billing="mensal">
   <div class="wrap">
     <div class="service-header reveal">
       <div class="service-header-l">
@@ -1262,7 +1263,7 @@
         </p>
       </div>
     </div>
-    <div class="plan-controls reveal">
+    <div class="plan-format-toggle reveal">
       <div class="seg" role="tablist" aria-label="Escolha o formato" data-active="criativos">
         <span class="seg-thumb" aria-hidden="true"></span>
         <button class="seg-btn" role="tab" id="tab-criativos" aria-controls="panel-criativos" aria-selected="true">
@@ -1272,10 +1273,13 @@
           <span class="seg-name">Reels</span>
         </button>
       </div>
-      <div class="bill-seg" data-active="avulso" role="group" aria-label="Período de contratação">
+    </div>
+
+    <div class="plan-billing-toggle reveal">
+      <div class="bill-seg" data-active="mensal" role="group" aria-label="Período de contratação">
         <span class="bill-thumb" aria-hidden="true"></span>
-        <button class="bill-btn" type="button" data-bill="avulso" aria-pressed="true">Avulso</button>
-        <button class="bill-btn" type="button" data-bill="trimestral" aria-pressed="false">Trimestral <span class="bill-off">−20%</span></button>
+        <button class="bill-btn" type="button" data-bill="mensal" aria-pressed="true">Mensal</button>
+        <button class="bill-btn" type="button" data-bill="trimestral" aria-pressed="false">Trimestral <span class="bill-off">−12%</span></button>
       </div>
     </div>
 
@@ -1304,17 +1308,17 @@
             <span class="plan-badge">Melhor custo</span>
             <h3 class="plan-name">Pacote 12</h3>
             <div class="plan-price">
-              <span class="plan-num" data-bill-show="avulso">2.997</span>
-              <span class="plan-num" data-bill-show="trimestral">2.398</span>
+              <span class="plan-num" data-bill-show="mensal">2.997</span>
+              <span class="plan-num" data-bill-show="trimestral">2.637</span>
               <span class="plan-unit">por 12 criativos · <strong>2 grátis</strong></span>
             </div>
             <p class="plan-desc">O melhor custo por peça para quem produz em volume.</p>
             <a class="btn-primary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20o%20pacote%20de%2012%20criativos." target="_blank" rel="noopener">Fechar pacote</a>
             <ul class="plan-list">
-              <li>Tudo do avulso, em 12 criativos</li>
+              <li>Tudo da unidade, em 12 criativos</li>
               <li>2 criativos grátis — paga 10, leva 12</li>
               <li>Prioridade na fila de entrega</li>
-              <li class="plan-list-hl" data-bill-only="trimestral">Trimestral: −20% no pacote</li>
+              <li class="plan-list-hl" data-bill-only="trimestral">Trimestral: −12% no pacote</li>
             </ul>
           </article>
 
@@ -1358,17 +1362,17 @@
             <span class="plan-badge">Melhor custo</span>
             <h3 class="plan-name">Pacote 12</h3>
             <div class="plan-price">
-              <span class="plan-num" data-bill-show="avulso">1.997</span>
-              <span class="plan-num" data-bill-show="trimestral">1.598</span>
+              <span class="plan-num" data-bill-show="mensal">1.997</span>
+              <span class="plan-num" data-bill-show="trimestral">1.757</span>
               <span class="plan-unit">por 12 reels · <strong>2 grátis</strong></span>
             </div>
             <p class="plan-desc">O melhor custo por reel para quem produz em volume.</p>
             <a class="btn-primary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20o%20pacote%20de%2012%20reels." target="_blank" rel="noopener">Fechar pacote</a>
             <ul class="plan-list">
-              <li>Tudo do avulso, em 12 reels</li>
+              <li>Tudo da unidade, em 12 reels</li>
               <li>2 reels grátis — paga 10, leva 12</li>
               <li>Prioridade na fila de entrega</li>
-              <li class="plan-list-hl" data-bill-only="trimestral">Trimestral: −20% no pacote</li>
+              <li class="plan-list-hl" data-bill-only="trimestral">Trimestral: −12% no pacote</li>
             </ul>
           </article>
 
