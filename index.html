@@ -726,12 +726,15 @@
     .service-stage { display: flex; flex-direction: column; overflow: hidden; }
     .service-stage-head { padding: 1rem 2.5rem 0.5rem; }
     .service-panels-grid { display: grid; }
-    .service-right { display: block; }
+    .service-right {
+      display: flex; flex-direction: column; justify-content: center;
+      padding-left: 2.5rem; border-left: 1px solid rgba(189,165,98,0.16);
+    }
     .service-panel {
       grid-area: 1 / 1;
-      display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
-      justify-content: space-between; align-items: start;
-      gap: 2.5rem; padding: 1.25rem 2.5rem 2rem;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+      justify-content: space-between; align-items: stretch;
+      gap: 3rem; padding: 1.25rem 2.5rem 2rem;
       transition: opacity 0.42s ease, transform 0.42s ease;
     }
     .service-panel[aria-hidden="true"] {
@@ -795,8 +798,9 @@
     .price-row { display: flex; flex-direction: column; align-items: flex-start; gap: 0.1rem; }
     .price-val {
       font-family: 'Oswald', sans-serif;
-      font-size: clamp(2.25rem, 5vw, 3rem);
-      font-weight: 700; line-height: 1; color: var(--c-paper);
+      font-size: clamp(2.75rem, 6vw, 3.75rem);
+      font-weight: 300; line-height: 0.95; letter-spacing: -0.01em;
+      color: var(--c-paper);
     }
     .price-unit {
       font-family: 'Geist Mono', monospace;
@@ -941,8 +945,8 @@
       .reel-lead     { max-width: 56ch; }
       .timeline-track { gap: 1rem; }
       .service-stage-head { padding: 1rem 2rem 0.5rem; }
-      .service-panel { grid-template-columns: minmax(0, 1fr) 280px; gap: 2rem; padding: 2rem; }
-      .service-right { display: block; }
+      .service-panel { grid-template-columns: minmax(0, 1fr) 260px; gap: 2rem; padding: 2rem; }
+      .service-right { padding-left: 2rem; }
       .service-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
       .service-header-r { border-left: none; padding-left: 0; border-top: 2px solid var(--c-oxblood); padding-top: 1.25rem; }
       .about-split   { grid-template-columns: 1fr; min-height: 0; }
@@ -1031,7 +1035,10 @@
       .photo-grid { grid-template-columns: 1fr; }
       .service-stage-head { padding: 1rem 1.25rem 0.5rem; }
       .service-panel { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 1.25rem; }
-      .service-right { display: block; }
+      .service-right {
+        padding-left: 0; padding-top: 1.5rem;
+        border-left: none; border-top: 1px solid rgba(189,165,98,0.16);
+      }
       .reel-title, .process-title, .format-title,
       .about-title, .videos-title {
         font-size: clamp(1.75rem, 8vw, 2.5rem);
@@ -1257,12 +1264,12 @@
       <div class="service-header-l">
         <span class="keyline"></span>
         <span class="eyebrow">Serviços &amp; Preços</span>
-        <h2 class="format-title">O que eu entrego,<br>e quanto custa.</h2>
+        <h2 class="format-title">Você viu o trabalho.<br>Aqui está o preço.</h2>
       </div>
       <div class="service-header-r">
         <p class="service-intro">
-          Dois formatos, preço transparente. O valor não está só no corte — está em
-          fazer a peça <strong>performar</strong>. Avulso ou pacote mensal recorrente.
+          Dois formatos, preço transparente — avulso ou pacote mensal. O valor não está
+          só no corte: está em fazer a peça <strong>performar</strong>.
         </p>
       </div>
     </div>
@@ -1300,11 +1307,11 @@
           <div class="service-right">
             <div class="service-price">
               <div class="price-row">
-                <span class="price-val">R$300</span>
+                <span class="price-val">297</span>
                 <span class="price-unit">/ peça</span>
               </div>
               <p class="price-note">1 conceito + <strong>3 variações de gancho</strong> para teste A/B — as variações são o produto.</p>
-              <div class="price-pack">10 peças / mês · <strong>R$3.000</strong></div>
+              <div class="price-pack">10 peças / mês · <strong>3.000</strong></div>
             </div>
           </div>
         </div>
@@ -1327,11 +1334,11 @@
           <div class="service-right">
             <div class="service-price">
               <div class="price-row">
-                <span class="price-val">R$200</span>
+                <span class="price-val">197</span>
                 <span class="price-unit">/ reel · até 60s</span>
               </div>
               <p class="price-note"><strong>Tudo incluído</strong> — da decupagem à capa, sem extra escondido.</p>
-              <div class="price-pack">15 reels / mês · <strong>R$3.000</strong></div>
+              <div class="price-pack">15 reels / mês · <strong>3.000</strong></div>
             </div>
           </div>
         </div>
