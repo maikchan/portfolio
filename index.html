@@ -726,7 +726,7 @@
     .service-stage { display: flex; flex-direction: column; overflow: hidden; }
     .service-stage-head { padding: 1rem 2.5rem 0.5rem; }
     .service-panels-grid { display: grid; }
-    .service-right { display: grid; grid-template-columns: 120px 1fr; gap: 1.25rem; align-items: start; }
+    .service-right { display: block; }
     .service-panel {
       grid-area: 1 / 1;
       display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
@@ -791,10 +791,7 @@
       padding: 0.42rem 0.8rem;
       border: 1px solid rgba(189,165,98,0.3); border-radius: 9999px;
     }
-    .service-price {
-      padding-left: 1.25rem;
-      border-left: 1px solid rgba(189,165,98,0.18);
-    }
+    .service-price { }
     .price-row { display: flex; flex-direction: column; align-items: flex-start; gap: 0.1rem; }
     .price-val {
       font-family: 'Oswald', sans-serif;
@@ -945,7 +942,7 @@
       .timeline-track { gap: 1rem; }
       .service-stage-head { padding: 1rem 2rem 0.5rem; }
       .service-panel { grid-template-columns: minmax(0, 1fr) 280px; gap: 2rem; padding: 2rem; }
-      .service-right { grid-template-columns: 120px 1fr; }
+      .service-right { display: block; }
       .service-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
       .service-header-r { border-left: none; padding-left: 0; border-top: 2px solid var(--c-oxblood); padding-top: 1.25rem; }
       .about-split   { grid-template-columns: 1fr; min-height: 0; }
@@ -1034,8 +1031,7 @@
       .photo-grid { grid-template-columns: 1fr; }
       .service-stage-head { padding: 1rem 1.25rem 0.5rem; }
       .service-panel { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 1.25rem; }
-      .service-right { grid-template-columns: 1fr; }
-      .service-facade { max-width: 260px; margin: 0 auto; width: 100%; }
+      .service-right { display: block; }
       .reel-title, .process-title, .format-title,
       .about-title, .videos-title {
         font-size: clamp(1.75rem, 8vw, 2.5rem);
@@ -1182,148 +1178,6 @@
   </div>
 </section>
 
-<!-- ══ SERVIÇOS & PREÇOS ══════════════════ -->
-<section id="formats">
-  <div class="wrap">
-    <div class="service-header reveal">
-      <div class="service-header-l">
-        <span class="keyline"></span>
-        <span class="eyebrow">Serviços &amp; Preços</span>
-        <h2 class="format-title">O que eu entrego,<br>e quanto custa.</h2>
-      </div>
-      <div class="service-header-r">
-        <p class="service-intro">
-          Dois formatos, preço transparente. O valor não está só no corte — está em
-          fazer a peça <strong>performar</strong>. Avulso ou pacote mensal recorrente.
-        </p>
-      </div>
-    </div>
-    <div class="service-stage card-surface reveal">
-
-      <div class="service-stage-head">
-        <div class="seg" role="tablist" aria-label="Escolha o formato" data-active="criativos">
-          <span class="seg-thumb" aria-hidden="true"></span>
-          <button class="seg-btn" role="tab" id="tab-criativos" aria-controls="panel-criativos" aria-selected="true">
-            <span class="seg-name">Criativos</span>
-          </button>
-          <button class="seg-btn" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="false" tabindex="-1">
-            <span class="seg-name">Reels</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="service-panels-grid">
-
-        <div class="service-panel" id="panel-criativos" role="tabpanel" aria-labelledby="tab-criativos" aria-hidden="false">
-          <div class="service-body">
-            <p class="service-headline">Criativo fraco queima verba: o CPL dispara antes de a oferta aparecer.</p>
-            <div class="service-chips">
-              <span>Gancho</span><span>Retenção</span><span>Clareza + CTA</span>
-            </div>
-            <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20criativos." target="_blank" rel="noopener">Orçar Criativos</a>
-            <details class="service-details">
-              <summary>Como funciona · o que entra</summary>
-              <div class="service-details-body">
-                <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
-                <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
-              </div>
-            </details>
-          </div>
-          <div class="service-right">
-            <div class="service-facade">
-              <span class="play-ring" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg></span>
-              <span class="play-label" aria-hidden="true">Ver criativo</span>
-              <span class="facade-tag" aria-hidden="true">Criativo · 9:16 · tráfego pago</span>
-              <button class="video-facade" type="button" aria-label="Assistir exemplo de criativo"
-                      data-src="https://player.vimeo.com/video/1204975863?color=BDA562&title=0&byline=0&portrait=0&autoplay=1"></button>
-            </div>
-            <div class="service-price">
-              <div class="price-row">
-                <span class="price-val">R$300</span>
-                <span class="price-unit">/ peça</span>
-              </div>
-              <p class="price-note">1 conceito + <strong>3 variações de gancho</strong> para teste A/B — as variações são o produto.</p>
-              <div class="price-pack">10 peças / mês · <strong>R$3.000</strong></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="service-panel" id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" aria-hidden="true">
-          <div class="service-body">
-            <p class="service-headline">Reel é identidade em movimento — o que impressiona é o que fica.</p>
-            <div class="service-chips">
-              <span>Ritmo</span><span>Color grading</span><span>Sound design</span>
-            </div>
-            <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20reels." target="_blank" rel="noopener">Orçar Reels</a>
-            <details class="service-details">
-              <summary>Como funciona · o que entra</summary>
-              <div class="service-details-body">
-                <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
-                <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
-              </div>
-            </details>
-          </div>
-          <div class="service-right">
-            <div class="service-facade">
-              <span class="play-ring" aria-hidden="true"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M20 12 0 24V0z"/></svg></span>
-              <span class="play-label" aria-hidden="true">Ver reel</span>
-              <span class="facade-tag" aria-hidden="true">Reel · 9:16 · orgânico</span>
-              <button class="video-facade" type="button" aria-label="Assistir exemplo de reel"
-                      data-src="https://player.vimeo.com/video/1204966430?color=BDA562&title=0&byline=0&portrait=0&autoplay=1"></button>
-            </div>
-            <div class="service-price">
-              <div class="price-row">
-                <span class="price-val">R$200</span>
-                <span class="price-unit">/ reel · até 60s</span>
-              </div>
-              <p class="price-note"><strong>Tudo incluído</strong> — da decupagem à capa, sem extra escondido.</p>
-              <div class="price-pack">15 reels / mês · <strong>R$3.000</strong></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══ SOBRE — zona navy, composição assimétrica ══ -->
-<section id="about">
-  <div class="about-split">
-
-    <figure class="about-media reveal">
-      <img src="assets/Background%20Main.jpeg" alt="Maikon Winter na suíte de edição e cor" width="2752" height="1536" loading="lazy" decoding="async"/>
-    </figure>
-
-    <div class="about-body reveal">
-      <div class="about-body-inner">
-        <span class="keyline"></span>
-        <span class="eyebrow">Background</span>
-        <h2 class="about-title">Produção de ponta<br>a ponta.</h2>
-        <p>
-          Passei anos produzindo conteúdo em contextos diferentes: canal autoral, agências,
-          produtoras, e como filmmaker fixo em empresa de audiovisual —
-          onde entregava <strong>criativos, VSLs e reels para múltiplos clientes</strong>
-          com prazos simultâneos. Aprendi a funcionar dentro de um fluxo exigente
-          antes de trabalhar para agências.
-        </p>
-        <p>
-          Atuei com canais do YouTube, agências de marketing, criadores de conteúdo e empresas
-          <strong>no Brasil e no exterior</strong> — com foco em storytelling, ritmo dinâmico,
-          retenção de audiência e identidade visual marcante.
-        </p>
-        <p>
-          Domino DaVinci Resolve, Premiere Pro, After Effects e Photoshop.
-          Trabalho com sound design, color grading e direção de curtas-metragens autorais.
-          Fluente em inglês e português.
-        </p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
 <!-- ══ TRABALHOS ══════════════════════════ -->
 <section id="videos">
   <div class="wrap">
@@ -1393,6 +1247,134 @@
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- ══ SERVIÇOS & PREÇOS ══════════════════ -->
+<section id="formats">
+  <div class="wrap">
+    <div class="service-header reveal">
+      <div class="service-header-l">
+        <span class="keyline"></span>
+        <span class="eyebrow">Serviços &amp; Preços</span>
+        <h2 class="format-title">O que eu entrego,<br>e quanto custa.</h2>
+      </div>
+      <div class="service-header-r">
+        <p class="service-intro">
+          Dois formatos, preço transparente. O valor não está só no corte — está em
+          fazer a peça <strong>performar</strong>. Avulso ou pacote mensal recorrente.
+        </p>
+      </div>
+    </div>
+    <div class="service-stage card-surface reveal">
+
+      <div class="service-stage-head">
+        <div class="seg" role="tablist" aria-label="Escolha o formato" data-active="criativos">
+          <span class="seg-thumb" aria-hidden="true"></span>
+          <button class="seg-btn" role="tab" id="tab-criativos" aria-controls="panel-criativos" aria-selected="true">
+            <span class="seg-name">Criativos</span>
+          </button>
+          <button class="seg-btn" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="false" tabindex="-1">
+            <span class="seg-name">Reels</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="service-panels-grid">
+
+        <div class="service-panel" id="panel-criativos" role="tabpanel" aria-labelledby="tab-criativos" aria-hidden="false">
+          <div class="service-body">
+            <p class="service-headline">Criativo fraco queima verba: o CPL dispara antes de a oferta aparecer.</p>
+            <div class="service-chips">
+              <span>Gancho</span><span>Retenção</span><span>Clareza + CTA</span>
+            </div>
+            <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20criativos." target="_blank" rel="noopener">Orçar Criativos</a>
+            <details class="service-details">
+              <summary>Como funciona · o que entra</summary>
+              <div class="service-details-body">
+                <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
+                <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
+              </div>
+            </details>
+          </div>
+          <div class="service-right">
+            <div class="service-price">
+              <div class="price-row">
+                <span class="price-val">R$300</span>
+                <span class="price-unit">/ peça</span>
+              </div>
+              <p class="price-note">1 conceito + <strong>3 variações de gancho</strong> para teste A/B — as variações são o produto.</p>
+              <div class="price-pack">10 peças / mês · <strong>R$3.000</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-panel" id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" aria-hidden="true">
+          <div class="service-body">
+            <p class="service-headline">Reel é identidade em movimento — o que impressiona é o que fica.</p>
+            <div class="service-chips">
+              <span>Ritmo</span><span>Color grading</span><span>Sound design</span>
+            </div>
+            <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20reels." target="_blank" rel="noopener">Orçar Reels</a>
+            <details class="service-details">
+              <summary>Como funciona · o que entra</summary>
+              <div class="service-details-body">
+                <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
+                <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
+              </div>
+            </details>
+          </div>
+          <div class="service-right">
+            <div class="service-price">
+              <div class="price-row">
+                <span class="price-val">R$200</span>
+                <span class="price-unit">/ reel · até 60s</span>
+              </div>
+              <p class="price-note"><strong>Tudo incluído</strong> — da decupagem à capa, sem extra escondido.</p>
+              <div class="price-pack">15 reels / mês · <strong>R$3.000</strong></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOBRE — zona navy, composição assimétrica ══ -->
+<section id="about">
+  <div class="about-split">
+
+    <figure class="about-media reveal">
+      <img src="assets/Background%20Main.jpeg" alt="Maikon Winter na suíte de edição e cor" width="2752" height="1536" loading="lazy" decoding="async"/>
+    </figure>
+
+    <div class="about-body reveal">
+      <div class="about-body-inner">
+        <span class="keyline"></span>
+        <span class="eyebrow">Background</span>
+        <h2 class="about-title">Produção de ponta<br>a ponta.</h2>
+        <p>
+          Passei anos produzindo conteúdo em contextos diferentes: canal autoral, agências,
+          produtoras, e como filmmaker fixo em empresa de audiovisual —
+          onde entregava <strong>criativos, VSLs e reels para múltiplos clientes</strong>
+          com prazos simultâneos. Aprendi a funcionar dentro de um fluxo exigente
+          antes de trabalhar para agências.
+        </p>
+        <p>
+          Atuei com canais do YouTube, agências de marketing, criadores de conteúdo e empresas
+          <strong>no Brasil e no exterior</strong> — com foco em storytelling, ritmo dinâmico,
+          retenção de audiência e identidade visual marcante.
+        </p>
+        <p>
+          Domino DaVinci Resolve, Premiere Pro, After Effects e Photoshop.
+          Trabalho com sound design, color grading e direção de curtas-metragens autorais.
+          Fluente em inglês e português.
+        </p>
+      </div>
+    </div>
+
   </div>
 </section>
 
