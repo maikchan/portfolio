@@ -27,7 +27,9 @@
       --c-brass:      #BDA562;
       --c-brass-light:#d8c084;
       --c-brass-dark: #8a7641;
-      --c-oxblood:    #66140E;
+      --c-oxblood:    #66140E;  /* vermelho estrutural — keylines, espinha */
+      --c-red:        #C0392B;  /* vermelho vivo — acento interativo (switch, contato) */
+      --c-red-dark:   #9e2c20;
     }
 
     /* ── Reset / base ── */
@@ -672,29 +674,21 @@
       border-top: 1px solid rgba(235,235,235,0.05);
       padding: 5rem 0;
     }
-    /* Cabeçalho editorial assimétrico (título nos dois terços · intro no terço) */
+    /* Cabeçalho objetivo, centralizado (estilo assinatura de planos) */
     .service-header {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 3rem; align-items: end;
-      margin-bottom: 3rem;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: 0.75rem; margin-bottom: 2.5rem;
+    }
+    .service-header .eyebrow::before {
+      content: ''; display: block; width: 34px; height: 2px;
+      background: var(--c-oxblood); margin: 0 auto 0.75rem;
     }
     .format-title {
       font-family: 'Oswald', sans-serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-size: clamp(2rem, 4vw, 3.25rem);
       font-weight: 600; text-transform: uppercase;
       color: var(--c-paper); line-height: 1.05;
     }
-    .service-header-r {
-      border-left: 2px solid var(--c-oxblood);  /* espinha — continuidade com hero/sobre */
-      padding-left: 1.5rem; padding-bottom: 0.4rem;
-    }
-    .service-intro {
-      margin: 0;
-      color: var(--c-paper-dim);
-      font-size: 1rem; line-height: 1.7;
-    }
-    .service-intro strong { color: var(--c-brass); font-weight: 600; }
 
     /* ── Toggle segmentado (Criativos / Reels) ── */
     .seg {
@@ -726,36 +720,44 @@
     .plan-format-toggle { display: flex; justify-content: center; margin-bottom: 1.25rem; }
     .plan-format-toggle .seg { margin-bottom: 0; }
 
-    /* ── Toggle de período (Mensal / Trimestral) — discreto, centralizado ── */
-    .plan-billing-toggle { display: flex; justify-content: center; margin-bottom: 2rem; }
-    .bill-seg {
-      position: relative; isolation: isolate;
-      display: inline-flex; padding: 3px;
-      border: 1px solid rgba(235,235,235,0.1); border-radius: 9999px;
-      background: rgba(235,235,235,0.02);
+    /* ── Toggle de período (Mensal / Trimestral) — switch discreto, centralizado ── */
+    .plan-billing-toggle {
+      display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+      margin-bottom: 2rem;
     }
-    .bill-thumb {
-      position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px;
-      width: calc(50% - 3px);
-      background: rgba(235,235,235,0.06);
-      border: 1px solid rgba(189,165,98,0.28); border-radius: 9999px;
-      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-    }
-    .bill-seg[data-active="trimestral"] .bill-thumb { transform: translateX(100%); }
-    .bill-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
-      min-height: 44px; padding: 0.4rem 1rem; background: none; border: none; cursor: pointer;
-      font-family: 'Geist Mono', monospace; font-size: 0.64rem; font-weight: 600;
+    .bill-label {
+      font-family: 'Geist Mono', monospace; font-size: 0.66rem; font-weight: 600;
       letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-paper-dim);
-      white-space: nowrap; transition: color 0.3s ease;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      transition: color 0.3s ease;
     }
-    .bill-btn[aria-pressed="true"] { color: var(--c-brass); }
-    .bill-btn:not([aria-pressed="true"]):hover { color: var(--c-paper); }
+    #formats[data-billing="mensal"] .bill-label[data-side="mensal"],
+    #formats[data-billing="trimestral"] .bill-label[data-side="trimestral"] { color: var(--c-paper); }
     .bill-off {
-      font-size: 0.54rem; padding: 0.12rem 0.4rem; border-radius: 9999px;
-      background: rgba(189,165,98,0.16); color: var(--c-brass);
-      border: 1px solid rgba(189,165,98,0.3); letter-spacing: 0.04em;
+      font-size: 0.56rem; padding: 0.12rem 0.42rem; border-radius: 9999px;
+      color: var(--c-red); border: 1px solid rgba(192,57,43,0.55);
+      background: rgba(192,57,43,0.1); letter-spacing: 0.04em;
     }
+    /* switch: alvo de 44px para toque, trilho visual menor centralizado */
+    .bill-switch {
+      position: relative; width: 54px; height: 44px;
+      display: inline-flex; align-items: center;
+      background: none; border: none; padding: 0; cursor: pointer;
+    }
+    .bill-switch::before {
+      content: ''; width: 54px; height: 26px; border-radius: 9999px;
+      background: rgba(235,235,235,0.14);
+      transition: background 0.3s ease;
+    }
+    .bill-knob {
+      position: absolute; left: 4px; top: 50%; transform: translateY(-50%);
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--c-paper); box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .bill-switch[aria-checked="true"]::before { background: var(--c-red); }
+    .bill-switch[aria-checked="true"] .bill-knob { transform: translate(28px, -50%); }
+    .bill-switch:focus-visible { outline: 2px solid var(--c-brass); outline-offset: 3px; border-radius: 9999px; }
 
     /* ── Grade de planos: 2 painéis empilhados (crossfade) ── */
     .plans-stack { display: grid; }
@@ -770,7 +772,7 @@
     .plans-panel[aria-hidden="false"] { opacity: 1; transform: none; }
     .plans-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem; align-items: start;
+      gap: 1.25rem; align-items: stretch;
     }
 
     /* ── Card de plano ── */
@@ -816,6 +818,18 @@
       margin: 0.5rem 0 1.5rem; min-height: 2.6rem;
     }
     .plan-cta { justify-content: center; width: 100%; margin-bottom: 1.6rem; }
+    .btn-red {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.8rem 1.75rem; border: none; border-radius: 9999px;
+      background-color: var(--c-red); color: var(--c-paper);
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em;
+      cursor: pointer; transition: all 0.18s ease;
+    }
+    .btn-red:hover {
+      background-color: var(--c-red-dark); transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(192,57,43,0.32);
+    }
     .plan-list {
       list-style: none; margin: 0; padding: 1.5rem 0 0;
       border-top: 1px solid rgba(235,235,235,0.07);
@@ -831,12 +845,15 @@
       -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.4 11.6 2.8 8l1.1-1.1 2.5 2.5L12.1 4l1.1 1.1z'/%3E%3C/svg%3E") center/contain no-repeat;
               mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.4 11.6 2.8 8l1.1-1.1 2.5 2.5L12.1 4l1.1 1.1z'/%3E%3C/svg%3E") center/contain no-repeat;
     }
-    .plan-list-hl { color: var(--c-brass); font-weight: 500; }
+    .plan-list-label {
+      font-family: 'Geist Mono', monospace; font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-brass);
+      margin-bottom: 0.9rem;
+    }
 
-    /* ── Estado de billing: mostra/oculta preço e linha extra ── */
+    /* ── Estado de billing: alterna só o preço do pacote ── */
     #formats[data-billing="mensal"] [data-bill-show="trimestral"],
-    #formats[data-billing="trimestral"] [data-bill-show="mensal"],
-    #formats[data-billing="mensal"] [data-bill-only="trimestral"] { display: none; }
+    #formats[data-billing="trimestral"] [data-bill-show="mensal"] { display: none; }
     .service-details-body strong { color: rgba(235,235,235,0.82); font-weight: 600; }
 
     /* ── Focus visible ── */
@@ -909,7 +926,7 @@
     }
 
     /* ── Touch targets 44px — global, não só mobile ── */
-    .btn-primary, .btn-secondary, .wa-btn { min-height: 44px; }
+    .btn-primary, .btn-secondary, .btn-red, .wa-btn { min-height: 44px; }
     /* ── Desabilita hover cards em touch real ── */
     @media (hover: none) and (pointer: coarse) {
       .card-surface.is-interactive:hover {
@@ -926,7 +943,7 @@
       .reveal { transition: none; opacity: 1; transform: none; }
       .beam-v::after { animation: none; }
       .playhead { animation: none; left: 6%; }
-      .seg-thumb, .bill-thumb, .plans-panel { transition: none; }
+      .seg-thumb, .bill-knob, .plans-panel { transition: none; }
     }
 
     /* ── Tablet — ≤900px ── */
@@ -938,8 +955,6 @@
       .plans-grid { gap: 0.85rem; }
       .plan-card { padding: 1.5rem 1.15rem; }
       .plan-badge { right: 1rem; }
-      .service-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
-      .service-header-r { border-left: none; padding-left: 0; border-top: 2px solid var(--c-oxblood); padding-top: 1.25rem; }
       .about-split   { grid-template-columns: 1fr; min-height: 0; }
       .about-media   { aspect-ratio: 16 / 10; border-right: none; border-bottom: 2px solid var(--c-oxblood); }
       .about-media::after { background: linear-gradient(180deg, transparent 70%, rgba(14,22,32,0.9) 100%); }
@@ -1251,17 +1266,8 @@
 <section id="formats" data-billing="mensal">
   <div class="wrap">
     <div class="service-header reveal">
-      <div class="service-header-l">
-        <span class="keyline"></span>
-        <span class="eyebrow">Serviços &amp; Preços</span>
-        <h2 class="format-title">Você viu o trabalho.<br>Aqui está o preço.</h2>
-      </div>
-      <div class="service-header-r">
-        <p class="service-intro">
-          Dois formatos, preço transparente — avulso ou pacote mensal. O valor não está
-          só no corte: está em fazer a peça <strong>performar</strong>.
-        </p>
-      </div>
+      <span class="eyebrow">Serviços &amp; Preços</span>
+      <h2 class="format-title">Escolha seu plano.</h2>
     </div>
     <div class="plan-format-toggle reveal">
       <div class="seg" role="tablist" aria-label="Escolha o formato" data-active="criativos">
@@ -1276,11 +1282,11 @@
     </div>
 
     <div class="plan-billing-toggle reveal">
-      <div class="bill-seg" data-active="mensal" role="group" aria-label="Período de contratação">
-        <span class="bill-thumb" aria-hidden="true"></span>
-        <button class="bill-btn" type="button" data-bill="mensal" aria-pressed="true">Mensal</button>
-        <button class="bill-btn" type="button" data-bill="trimestral" aria-pressed="false">Trimestral <span class="bill-off">−12%</span></button>
-      </div>
+      <span class="bill-label" data-side="mensal">Mensal</span>
+      <button class="bill-switch" type="button" role="switch" aria-checked="false" aria-label="Ativar preço trimestral com desconto">
+        <span class="bill-knob" aria-hidden="true"></span>
+      </button>
+      <span class="bill-label" data-side="trimestral">Trimestral <span class="bill-off">−12%</span></span>
     </div>
 
     <div class="plans-stack reveal">
@@ -1297,10 +1303,11 @@
             <p class="plan-desc">Uma peça avulsa, sem compromisso.</p>
             <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%201%20criativo." target="_blank" rel="noopener">Orçar 1 criativo</a>
             <ul class="plan-list">
-              <li>Criativo completo, tudo incluído</li>
-              <li>3 variações de gancho p/ teste A/B</li>
-              <li>Reframe 9:16 · cor · som dinâmico</li>
-              <li>1 revisão — todos os pontos de uma vez</li>
+              <li>Edição completa — decupagem, cor, som e legenda</li>
+              <li>3 variações de gancho para teste A/B</li>
+              <li>Reframe 9:16 feito à mão, não corte automático</li>
+              <li>1 revisão por texto, todos os pontos de uma vez</li>
+              <li>Arquivos prontos para publicar</li>
             </ul>
           </article>
 
@@ -1314,11 +1321,12 @@
             </div>
             <p class="plan-desc">O melhor custo por peça para quem produz em volume.</p>
             <a class="btn-primary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20o%20pacote%20de%2012%20criativos." target="_blank" rel="noopener">Fechar pacote</a>
+            <p class="plan-list-label">Tudo da unidade, mais:</p>
             <ul class="plan-list">
-              <li>Tudo da unidade, em 12 criativos</li>
               <li>2 criativos grátis — paga 10, leva 12</li>
               <li>Prioridade na fila de entrega</li>
-              <li class="plan-list-hl" data-bill-only="trimestral">Trimestral: −12% no pacote</li>
+              <li>Linguagem consistente entre as peças</li>
+              <li>Escala para testar mais ofertas por mês</li>
             </ul>
           </article>
 
@@ -1328,11 +1336,13 @@
               <span class="plan-num plan-num--sm">Personalizado</span>
             </div>
             <p class="plan-desc">Volume alto, múltiplos canais ou fluxo recorrente.</p>
-            <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20personalizar%20um%20pacote%20de%20criativos." target="_blank" rel="noopener">Quero personalizar</a>
+            <a class="btn-red plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20personalizar%20um%20pacote%20de%20criativos." target="_blank" rel="noopener">Quero personalizar</a>
+            <p class="plan-list-label">Tudo do pacote, mais:</p>
             <ul class="plan-list">
-              <li>Acima de 12 peças por mês</li>
-              <li>Fluxo recorrente dedicado</li>
+              <li>Volume acima de 12 peças por mês</li>
+              <li>Fluxo recorrente dedicado ao seu funil</li>
               <li>Escopo, prazo e preço combinados</li>
+              <li>Um só editor cuidando da sua conta</li>
             </ul>
           </article>
 
@@ -1351,10 +1361,11 @@
             <p class="plan-desc">Um reel avulso, sem compromisso.</p>
             <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%201%20reel." target="_blank" rel="noopener">Orçar 1 reel</a>
             <ul class="plan-list">
-              <li>Reel completo, tudo incluído</li>
-              <li>Reframe 9:16 · cor · som dinâmico</li>
-              <li>Legenda + capa</li>
-              <li>1 revisão — todos os pontos de uma vez</li>
+              <li>Edição completa — decupagem, cor, som e legenda</li>
+              <li>Reframe 9:16 feito à mão, não corte automático</li>
+              <li>Ritmo e sound design que seguram a atenção</li>
+              <li>1 revisão por texto, todos os pontos de uma vez</li>
+              <li>Capa e arquivos prontos para publicar</li>
             </ul>
           </article>
 
@@ -1368,11 +1379,12 @@
             </div>
             <p class="plan-desc">O melhor custo por reel para quem produz em volume.</p>
             <a class="btn-primary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20o%20pacote%20de%2012%20reels." target="_blank" rel="noopener">Fechar pacote</a>
+            <p class="plan-list-label">Tudo da unidade, mais:</p>
             <ul class="plan-list">
-              <li>Tudo da unidade, em 12 reels</li>
               <li>2 reels grátis — paga 10, leva 12</li>
               <li>Prioridade na fila de entrega</li>
-              <li class="plan-list-hl" data-bill-only="trimestral">Trimestral: −12% no pacote</li>
+              <li>Identidade consistente entre os reels</li>
+              <li>Presença constante no feed, sem sumir</li>
             </ul>
           </article>
 
@@ -1382,11 +1394,13 @@
               <span class="plan-num plan-num--sm">Personalizado</span>
             </div>
             <p class="plan-desc">Volume alto, múltiplos canais ou fluxo recorrente.</p>
-            <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20personalizar%20um%20pacote%20de%20reels." target="_blank" rel="noopener">Quero personalizar</a>
+            <a class="btn-red plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20personalizar%20um%20pacote%20de%20reels." target="_blank" rel="noopener">Quero personalizar</a>
+            <p class="plan-list-label">Tudo do pacote, mais:</p>
             <ul class="plan-list">
-              <li>Acima de 12 reels por mês</li>
-              <li>Fluxo recorrente dedicado</li>
+              <li>Volume acima de 12 reels por mês</li>
+              <li>Fluxo recorrente dedicado ao seu canal</li>
               <li>Escopo, prazo e preço combinados</li>
+              <li>Um só editor cuidando da sua conta</li>
             </ul>
           </article>
 
@@ -1552,20 +1566,24 @@
     });
   }());
 
-  // ── Serviços: toggle Avulso / Trimestral (-20% no pacote) ──
+  // ── Serviços: switch Mensal / Trimestral (-12% no pacote) ──
   (function () {
-    const seg     = document.querySelector('.bill-seg');
+    const sw      = document.querySelector('.bill-switch');
     const section = document.getElementById('formats');
-    if (!seg || !section) return;
-    const btns = [...seg.querySelectorAll('.bill-btn')];
+    if (!sw || !section) return;
+    const labels = [...document.querySelectorAll('.bill-label')];
 
     function setBilling(mode) {
       section.dataset.billing = mode;
-      seg.dataset.active = mode;
-      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.bill === mode)));
+      sw.setAttribute('aria-checked', String(mode === 'trimestral'));
     }
 
-    btns.forEach((btn) => btn.addEventListener('click', () => setBilling(btn.dataset.bill)));
+    sw.addEventListener('click', () =>
+      setBilling(section.dataset.billing === 'trimestral' ? 'mensal' : 'trimestral')
+    );
+    labels.forEach((l) =>
+      l.addEventListener('click', () => setBilling(l.dataset.side))
+    );
   }());
 
   // ── Hamburger / nav drawer ────────────────────────────────
