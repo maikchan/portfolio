@@ -722,130 +722,120 @@
     .seg-btn[aria-selected="true"] { color: var(--c-navy); }
     .seg-btn:not([aria-selected="true"]):hover { color: var(--c-paper); }
 
-    /* ── Palco: flex column — toggle no topo, painéis no meio (grid-area), detalhes no rodapé ── */
-    .service-stage { display: flex; flex-direction: column; overflow: hidden; }
-    .service-stage-head { padding: 1rem 2.5rem 0.5rem; }
-    .service-panels-grid { display: grid; }
-    .service-right {
-      display: flex; flex-direction: column; justify-content: center;
-      padding-left: 2.5rem; border-left: 1px solid rgba(189,165,98,0.16);
+    /* ── Controles: toggle de formato + toggle de período ── */
+    .plan-controls {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem;
+      margin-bottom: 2.5rem;
     }
-    .service-panel {
+    .plan-controls .seg { margin-bottom: 0; }
+    .bill-seg {
+      position: relative; isolation: isolate;
+      display: inline-flex; padding: 4px;
+      border: 1px solid rgba(189,165,98,0.28); border-radius: 9999px;
+      background: rgba(235,235,235,0.03);
+    }
+    .bill-thumb {
+      position: absolute; z-index: -1; top: 4px; bottom: 4px; left: 4px;
+      width: calc(50% - 4px);
+      background: rgba(189,165,98,0.14);
+      border: 1px solid rgba(189,165,98,0.4); border-radius: 9999px;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .bill-seg[data-active="trimestral"] .bill-thumb { transform: translateX(100%); }
+    .bill-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+      min-height: 44px; padding: 0.6rem 1.15rem; background: none; border: none; cursor: pointer;
+      font-family: 'Geist Mono', monospace; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-paper-dim);
+      white-space: nowrap; transition: color 0.3s ease;
+    }
+    .bill-btn[aria-pressed="true"] { color: var(--c-brass); }
+    .bill-btn:not([aria-pressed="true"]):hover { color: var(--c-paper); }
+    .bill-off {
+      font-size: 0.58rem; padding: 0.15rem 0.45rem; border-radius: 9999px;
+      background: var(--c-oxblood); color: var(--c-paper); letter-spacing: 0.05em;
+    }
+
+    /* ── Grade de planos: 2 painéis empilhados (crossfade) ── */
+    .plans-stack { display: grid; }
+    .plans-panel {
       grid-area: 1 / 1;
-      display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
-      justify-content: space-between; align-items: stretch;
-      gap: 3rem; padding: 1.25rem 2.5rem 2rem;
       transition: opacity 0.42s ease, transform 0.42s ease;
     }
-    .service-panel[aria-hidden="true"] {
+    .plans-panel[aria-hidden="true"] {
       opacity: 0; transform: translateY(12px);
       pointer-events: none; visibility: hidden;
     }
-    .service-panel[aria-hidden="false"] { opacity: 1; transform: none; }
+    .plans-panel[aria-hidden="false"] { opacity: 1; transform: none; }
+    .plans-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem; align-items: start;
+    }
 
-    /* box de play estilizado 9:16 — facade (carrega o Vimeo só no clique) */
-    .service-facade {
-      position: relative; width: 100%; aspect-ratio: 9 / 16;
-      overflow: hidden; border-radius: 0.9rem;
-      border: 1px solid rgba(189,165,98,0.22);
+    /* ── Card de plano ── */
+    .plan-card {
+      position: relative; display: flex; flex-direction: column;
+      padding: 1.9rem 1.6rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(235,235,235,0.08); border-radius: 1rem;
+    }
+    .plan-card--featured {
       background:
-        radial-gradient(130% 110% at 50% 12%, rgba(27,44,59,0.5), transparent 62%),
-        #0a0e14;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 1rem;
+        linear-gradient(180deg, rgba(189,165,98,0.08), rgba(189,165,98,0) 42%),
+        rgba(255,255,255,0.02);
+      border-color: rgba(189,165,98,0.55);
+      box-shadow: 0 0 0 1px rgba(189,165,98,0.15), 0 24px 55px -28px rgba(0,0,0,0.7);
     }
-    .service-facade .play-ring {
-      width: 72px; height: 72px; border-radius: 50%;
-      border: 1.5px solid rgba(189,165,98,0.4);
-      display: grid; place-items: center;
-      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    .plan-badge {
+      position: absolute; top: -0.7rem; right: 1.4rem;
+      padding: 0.32rem 0.75rem; border-radius: 9999px;
+      background: var(--c-brass); color: var(--c-navy);
+      font-family: 'Geist Mono', monospace; font-size: 0.58rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
     }
-    .service-facade .play-ring svg { fill: var(--c-brass); margin-left: 4px; }
-    .service-facade .play-label {
-      font-family: 'Geist Mono', monospace; font-size: 0.64rem;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(235,235,235,0.55); transition: color 0.2s;
+    .plan-name {
+      font-family: 'Oswald', sans-serif; font-weight: 500;
+      font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--c-paper); margin: 0 0 1rem;
     }
-    .service-facade:hover .play-ring {
-      border-color: rgba(189,165,98,0.75);
-      background: rgba(189,165,98,0.08); transform: scale(1.05);
-    }
-    .service-facade:hover .play-label { color: var(--c-brass); }
-    .service-facade .facade-tag {
-      position: absolute; left: 0.9rem; bottom: 0.85rem;
-      font-family: 'Geist Mono', monospace; font-size: 0.56rem;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-paper-dim);
-    }
-    .service-facade .video-facade { z-index: 2; } /* overlay clicável transparente */
-    .service-facade iframe {
-      position: absolute; inset: 0; z-index: 3;
-      width: 100%; height: 100%; border: none;
-    }
-
-    .service-body { display: flex; flex-direction: column; justify-content: center; max-width: 560px; }
-    .service-headline {
-      font-size: 1.05rem; line-height: 1.5; color: var(--c-paper);
-      font-weight: 500; margin: 0 0 1.25rem;
-    }
-    .service-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .service-chips span {
-      font-family: 'Geist Mono', monospace; font-size: 0.64rem;
-      letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-paper);
-      padding: 0.42rem 0.8rem;
-      border: 1px solid rgba(189,165,98,0.3); border-radius: 9999px;
-    }
-    .service-price { }
-    .price-row { display: flex; flex-direction: column; align-items: flex-start; gap: 0.1rem; }
-    .price-val {
+    .plan-price { display: flex; flex-direction: column; gap: 0.2rem; min-height: 4.5rem; }
+    .plan-num {
       font-family: 'Oswald', sans-serif;
-      font-size: clamp(2.75rem, 6vw, 3.75rem);
+      font-size: clamp(2.5rem, 4.5vw, 3.25rem);
       font-weight: 300; line-height: 0.95; letter-spacing: -0.01em;
       color: var(--c-paper);
     }
-    .price-unit {
-      font-family: 'Geist Mono', monospace;
-      font-size: 0.78rem; color: var(--c-paper-dim);
+    .plan-num--sm { font-size: 1.75rem; font-weight: 400; color: var(--c-brass); }
+    .plan-unit {
+      font-family: 'Geist Mono', monospace; font-size: 0.72rem; color: var(--c-paper-dim);
     }
-    .price-note {
-      font-size: 0.85rem; line-height: 1.55;
-      color: rgba(235,235,235,0.6); margin: 0.7rem 0 0;
+    .plan-unit strong { color: var(--c-brass); font-weight: 600; }
+    .plan-desc {
+      font-size: 0.85rem; line-height: 1.55; color: rgba(235,235,235,0.6);
+      margin: 0.5rem 0 1.5rem; min-height: 2.6rem;
     }
-    .price-note strong { color: var(--c-brass); font-weight: 600; }
-    .price-pack {
-      font-family: 'Geist Mono', monospace;
-      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--c-paper-dim); margin-top: 0.85rem;
+    .plan-cta { justify-content: center; width: 100%; margin-bottom: 1.6rem; }
+    .plan-list {
+      list-style: none; margin: 0; padding: 1.5rem 0 0;
+      border-top: 1px solid rgba(235,235,235,0.07);
+      display: flex; flex-direction: column; gap: 0.7rem;
     }
-    .price-pack strong { color: var(--c-paper); }
-    .service-cta { margin-top: 1.5rem; align-self: flex-start; }
+    .plan-list li {
+      position: relative; padding-left: 1.7rem;
+      font-size: 0.83rem; line-height: 1.45; color: var(--c-paper);
+    }
+    .plan-list li::before {
+      content: ''; position: absolute; left: 0; top: 0.15em;
+      width: 15px; height: 15px; background: var(--c-brass);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.4 11.6 2.8 8l1.1-1.1 2.5 2.5L12.1 4l1.1 1.1z'/%3E%3C/svg%3E") center/contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.4 11.6 2.8 8l1.1-1.1 2.5 2.5L12.1 4l1.1 1.1z'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+    .plan-list-hl { color: var(--c-brass); font-weight: 500; }
 
-    /* detalhes expandível — pílula clicável óbvia */
-    .service-details { max-width: none; margin-top: 1.5rem; }
-    .service-details summary {
-      cursor: pointer; list-style: none; width: fit-content;
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      padding: 0.65rem 1.15rem; border-radius: 9999px;
-      border: 1px solid rgba(189,165,98,0.4);
-      background: rgba(189,165,98,0.05);
-      font-family: 'Geist Mono', monospace; font-size: 0.7rem;
-      letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-brass);
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .service-details summary:hover {
-      background: rgba(189,165,98,0.12); border-color: var(--c-brass);
-    }
-    .service-details summary::-webkit-details-marker { display: none; }
-    .service-details summary::after {
-      content: '+'; font-size: 1rem; line-height: 1; color: var(--c-brass);
-      transition: transform 0.25s ease;
-    }
-    .service-details[open] summary::after { transform: rotate(45deg); }
-    .service-details-body { margin-top: 1.1rem; }
-    .service-details-body p {
-      font-size: 0.82rem; line-height: 1.7; color: var(--c-paper-dim);
-      margin: 0 0 0.75rem;
-    }
-    .service-details-body p:last-child { margin-bottom: 0; }
+    /* ── Estado de billing: mostra/oculta preço e linha extra ── */
+    #formats[data-billing="avulso"] [data-bill-show="trimestral"],
+    #formats[data-billing="trimestral"] [data-bill-show="avulso"],
+    #formats[data-billing="avulso"] [data-bill-only="trimestral"] { display: none; }
     .service-details-body strong { color: rgba(235,235,235,0.82); font-weight: 600; }
 
     /* ── Focus visible ── */
@@ -935,7 +925,7 @@
       .reveal { transition: none; opacity: 1; transform: none; }
       .beam-v::after { animation: none; }
       .playhead { animation: none; left: 6%; }
-      .seg-thumb, .service-panel { transition: none; }
+      .seg-thumb, .bill-thumb, .plans-panel { transition: none; }
     }
 
     /* ── Tablet — ≤900px ── */
@@ -944,9 +934,9 @@
       .reel-grid     { grid-template-columns: 1fr; gap: 2.5rem; }
       .reel-lead     { max-width: 56ch; }
       .timeline-track { gap: 1rem; }
-      .service-stage-head { padding: 1rem 2rem 0.5rem; }
-      .service-panel { grid-template-columns: minmax(0, 1fr) 260px; gap: 2rem; padding: 2rem; }
-      .service-right { padding-left: 2rem; }
+      .plans-grid { gap: 0.85rem; }
+      .plan-card { padding: 1.5rem 1.15rem; }
+      .plan-badge { right: 1rem; }
       .service-header { grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
       .service-header-r { border-left: none; padding-left: 0; border-top: 2px solid var(--c-oxblood); padding-top: 1.25rem; }
       .about-split   { grid-template-columns: 1fr; min-height: 0; }
@@ -1033,12 +1023,11 @@
       .wrap { padding: 0 1.25rem; }
       .hero-h1 { font-size: clamp(2rem, 10vw, 3rem); }
       .photo-grid { grid-template-columns: 1fr; }
-      .service-stage-head { padding: 1rem 1.25rem 0.5rem; }
-      .service-panel { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 1.25rem; }
-      .service-right {
-        padding-left: 0; padding-top: 1.5rem;
-        border-left: none; border-top: 1px solid rgba(189,165,98,0.16);
-      }
+      .plan-controls { flex-direction: column; align-items: flex-start; gap: 0.85rem; }
+      .plans-grid { grid-template-columns: 1fr; gap: 1.5rem; max-width: 420px; }
+      .plan-card { padding: 1.75rem 1.4rem; }
+      .plan-card--featured { order: -1; }
+      .plan-desc { min-height: 0; }
       .reel-title, .process-title, .format-title,
       .about-title, .videos-title {
         font-size: clamp(1.75rem, 8vw, 2.5rem);
@@ -1258,7 +1247,7 @@
 </section>
 
 <!-- ══ SERVIÇOS & PREÇOS ══════════════════ -->
-<section id="formats">
+<section id="formats" data-billing="avulso">
   <div class="wrap">
     <div class="service-header reveal">
       <div class="service-header-l">
@@ -1273,76 +1262,131 @@
         </p>
       </div>
     </div>
-    <div class="service-stage card-surface reveal">
+    <div class="plan-controls reveal">
+      <div class="seg" role="tablist" aria-label="Escolha o formato" data-active="criativos">
+        <span class="seg-thumb" aria-hidden="true"></span>
+        <button class="seg-btn" role="tab" id="tab-criativos" aria-controls="panel-criativos" aria-selected="true">
+          <span class="seg-name">Criativos</span>
+        </button>
+        <button class="seg-btn" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="false" tabindex="-1">
+          <span class="seg-name">Reels</span>
+        </button>
+      </div>
+      <div class="bill-seg" data-active="avulso" role="group" aria-label="Período de contratação">
+        <span class="bill-thumb" aria-hidden="true"></span>
+        <button class="bill-btn" type="button" data-bill="avulso" aria-pressed="true">Avulso</button>
+        <button class="bill-btn" type="button" data-bill="trimestral" aria-pressed="false">Trimestral <span class="bill-off">−20%</span></button>
+      </div>
+    </div>
 
-      <div class="service-stage-head">
-        <div class="seg" role="tablist" aria-label="Escolha o formato" data-active="criativos">
-          <span class="seg-thumb" aria-hidden="true"></span>
-          <button class="seg-btn" role="tab" id="tab-criativos" aria-controls="panel-criativos" aria-selected="true">
-            <span class="seg-name">Criativos</span>
-          </button>
-          <button class="seg-btn" role="tab" id="tab-reels" aria-controls="panel-reels" aria-selected="false" tabindex="-1">
-            <span class="seg-name">Reels</span>
-          </button>
+    <div class="plans-stack reveal">
+
+      <div class="plans-panel" id="panel-criativos" role="tabpanel" aria-labelledby="tab-criativos" aria-hidden="false">
+        <div class="plans-grid">
+
+          <article class="plan-card">
+            <h3 class="plan-name">Unidade</h3>
+            <div class="plan-price">
+              <span class="plan-num">297</span>
+              <span class="plan-unit">por criativo</span>
+            </div>
+            <p class="plan-desc">Uma peça avulsa, sem compromisso.</p>
+            <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%201%20criativo." target="_blank" rel="noopener">Orçar 1 criativo</a>
+            <ul class="plan-list">
+              <li>Criativo completo, tudo incluído</li>
+              <li>3 variações de gancho p/ teste A/B</li>
+              <li>Reframe 9:16 · cor · som dinâmico</li>
+              <li>1 revisão — todos os pontos de uma vez</li>
+            </ul>
+          </article>
+
+          <article class="plan-card plan-card--featured">
+            <span class="plan-badge">Melhor custo</span>
+            <h3 class="plan-name">Pacote 12</h3>
+            <div class="plan-price">
+              <span class="plan-num" data-bill-show="avulso">2.997</span>
+              <span class="plan-num" data-bill-show="trimestral">2.398</span>
+              <span class="plan-unit">por 12 criativos · <strong>2 grátis</strong></span>
+            </div>
+            <p class="plan-desc">O melhor custo por peça para quem produz em volume.</p>
+            <a class="btn-primary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20o%20pacote%20de%2012%20criativos." target="_blank" rel="noopener">Fechar pacote</a>
+            <ul class="plan-list">
+              <li>Tudo do avulso, em 12 criativos</li>
+              <li>2 criativos grátis — paga 10, leva 12</li>
+              <li>Prioridade na fila de entrega</li>
+              <li class="plan-list-hl" data-bill-only="trimestral">Trimestral: −20% no pacote</li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3 class="plan-name">Sob medida</h3>
+            <div class="plan-price">
+              <span class="plan-num plan-num--sm">Personalizado</span>
+            </div>
+            <p class="plan-desc">Volume alto, múltiplos canais ou fluxo recorrente.</p>
+            <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20personalizar%20um%20pacote%20de%20criativos." target="_blank" rel="noopener">Quero personalizar</a>
+            <ul class="plan-list">
+              <li>Acima de 12 peças por mês</li>
+              <li>Fluxo recorrente dedicado</li>
+              <li>Escopo, prazo e preço combinados</li>
+            </ul>
+          </article>
+
         </div>
       </div>
 
-      <div class="service-panels-grid">
+      <div class="plans-panel" id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" aria-hidden="true">
+        <div class="plans-grid">
 
-        <div class="service-panel" id="panel-criativos" role="tabpanel" aria-labelledby="tab-criativos" aria-hidden="false">
-          <div class="service-body">
-            <p class="service-headline">Criativo fraco queima verba: o CPL dispara antes de a oferta aparecer.</p>
-            <div class="service-chips">
-              <span>Gancho</span><span>Retenção</span><span>Clareza + CTA</span>
+          <article class="plan-card">
+            <h3 class="plan-name">Unidade</h3>
+            <div class="plan-price">
+              <span class="plan-num">197</span>
+              <span class="plan-unit">por reel · até 60s</span>
             </div>
-            <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20criativos." target="_blank" rel="noopener">Orçar Criativos</a>
-            <details class="service-details">
-              <summary>Como funciona · o que entra</summary>
-              <div class="service-details-body">
-                <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
-                <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
-              </div>
-            </details>
-          </div>
-          <div class="service-right">
-            <div class="service-price">
-              <div class="price-row">
-                <span class="price-val">297</span>
-                <span class="price-unit">/ peça</span>
-              </div>
-              <p class="price-note">1 conceito + <strong>3 variações de gancho</strong> para teste A/B — as variações são o produto.</p>
-              <div class="price-pack">10 peças / mês · <strong>3.000</strong></div>
+            <p class="plan-desc">Um reel avulso, sem compromisso.</p>
+            <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%201%20reel." target="_blank" rel="noopener">Orçar 1 reel</a>
+            <ul class="plan-list">
+              <li>Reel completo, tudo incluído</li>
+              <li>Reframe 9:16 · cor · som dinâmico</li>
+              <li>Legenda + capa</li>
+              <li>1 revisão — todos os pontos de uma vez</li>
+            </ul>
+          </article>
+
+          <article class="plan-card plan-card--featured">
+            <span class="plan-badge">Melhor custo</span>
+            <h3 class="plan-name">Pacote 12</h3>
+            <div class="plan-price">
+              <span class="plan-num" data-bill-show="avulso">1.997</span>
+              <span class="plan-num" data-bill-show="trimestral">1.598</span>
+              <span class="plan-unit">por 12 reels · <strong>2 grátis</strong></span>
             </div>
-          </div>
+            <p class="plan-desc">O melhor custo por reel para quem produz em volume.</p>
+            <a class="btn-primary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20o%20pacote%20de%2012%20reels." target="_blank" rel="noopener">Fechar pacote</a>
+            <ul class="plan-list">
+              <li>Tudo do avulso, em 12 reels</li>
+              <li>2 reels grátis — paga 10, leva 12</li>
+              <li>Prioridade na fila de entrega</li>
+              <li class="plan-list-hl" data-bill-only="trimestral">Trimestral: −20% no pacote</li>
+            </ul>
+          </article>
+
+          <article class="plan-card">
+            <h3 class="plan-name">Sob medida</h3>
+            <div class="plan-price">
+              <span class="plan-num plan-num--sm">Personalizado</span>
+            </div>
+            <p class="plan-desc">Volume alto, múltiplos canais ou fluxo recorrente.</p>
+            <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20personalizar%20um%20pacote%20de%20reels." target="_blank" rel="noopener">Quero personalizar</a>
+            <ul class="plan-list">
+              <li>Acima de 12 reels por mês</li>
+              <li>Fluxo recorrente dedicado</li>
+              <li>Escopo, prazo e preço combinados</li>
+            </ul>
+          </article>
+
         </div>
-
-        <div class="service-panel" id="panel-reels" role="tabpanel" aria-labelledby="tab-reels" aria-hidden="true">
-          <div class="service-body">
-            <p class="service-headline">Reel é identidade em movimento — o que impressiona é o que fica.</p>
-            <div class="service-chips">
-              <span>Ritmo</span><span>Color grading</span><span>Sound design</span>
-            </div>
-            <a class="btn-primary service-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%20reels." target="_blank" rel="noopener">Orçar Reels</a>
-            <details class="service-details">
-              <summary>Como funciona · o que entra</summary>
-              <div class="service-details-body">
-                <p>Pacotes fixos, uma revisão por peça (todos os pontos de uma vez). Material bruto até 10&nbsp;min por reel de 60s; motion pesado (logo animado, infográfico) é orçado à parte. O <strong>pacote mensal</strong> é o que fecha melhor pra agência — previsível dos dois lados.</p>
-                <p><strong>Reels — tudo incluído:</strong> decupagem · montagem · reframe 9:16 · cor · áudio (EQ, denoise) · som dinâmico · legenda · capa.</p>
-              </div>
-            </details>
-          </div>
-          <div class="service-right">
-            <div class="service-price">
-              <div class="price-row">
-                <span class="price-val">197</span>
-                <span class="price-unit">/ reel · até 60s</span>
-              </div>
-              <p class="price-note"><strong>Tudo incluído</strong> — da decupagem à capa, sem extra escondido.</p>
-              <div class="price-pack">15 reels / mês · <strong>3.000</strong></div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
     </div>
@@ -1502,6 +1546,22 @@
         select(next); next.focus();
       });
     });
+  }());
+
+  // ── Serviços: toggle Avulso / Trimestral (-20% no pacote) ──
+  (function () {
+    const seg     = document.querySelector('.bill-seg');
+    const section = document.getElementById('formats');
+    if (!seg || !section) return;
+    const btns = [...seg.querySelectorAll('.bill-btn')];
+
+    function setBilling(mode) {
+      section.dataset.billing = mode;
+      seg.dataset.active = mode;
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.bill === mode)));
+    }
+
+    btns.forEach((btn) => btn.addEventListener('click', () => setBilling(btn.dataset.bill)));
   }());
 
   // ── Hamburger / nav drawer ────────────────────────────────
