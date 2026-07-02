@@ -5,16 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Maikon Winter — Editor e Colorista</title>
   <meta name="description" content="Editor e colorista com background completo em produção audiovisual. Criativos, VSLs, Reels e YouTube — Brasil e exterior."/>
+  <!-- ── Open Graph / preview ao compartilhar o link (WhatsApp, Instagram, anúncios) ── -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Maikon Winter"/>
+  <meta property="og:title" content="Maikon Winter — Editor e Colorista"/>
+  <meta property="og:description" content="Editor e colorista com background completo em produção audiovisual. Criativos, VSLs, Reels e YouTube — Brasil e exterior."/>
+  <meta property="og:url" content="https://www.maikchan.com/"/>
+  <meta property="og:image" content="https://www.maikchan.com/assets/hero.jpg"/>
+  <meta property="og:image:width" content="1080"/>
+  <meta property="og:image:height" content="1080"/>
+  <meta property="og:locale" content="pt_BR"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Maikon Winter — Editor e Colorista"/>
+  <meta name="twitter:description" content="Editor e colorista — Criativos, VSLs, Reels e YouTube. Brasil e exterior."/>
+  <meta name="twitter:image" content="https://www.maikchan.com/assets/hero.jpg"/>
   <link rel="icon" href="favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
   <link rel="apple-touch-icon" sizes="192x192" href="assets/favicon-192.png"/>
   <link rel="manifest" href="site.webmanifest"/>
-  <meta name="theme-color" content="#0a0b0d"/>
+  <meta name="theme-color" content="#050505"/>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Space+Grotesk:wght@400;600&family=Geist+Mono:wght@600&display=swap"/>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Geist+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <!-- Fontes: só os pesos realmente usados. Preload + stylesheet na mesma URL (fetch único, prioridade alta). -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;600;700&family=Space+Grotesk:wght@400;600;700&family=Geist+Mono:wght@600&display=swap"/>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;600;700&family=Space+Grotesk:wght@400;600;700&family=Geist+Mono:wght@600&display=swap" rel="stylesheet"/>
+
+  <!-- ══ Meta Pixel ══════════════════════════════════════════════════
+       Pixel ID: 1069857728941860.
+       O evento de Lead no clique do WhatsApp está no script no fim da página. -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1069857728941860');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1069857728941860&ev=PageView&noscript=1"/></noscript>
+  <!-- ══ Fim Meta Pixel ══════════════════════════════════════════════ -->
   <style>
     /* ── Brand tokens ── */
     :root {
@@ -34,7 +68,7 @@
 
     /* ── Reset / base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
     body {
       background-color: var(--c-bg);
       color: var(--c-paper);
@@ -125,12 +159,6 @@
       from { opacity: 0; transform: translateY(28px); filter: blur(6px); }
       to   { opacity: 1; transform: translateY(0);    filter: blur(0);   }
     }
-    @keyframes beam-drop {
-      0%   { transform: translateY(-100%); opacity: 0; }
-      10%  { opacity: 0.7; }
-      90%  { opacity: 0.7; }
-      100% { transform: translateY(100%);  opacity: 0; }
-    }
     .hero-animate { animation: fadeSlideIn 0.85s ease both; }
     .delay-1 { animation-delay: 0.12s; }
     .delay-2 { animation-delay: 0.26s; }
@@ -143,18 +171,6 @@
       transition: opacity 0.65s ease, transform 0.65s ease;
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── Beam border (vertical) ── */
-    .beam-v {
-      position: absolute; top: 0; bottom: 0; left: 0; width: 1px;
-      background: rgba(235,235,235,0.04); overflow: hidden;
-    }
-    .beam-v::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent, var(--c-brass), transparent);
-      transform: translateY(-100%);
-      animation: beam-drop 6s cubic-bezier(0.4,0,0.2,1) infinite;
-    }
 
     /* ── Layout helpers ── */
     .wrap {
@@ -173,6 +189,7 @@
       overflow: hidden;
       pointer-events: none;
     }
+    .hero-photo picture { display: block; width: 100%; height: 100%; }
     .hero-photo img {
       width: 100%; height: 100%;
       object-fit: cover;
@@ -477,6 +494,7 @@
       margin: 0; overflow: hidden;
       height: clamp(190px, 20vw, 290px);
     }
+    .about-photo picture { display: block; width: 100%; height: 100%; }
     .about-photo img {
       width: 100%; height: 100%;
       object-fit: cover; object-position: center;
@@ -605,20 +623,6 @@
       border-top: 1px solid rgba(235,235,235,0.06);
       padding: 5rem max(2.5rem, 5vw) 5rem;
     }
-    .contact-manifesto {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.5rem, 2.8vw, 2.5rem);
-      font-weight: 400; line-height: 1.4;
-      color: rgba(235,235,235,0.55);
-      max-width: 960px; margin: 0 0 0.9em;
-    }
-    .contact-punch {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.5rem, 2.8vw, 2.5rem);
-      font-weight: 400; line-height: 1.4;
-      color: var(--c-paper);
-      max-width: 960px; margin: 0 0 4rem;
-    }
     .contact-cta { text-align: center; }
     .wa-btn {
       display: inline-flex; align-items: center; gap: 0.75rem;
@@ -659,6 +663,7 @@
     .footer-col a {
       color: rgba(235,235,235,0.55);
       font-size: 0.92rem; transition: color 0.16s ease;
+      padding: 5px 0; /* área de toque maior no mobile */
     }
     .footer-col a:hover { color: var(--c-brass); }
     .footer-static { color: rgba(235,235,235,0.35); font-size: 0.92rem; }
@@ -669,7 +674,7 @@
       display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
       font-family: 'Geist Mono', monospace;
       font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(235,235,235,0.28);
+      color: rgba(235,235,235,0.45);
     }
 
     /* ── Redes sociais ── */
@@ -978,7 +983,6 @@
     @media (prefers-reduced-motion: reduce) {
       .hero-animate { animation: none; opacity: 1; transform: none; }
       .reveal { transition: none; opacity: 1; transform: none; }
-      .beam-v::after { animation: none; }
       .playhead { animation: none; left: 6%; }
       .seg-thumb, .bill-knob, .plans-panel { transition: none; }
     }
@@ -1074,7 +1078,6 @@
     @media (max-width: 640px) {
       .wrap { padding: 0 1.25rem; }
       .hero-h1 { font-size: clamp(2rem, 10vw, 3rem); }
-      .photo-grid { grid-template-columns: 1fr; }
       .plan-billing-toggle { margin-bottom: 1.5rem; }
       .plans-grid { grid-template-columns: 1fr; gap: 1.5rem; max-width: 420px; }
       .plan-card { padding: 1.75rem 1.4rem; }
@@ -1091,8 +1094,20 @@
       nav { padding: 0.875rem 1.25rem; }
       .hero-h1 { font-size: clamp(2.25rem, 14vw, 3.5rem); }
       .btn-primary, .btn-secondary { font-size: 0.7rem; padding: 0.75rem 1.25rem; }
+      /* telas estreitas (≤~340px): tag e botões quebram em vez de cortar na borda */
+      .hero-tag { white-space: normal; }
+      .hero-actions { flex-wrap: wrap; }
+    }
+
+    /* ── Celular deitado (landscape baixo): hero não pode cortar os botões ── */
+    @media (max-width: 768px) and (max-height: 500px) {
+      #hero { justify-content: center; padding: 5rem 1.5rem 2rem; }
+      .hero-h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+      .hero-actions { margin-top: 0.5rem; }
     }
   </style>
+  <!-- Sem JavaScript: garante que todo o conteúdo apareça (o reveal-on-scroll começa invisível) -->
+  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body>
 
@@ -1130,7 +1145,10 @@
 <section>
   <div id="hero">
     <div class="hero-photo">
-      <img src="assets/hero.jpg" alt="Maikon Winter — Editor e Colorista" width="1080" height="1080" fetchpriority="high" decoding="async"/>
+      <picture>
+        <source srcset="assets/hero.webp" type="image/webp"/>
+        <img src="assets/hero.jpg" alt="Maikon Winter — Editor e Colorista" width="1080" height="1080" fetchpriority="high" decoding="async"/>
+      </picture>
     </div>
     <div class="hero-inner">
       <div class="hero-content">
@@ -1460,13 +1478,22 @@
 
     <div class="about-photos">
       <figure class="about-photo reveal">
-        <img src="assets/Background%20Main.jpeg" alt="Maikon Winter na suíte de edição e cor" width="2752" height="1536" loading="lazy" decoding="async"/>
+        <picture>
+          <source srcset="assets/bg-main.webp" type="image/webp"/>
+          <img src="assets/bg-main.jpg" alt="Maikon Winter na suíte de edição e cor" width="1200" height="670" loading="lazy" decoding="async"/>
+        </picture>
       </figure>
       <figure class="about-photo reveal">
-        <img src="assets/Background%202.jpg" alt="Setup de edição" width="1920" height="1080" loading="lazy" decoding="async"/>
+        <picture>
+          <source srcset="assets/bg-2.webp" type="image/webp"/>
+          <img src="assets/Background%202.jpg" alt="Setup de edição" width="1080" height="720" loading="lazy" decoding="async"/>
+        </picture>
       </figure>
       <figure class="about-photo reveal">
-        <img src="assets/Background%203.jpg" alt="Ambiente de trabalho" width="1920" height="1080" loading="lazy" decoding="async"/>
+        <picture>
+          <source srcset="assets/bg-3.webp" type="image/webp"/>
+          <img src="assets/Background%203.jpg" alt="Ambiente de trabalho" width="1080" height="720" loading="lazy" decoding="async"/>
+        </picture>
       </figure>
     </div>
 
@@ -1569,15 +1596,20 @@
 <script>
   // ── Reveal on scroll ─────────────────────────────────────
   const revealEls = document.querySelectorAll('.reveal');
-  const revealObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        revealObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => revealObs.observe(el));
+  if (!('IntersectionObserver' in window)) {
+    // failsafe: navegador sem suporte → mostra tudo (não deixa a página em branco)
+    revealEls.forEach(el => el.classList.add('visible'));
+  } else {
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObs.observe(el));
+  }
 
   // ── Showreel facade — carrega o iframe do Vimeo só no clique ──
   (function () {
@@ -1788,6 +1820,16 @@
     });
 
     onScrollFrame();
+  }());
+
+  // ── Rastreamento de conversão: clique em qualquer link do WhatsApp = Lead ──
+  // Só dispara se o Pixel estiver ativo (ID preenchido). Não quebra nada se estiver inativo.
+  (function () {
+    document.querySelectorAll('a[href*="wa.me"]').forEach((a) => {
+      a.addEventListener('click', () => {
+        if (typeof fbq === 'function') fbq('track', 'Lead');
+      });
+    });
   }());
 </script>
 
