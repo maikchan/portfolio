@@ -255,23 +255,6 @@
     }
     .nav-links a:hover { color: var(--c-brass); }
     .nav-cta { display: flex; align-items: center; }
-    .nav-right { display: flex; align-items: center; gap: 1.4rem; }
-
-    /* ── Toggle de idioma PT/EN ── */
-    .lang-toggle {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      font-family: 'Geist Mono', monospace;
-      font-size: 0.66rem; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase;
-    }
-    .lang-toggle a {
-      color: rgba(235,235,235,0.45);
-      padding: 12px 3px; /* alvo de toque confortável na vertical */
-      transition: color 0.15s;
-    }
-    .lang-toggle a:hover { color: var(--c-paper); }
-    .lang-toggle a.is-active { color: var(--c-brass); pointer-events: none; }
-    .lang-sep { width: 1px; height: 11px; background: rgba(235,235,235,0.22); }
 
     /* ══════════════════════════════════════
        HERO
@@ -1026,7 +1009,6 @@
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
       .nav-hamburger { display: flex; }
-      .nav-right { gap: 0.35rem; } /* toggle de idioma colado no hambúrguer */
 
       /* pôster mobile: foto full-bleed, rosto visível em cima, texto ancorado embaixo */
       #hero {
@@ -1144,19 +1126,12 @@
     <li><a href="#about">Sobre</a></li>
     <li><a href="#videos">Trabalhos</a></li>
   </ul>
-  <div class="nav-right">
-    <div class="lang-toggle" role="group" aria-label="Idioma">
-      <a class="is-active" href="/" aria-current="page" hreflang="pt-BR" lang="pt-BR">PT</a>
-      <span class="lang-sep" aria-hidden="true"></span>
-      <a href="/en/" hreflang="en" lang="en">EN</a>
-    </div>
-    <div class="nav-cta">
-      <a class="btn-primary" href="https://wa.me/5547996553649" target="_blank" rel="noopener">Falar no WhatsApp</a>
-    </div>
-    <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-drawer">
-      <span></span><span></span><span></span>
-    </button>
+  <div class="nav-cta">
+    <a class="btn-primary" href="https://wa.me/5547996553649" target="_blank" rel="noopener">Falar no WhatsApp</a>
   </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-drawer">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação">
