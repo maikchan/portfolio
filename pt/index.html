@@ -31,6 +31,7 @@
   <link rel="apple-touch-icon" sizes="192x192" href="/assets/favicon-192.png"/>
   <link rel="manifest" href="/site.webmanifest"/>
   <meta name="theme-color" content="#050505"/>
+  <script>try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light')}catch(e){}</script>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <!-- Fontes: só os pesos realmente usados. Preload + stylesheet na mesma URL (fetch único, prioridade alta). -->
@@ -1109,6 +1110,188 @@
       .hero-h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
       .hero-actions { margin-top: 0.5rem; }
     }
+
+    /* ══════════════════════════════════════
+       BOTÃO DE TEMA (sol/lua)
+    ══════════════════════════════════════ */
+    .theme-toggle {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: none; cursor: pointer; padding: 0;
+      border: 1px solid rgba(235,235,235,0.18);
+      color: var(--c-paper-dim);
+      margin-right: 1rem;
+      transition: color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .theme-toggle:hover { color: var(--c-brass); border-color: rgba(189,165,98,0.55); transform: translateY(-1px); }
+    .theme-toggle svg { width: 17px; height: 17px; fill: currentColor; pointer-events: none; }
+    .theme-toggle .tt-moon { display: none; }
+    html.light .theme-toggle .tt-sun { display: none; }
+    html.light .theme-toggle .tt-moon { display: block; }
+    /* variante do drawer: pill com rótulo */
+    .theme-toggle--drawer {
+      width: auto; margin-right: 0; padding: 0 1.4rem; gap: 0.6rem;
+      border-radius: 9999px;
+      font-family: 'Geist Mono', monospace; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-paper-dim);
+    }
+    .theme-toggle--drawer .tt-label--dark { display: none; }
+    html.light .theme-toggle--drawer .tt-label--light { display: none; }
+    html.light .theme-toggle--drawer .tt-label--dark { display: inline; }
+
+    /* ══════════════════════════════════════
+       TEMA CLARO — opcional (botão); padrão segue escuro.
+       Esquema do currículo branco: papel #FDFDFC, tinta #131313,
+       assinatura oxblood fosco no lugar do brass.
+       Regra: telas continuam escuras — hero, caixa do showreel e
+       embeds de vídeo não mudam (monitores numa sala clara).
+    ══════════════════════════════════════ */
+    html.light body { background-color: #FDFDFC; color: #131313; }
+    html.light body::after { opacity: 0.035; } /* grão vira textura de papel */
+    html.light ::selection { background: var(--c-oxblood); color: #FDFDFC; }
+    html.light :focus-visible { outline-color: var(--c-oxblood); }
+
+    /* nav: transparente sobre a hero (escura); ganha fundo ao passar dela */
+    html.light nav.is-past-hero {
+      background: rgba(253,253,252,0.92);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(19,19,19,0.07);
+    }
+    html.light nav.is-past-hero .nav-logo { color: #131313; }
+    html.light nav.is-past-hero .nav-links a { color: rgba(19,19,19,0.6); }
+    html.light nav.is-past-hero .nav-links a:hover { color: var(--c-oxblood); }
+    html.light nav.is-past-hero .btn-primary { background-color: var(--c-oxblood); color: #FDFDFC; }
+    html.light nav.is-past-hero .btn-primary:hover { background-color: #7d1c13; box-shadow: 0 6px 20px rgba(102,20,14,0.3); }
+    html.light nav.is-past-hero .nav-hamburger span { background: #131313; }
+    html.light nav.is-past-hero .theme-toggle { border-color: rgba(19,19,19,0.2); color: #545d66; }
+    html.light nav.is-past-hero .theme-toggle:hover { color: var(--c-oxblood); border-color: rgba(102,20,14,0.55); }
+    /* sobre a hero (escura) a nav mantém o visual original — oxblood só depois dela */
+    html.light nav:not(.is-past-hero) .btn-primary { background-color: var(--c-brass); color: var(--c-navy); }
+    html.light nav:not(.is-past-hero) .btn-primary:hover { background-color: var(--c-brass-light); box-shadow: 0 6px 20px rgba(189,165,98,0.35); }
+
+    /* drawer claro */
+    html.light .nav-drawer { background: rgba(253,253,252,0.97); }
+    html.light .drawer-link { color: #131313; }
+    html.light .drawer-link:hover, html.light .drawer-link:active { color: var(--c-oxblood); }
+    html.light .theme-toggle--drawer { border-color: rgba(19,19,19,0.2); color: #545d66; }
+    html.light .theme-toggle--drawer:hover { color: var(--c-oxblood); border-color: rgba(102,20,14,0.55); }
+    /* drawer aberto no claro: logo e X da nav precisam virar tinta escura */
+    html.light .nav-hamburger.is-open span { background: #131313; }
+    html.light:has(.nav-drawer.is-open) .nav-logo { color: #131313; }
+
+    /* componentes globais (fora da hero) */
+    html.light .eyebrow { color: var(--c-oxblood); }
+    html.light .btn-primary { background-color: var(--c-oxblood); color: #FDFDFC; }
+    html.light .btn-primary:hover { background-color: #7d1c13; box-shadow: 0 6px 20px rgba(102,20,14,0.3); }
+    html.light .btn-secondary { color: #131313; border-color: rgba(102,20,14,0.45); }
+    html.light .btn-secondary:hover { background-color: rgba(102,20,14,0.07); border-color: var(--c-oxblood); }
+    html.light .card-surface {
+      background-color: #FFFFFF;
+      border-color: rgba(19,19,19,0.09);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+    html.light .card-surface.is-interactive:hover {
+      box-shadow: 0 14px 40px rgba(0,0,0,0.14);
+      border-color: rgba(102,20,14,0.4);
+    }
+
+    /* hero intocada — reafirma o visual escuro original dos botões */
+    html.light #hero .btn-primary { background-color: var(--c-brass); color: var(--c-navy); }
+    html.light #hero .btn-primary:hover { background-color: var(--c-brass-light); box-shadow: 0 6px 20px rgba(189,165,98,0.35); }
+    html.light #hero .btn-secondary { color: var(--c-paper); border-color: rgba(189,165,98,0.45); }
+    html.light #hero .btn-secondary:hover { background-color: rgba(189,165,98,0.1); border-color: var(--c-brass); }
+
+    /* showreel */
+    html.light #reel { background-color: #F4F3F0; border-top-color: rgba(19,19,19,0.08); border-bottom-color: rgba(19,19,19,0.08); }
+    html.light .reel-title { color: #131313; }
+    html.light .reel-lead { color: #3f4750; }
+    html.light .reel-tags { color: var(--c-oxblood); }
+    html.light .reel-box { border-color: rgba(19,19,19,0.14); box-shadow: 0 24px 64px rgba(0,0,0,0.2); }
+
+    /* processo */
+    html.light .process-title { color: #131313; }
+    html.light .timeline-ruler { border-bottom-color: rgba(19,19,19,0.25); }
+    html.light .timeline-ruler::before {
+      background-image: repeating-linear-gradient(to right,
+        rgba(19,19,19,0.3) 0, rgba(19,19,19,0.3) 1px,
+        transparent 1px, transparent 38px);
+    }
+    html.light .playhead {
+      background: linear-gradient(to bottom,
+        var(--c-oxblood) 0%, rgba(102,20,14,0.18) 72%, transparent 100%);
+      box-shadow: 0 0 16px rgba(102,20,14,0.3);
+    }
+    html.light .playhead::before { border-top-color: var(--c-oxblood); }
+    html.light .clip { border-left-color: rgba(102,20,14,0.4); }
+    html.light .clip-name { color: #131313; }
+    html.light .clip-desc { color: rgba(19,19,19,0.72); }
+
+    /* sobre */
+    html.light #about { background: linear-gradient(155deg, #F1EFEA 0%, #FAF9F7 72%); border-top-color: rgba(19,19,19,0.07); }
+    html.light .about-title { color: #131313; }
+    html.light .about-body-text { color: rgba(19,19,19,0.8); }
+    html.light .about-body-text strong { color: #131313; }
+    html.light .about-manifesto { color: rgba(19,19,19,0.66); }
+    html.light .about-punch { color: #131313; }
+
+    /* trabalhos */
+    html.light .videos-title { color: #131313; }
+    html.light .video-name { color: #131313; }
+    html.light .video-meta { color: #545d66; }
+
+    /* serviços & preços */
+    html.light #formats { background: linear-gradient(180deg, #F4F3F0 0%, #ECEAE5 100%); border-top-color: rgba(19,19,19,0.07); }
+    html.light .format-title { color: #131313; }
+    html.light .seg { border-color: rgba(102,20,14,0.35); background: rgba(19,19,19,0.03); }
+    html.light .seg-thumb { background: var(--c-oxblood); }
+    html.light .seg-btn { color: #545d66; }
+    html.light .seg-btn[aria-selected="true"] { color: #FDFDFC; }
+    html.light .seg-btn:not([aria-selected="true"]):hover { color: #131313; }
+    html.light .bill-label { color: #545d66; }
+    html.light #formats[data-billing="mensal"] .bill-label[data-side="mensal"],
+    html.light #formats[data-billing="trimestral"] .bill-label[data-side="trimestral"] { color: #131313; }
+    html.light .bill-switch::before { background: rgba(19,19,19,0.18); }
+    html.light .plan-card { background: #FFFFFF; border-color: rgba(19,19,19,0.1); }
+    html.light .plan-card--featured {
+      background:
+        linear-gradient(180deg, rgba(102,20,14,0.06), rgba(102,20,14,0) 42%),
+        #FFFFFF;
+      border-color: rgba(102,20,14,0.55);
+      box-shadow: 0 0 0 1px rgba(102,20,14,0.12), 0 24px 55px -28px rgba(0,0,0,0.25);
+    }
+    html.light .plan-badge { background: var(--c-oxblood); color: #FDFDFC; }
+    html.light .plan-name { color: #131313; }
+    html.light .plan-num { color: #131313; }
+    html.light .plan-num--sm { color: var(--c-oxblood); }
+    html.light .plan-unit { color: #545d66; }
+    html.light .plan-unit strong { color: var(--c-oxblood); }
+    html.light .plan-desc { color: rgba(19,19,19,0.72); }
+    html.light .plan-list { border-top-color: rgba(19,19,19,0.12); }
+    html.light .plan-list li { color: #131313; }
+    html.light .plan-list li::before { background: var(--c-oxblood); }
+    html.light .plan-list-label { color: var(--c-oxblood); }
+    html.light .service-details-body strong { color: rgba(19,19,19,0.85); }
+
+    /* contato + footer */
+    html.light #contact { background: #FDFDFC; border-top-color: rgba(19,19,19,0.08); }
+    html.light .wa-btn { background-color: var(--c-oxblood); color: #FDFDFC; }
+    html.light .wa-btn:hover { background-color: #7d1c13; box-shadow: 0 8px 24px rgba(102,20,14,0.3); }
+    html.light .social-label { color: #545d66; }
+    html.light .social-link { border-color: rgba(19,19,19,0.16); color: #545d66; }
+    html.light .social-link:hover { color: var(--c-oxblood); border-color: rgba(102,20,14,0.55); }
+    html.light footer { background: #FDFDFC; border-top-color: rgba(19,19,19,0.08); }
+    html.light .footer-h { color: var(--c-oxblood); }
+    html.light .footer-col a { color: rgba(19,19,19,0.66); }
+    html.light .footer-col a:hover { color: var(--c-oxblood); }
+    html.light .footer-static { color: rgba(19,19,19,0.45); }
+    html.light .footer-base { border-top-color: rgba(19,19,19,0.1); color: rgba(19,19,19,0.55); }
+
+    /* mobile: espinha vertical do processo */
+    @media (max-width: 768px) {
+      html.light .timeline-track { border-left-color: rgba(102,20,14,0.4); }
+      html.light .clip::before { background: #FDFDFC; border-color: var(--c-oxblood); }
+    }
   </style>
   <!-- Sem JavaScript: garante que todo o conteúdo apareça (o reveal-on-scroll começa invisível) -->
   <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
@@ -1127,6 +1310,7 @@
     <li><a href="#videos">Trabalhos</a></li>
   </ul>
   <div class="nav-cta">
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Mudar para tema claro"><svg class="tt-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0-2a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM11 1h2v3.2h-2V1zm0 18.8h2V23h-2v-3.2zM1 11h3.2v2H1v-2zm18.8 0H23v2h-3.2v-2zM3.5 5 5 3.5l2.3 2.3-1.5 1.4L3.5 5zm13.3 13.2 1.4-1.4 2.3 2.2-1.4 1.5-2.3-2.3zM18.7 3.5 20.1 5l-2.3 2.3-1.4-1.5 2.3-2.3zM5.8 16.8l1.4 1.4L5 20.5l-1.5-1.4 2.3-2.3z"/></svg><svg class="tt-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 13.2a1 1 0 0 0-1-.2 7.9 7.9 0 0 1-2.6.4A8.1 8.1 0 0 1 9.9 5.3c0-.7.1-1.4.3-2.1a1 1 0 0 0-1.3-1.2 10.1 10.1 0 1 0 13 13 1 1 0 0 0-.3-1.8z"/></svg></button>
     <a class="btn-primary" href="https://wa.me/5547996553649" target="_blank" rel="noopener">Falar no WhatsApp</a>
   </div>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-drawer">
@@ -1140,6 +1324,7 @@
   <a class="drawer-link" href="#formats">Serviços</a>
   <a class="drawer-link" href="#about">Sobre</a>
   <a class="drawer-link" href="#videos">Trabalhos</a>
+  <button class="theme-toggle theme-toggle--drawer" type="button" aria-pressed="false" aria-label="Mudar para tema claro"><svg class="tt-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0-2a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM11 1h2v3.2h-2V1zm0 18.8h2V23h-2v-3.2zM1 11h3.2v2H1v-2zm18.8 0H23v2h-3.2v-2zM3.5 5 5 3.5l2.3 2.3-1.5 1.4L3.5 5zm13.3 13.2 1.4-1.4 2.3 2.2-1.4 1.5-2.3-2.3zM18.7 3.5 20.1 5l-2.3 2.3-1.4-1.5 2.3-2.3zM5.8 16.8l1.4 1.4L5 20.5l-1.5-1.4 2.3-2.3z"/></svg><svg class="tt-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 13.2a1 1 0 0 0-1-.2 7.9 7.9 0 0 1-2.6.4A8.1 8.1 0 0 1 9.9 5.3c0-.7.1-1.4.3-2.1a1 1 0 0 0-1.3-1.2 10.1 10.1 0 1 0 13 13 1 1 0 0 0-.3-1.8z"/></svg><span class="tt-label tt-label--light">Tema claro</span><span class="tt-label tt-label--dark">Tema escuro</span></button>
   <a class="btn-primary drawer-cta" href="https://wa.me/5547996553649" target="_blank" rel="noopener">Falar no WhatsApp</a>
 </div>
 </header>
@@ -1812,6 +1997,40 @@
     });
 
     onScrollFrame();
+  }());
+
+  // ── Tema claro/escuro — padrão escuro; escolha salva em localStorage ──
+  (function () {
+    const root = document.documentElement;
+    const buttons = document.querySelectorAll('.theme-toggle');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    function sync() {
+      const light = root.classList.contains('light');
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(light)));
+      if (meta) meta.setAttribute('content', light ? '#FDFDFC' : '#050505');
+    }
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      root.classList.toggle('light');
+      try { localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark'); } catch (e) {}
+      sync();
+    }));
+    sync();
+  }());
+
+  // ── Nav ganha fundo depois da hero (necessário no tema claro) ──
+  (function () {
+    const nav = document.querySelector('nav');
+    const hero = document.getElementById('hero');
+    if (!nav || !hero) return;
+    let raf = null;
+    function update() {
+      raf = null;
+      nav.classList.toggle('is-past-hero', window.scrollY > hero.offsetHeight - 96);
+    }
+    window.addEventListener('scroll', () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    }, { passive: true });
+    update();
   }());
 
   // ── Rastreamento de conversão: clique em qualquer link do WhatsApp = Lead ──
