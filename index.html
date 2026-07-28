@@ -238,6 +238,15 @@
       padding: 1.25rem 2rem 1.25rem max(2.5rem, 5vw);
       display: flex; justify-content: space-between; align-items: center;
       background: transparent;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    /* Sem isso, o nav fica transparente a rolagem inteira e o conteúdo
+       de baixo (qualquer seção) vaza através do texto dos links. */
+    nav.is-past-hero {
+      background: rgba(5,5,5,0.88);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(235,235,235,0.06);
     }
     .nav-logo {
       font-family: 'Oswald', sans-serif;
@@ -1684,14 +1693,15 @@
               </div>
               <span class="plan-unit">per ad creative · USD</span>
             </div>
-            <p class="plan-desc">A single piece, zero commitment.</p>
+            <p class="plan-desc">Start with one piece before committing to volume.</p>
             <a class="btn-secondary plan-cta" href="mailto:maik@maikchanstudio.com?subject=Quote%20for%201%20ad%20creative">Get a quote</a>
             <ul class="plan-list">
-              <li>Full edit: selects, color, sound and captions</li>
               <li>3 hook variations for A/B testing</li>
               <li>9:16 reframed by hand, never auto-cropped</li>
               <li>1 written revision round, all notes in one pass</li>
+              <li>Full edit: selects, color, sound and captions</li>
               <li>Files ready to publish</li>
+              <li>First cut in 3 business days</li>
             </ul>
           </article>
 
@@ -1707,16 +1717,16 @@
                 <span class="plan-was">$2,999</span>
                 <span class="plan-num">$1,619</span>
               </div>
-              <span class="plan-unit">12 ad creatives · <strong>2 free</strong> · USD</span>
+              <span class="plan-unit">12 ad creatives · <strong>$150 each</strong> · USD</span>
             </div>
             <p class="plan-desc">The lowest cost per piece when you produce at volume.</p>
             <a class="btn-primary plan-cta" href="mailto:maik@maikchanstudio.com?subject=Get%20the%2012-creative%20pack">Get the pack</a>
             <p class="plan-list-label">Everything in Single, plus:</p>
             <ul class="plan-list">
-              <li>2 free creatives: pay for 10, get 12</li>
               <li>Priority in the delivery queue</li>
               <li>Consistent visual language across every piece</li>
               <li>Room to test more offers every month</li>
+              <li>First cut in 3 business days</li>
             </ul>
           </article>
 
@@ -1725,11 +1735,10 @@
             <div class="plan-price">
               <span class="plan-num plan-num--sm">Let’s talk</span>
             </div>
-            <p class="plan-desc">High volume, multiple channels, or an ongoing pipeline.</p>
+            <p class="plan-desc">More than 12 pieces a month, multiple channels, or an ongoing pipeline.</p>
             <a class="btn-red plan-cta" href="mailto:maik@maikchanstudio.com?subject=Custom%20ad%20creative%20package">Build my plan</a>
             <p class="plan-list-label">Everything in the 12-Pack, plus:</p>
             <ul class="plan-list">
-              <li>More than 12 pieces a month</li>
               <li>A dedicated recurring pipeline for your funnel</li>
               <li>Scope, timeline and price agreed up front</li>
               <li>One editor owning your account</li>
@@ -1751,14 +1760,15 @@
               </div>
               <span class="plan-unit">per reel · up to 60s · USD</span>
             </div>
-            <p class="plan-desc">A single reel, zero commitment.</p>
+            <p class="plan-desc">Start with one reel before committing to volume.</p>
             <a class="btn-secondary plan-cta" href="mailto:maik@maikchanstudio.com?subject=Quote%20for%201%20reel">Get a quote</a>
             <ul class="plan-list">
-              <li>Full edit: selects, color, sound and captions</li>
               <li>9:16 reframed by hand, never auto-cropped</li>
               <li>Pacing and sound design that hold attention</li>
               <li>1 written revision round, all notes in one pass</li>
+              <li>Full edit: selects, color, sound and captions</li>
               <li>Cover image and files ready to publish</li>
+              <li>First cut in 3 business days</li>
             </ul>
           </article>
 
@@ -1774,16 +1784,16 @@
                 <span class="plan-was">$1,199</span>
                 <span class="plan-num">$629</span>
               </div>
-              <span class="plan-unit">12 reels · <strong>2 free</strong> · USD</span>
+              <span class="plan-unit">12 reels · <strong>$58 each</strong> · USD</span>
             </div>
             <p class="plan-desc">The lowest cost per reel when you produce at volume.</p>
             <a class="btn-primary plan-cta" href="mailto:maik@maikchanstudio.com?subject=Get%20the%2012-reel%20pack">Get the pack</a>
             <p class="plan-list-label">Everything in Single, plus:</p>
             <ul class="plan-list">
-              <li>2 free reels: pay for 10, get 12</li>
               <li>Priority in the delivery queue</li>
               <li>A consistent identity across your reels</li>
               <li>A constant presence in the feed, never going dark</li>
+              <li>First cut in 3 business days</li>
             </ul>
           </article>
 
@@ -1792,11 +1802,10 @@
             <div class="plan-price">
               <span class="plan-num plan-num--sm">Let’s talk</span>
             </div>
-            <p class="plan-desc">High volume, multiple channels, or an ongoing pipeline.</p>
+            <p class="plan-desc">More than 12 reels a month, multiple channels, or an ongoing pipeline.</p>
             <a class="btn-red plan-cta" href="mailto:maik@maikchanstudio.com?subject=Custom%20reels%20package">Build my plan</a>
             <p class="plan-list-label">Everything in the 12-Pack, plus:</p>
             <ul class="plan-list">
-              <li>More than 12 reels a month</li>
               <li>A dedicated recurring pipeline for your channel</li>
               <li>Scope, timeline and price agreed up front</li>
               <li>One editor owning your account</li>

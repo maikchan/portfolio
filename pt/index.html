@@ -238,6 +238,15 @@
       padding: 1.25rem 2rem 1.25rem max(2.5rem, 5vw);
       display: flex; justify-content: space-between; align-items: center;
       background: transparent;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    /* Sem isso, o nav fica transparente a rolagem inteira e o conteúdo
+       de baixo (qualquer seção) vaza através do texto dos links. */
+    nav.is-past-hero {
+      background: rgba(5,5,5,0.88);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(235,235,235,0.06);
     }
     .nav-logo {
       font-family: 'Oswald', sans-serif;
@@ -1684,14 +1693,15 @@
               </div>
               <span class="plan-unit">por criativo</span>
             </div>
-            <p class="plan-desc">Uma peça avulsa, sem compromisso.</p>
+            <p class="plan-desc">Comece com uma peça antes de partir para o volume.</p>
             <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%201%20criativo." target="_blank" rel="noopener">Orçar 1 criativo</a>
             <ul class="plan-list">
-              <li>Edição completa: decupagem, cor, som e legenda</li>
               <li>3 variações de gancho para teste A/B</li>
               <li>Reframe 9:16 feito à mão, não corte automático</li>
               <li>1 revisão por texto, todos os pontos de uma vez</li>
+              <li>Edição completa: decupagem, cor, som e legenda</li>
               <li>Arquivos prontos para publicar</li>
+              <li>Primeiro corte em 3 dias úteis</li>
             </ul>
           </article>
 
@@ -1717,6 +1727,7 @@
               <li>Prioridade na fila de entrega</li>
               <li>Linguagem consistente entre as peças</li>
               <li>Escala para testar mais ofertas por mês</li>
+              <li>Primeiro corte em 3 dias úteis</li>
             </ul>
           </article>
 
@@ -1725,11 +1736,10 @@
             <div class="plan-price">
               <span class="plan-num plan-num--sm">Personalizado</span>
             </div>
-            <p class="plan-desc">Volume alto, múltiplos canais ou fluxo recorrente.</p>
+            <p class="plan-desc">Volume acima de 12 peças por mês, múltiplos canais ou fluxo recorrente.</p>
             <a class="btn-red plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20personalizar%20um%20pacote%20de%20criativos." target="_blank" rel="noopener">Quero personalizar</a>
             <p class="plan-list-label">Tudo do pacote, mais:</p>
             <ul class="plan-list">
-              <li>Volume acima de 12 peças por mês</li>
               <li>Fluxo recorrente dedicado ao seu funil</li>
               <li>Escopo, prazo e preço combinados</li>
               <li>Um só editor cuidando da sua conta</li>
@@ -1751,14 +1761,15 @@
               </div>
               <span class="plan-unit">por reel · até 60s</span>
             </div>
-            <p class="plan-desc">Um reel avulso, sem compromisso.</p>
+            <p class="plan-desc">Comece com um reel antes de partir para o volume.</p>
             <a class="btn-secondary plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20or%C3%A7ar%201%20reel." target="_blank" rel="noopener">Orçar 1 reel</a>
             <ul class="plan-list">
-              <li>Edição completa: decupagem, cor, som e legenda</li>
               <li>Reframe 9:16 feito à mão, não corte automático</li>
               <li>Ritmo e sound design que seguram a atenção</li>
               <li>1 revisão por texto, todos os pontos de uma vez</li>
+              <li>Edição completa: decupagem, cor, som e legenda</li>
               <li>Capa e arquivos prontos para publicar</li>
+              <li>Primeiro corte em 3 dias úteis</li>
             </ul>
           </article>
 
@@ -1784,6 +1795,7 @@
               <li>Prioridade na fila de entrega</li>
               <li>Identidade consistente entre os reels</li>
               <li>Presença constante no feed, sem sumir</li>
+              <li>Primeiro corte em 3 dias úteis</li>
             </ul>
           </article>
 
@@ -1792,11 +1804,10 @@
             <div class="plan-price">
               <span class="plan-num plan-num--sm">Personalizado</span>
             </div>
-            <p class="plan-desc">Volume alto, múltiplos canais ou fluxo recorrente.</p>
+            <p class="plan-desc">Volume acima de 12 reels por mês, múltiplos canais ou fluxo recorrente.</p>
             <a class="btn-red plan-cta" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20personalizar%20um%20pacote%20de%20reels." target="_blank" rel="noopener">Quero personalizar</a>
             <p class="plan-list-label">Tudo do pacote, mais:</p>
             <ul class="plan-list">
-              <li>Volume acima de 12 reels por mês</li>
               <li>Fluxo recorrente dedicado ao seu canal</li>
               <li>Escopo, prazo e preço combinados</li>
               <li>Um só editor cuidando da sua conta</li>
