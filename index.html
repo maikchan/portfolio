@@ -849,11 +849,19 @@
       color: var(--c-paper); margin: 0 0 1rem;
     }
     .plan-price { display: flex; flex-direction: column; gap: 0.2rem; min-height: 4.5rem; }
+    .plan-price-row { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
+    .plan-was {
+      font-family: 'Oswald', sans-serif; font-weight: 300;
+      font-size: clamp(1.05rem, 1.8vw, 1.35rem); line-height: 0.95;
+      color: rgba(235,235,235,0.32);
+      text-decoration: line-through; text-decoration-color: rgba(192,57,43,0.65);
+      text-decoration-thickness: 1.5px;
+    }
     .plan-num {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(2.5rem, 4.5vw, 3.25rem);
       font-weight: 300; line-height: 0.95; letter-spacing: -0.01em;
-      color: var(--c-paper);
+      color: var(--c-brass);
     }
     .plan-num--sm { font-size: 1.75rem; font-weight: 400; color: var(--c-brass); }
     .plan-unit {
@@ -1262,7 +1270,8 @@
     }
     html.light .plan-badge { background: var(--c-oxblood); color: #FDFDFC; }
     html.light .plan-name { color: #131313; }
-    html.light .plan-num { color: #131313; }
+    html.light .plan-num { color: var(--c-oxblood); }
+    html.light .plan-was { color: rgba(19,19,19,0.35); text-decoration-color: rgba(192,57,43,0.55); }
     html.light .plan-num--sm { color: var(--c-oxblood); }
     html.light .plan-unit { color: #545d66; }
     html.light .plan-unit strong { color: var(--c-oxblood); }
@@ -1596,10 +1605,10 @@
       <span class="eyebrow">Services &amp; Pricing</span>
       <h2 class="format-title">Pick your plan.</h2>
     </div>
-    <div class="promo-strip reveal" id="promo-strip" data-deadline="2026-08-31T23:59:59-03:00" data-slots-total="4" data-slots-filled="0" data-state="counting">
+    <div class="promo-strip reveal" id="promo-strip" data-deadline="2026-07-31T23:59:59-03:00" data-slots-total="4" data-slots-filled="0" data-state="counting">
       <div class="promo-info">
-        <span class="promo-eyebrow">August offer</span>
-        <p class="promo-text">Current pricing is a limited-time rate for the first 4 new clients this month, locked in before it goes up in September.</p>
+        <span class="promo-eyebrow">July offer</span>
+        <p class="promo-text">Current pricing is a limited-time rate for the first 4 new clients this month, locked in before it goes up in August.</p>
       </div>
       <div class="promo-panel promo-active">
         <div class="promo-timer-col">
@@ -1620,8 +1629,8 @@
       </div>
       <div class="promo-soldout">
         <div class="promo-soldout-inner">
-          <p class="promo-soldout-text">All 4 August spots are taken. I’ll open a September waitlist soon, message me to get on it.</p>
-          <a class="btn-secondary" href="https://wa.me/5547996553649?text=Hi%20Maik%2C%20I%E2%80%99d%20like%20to%20join%20the%20September%20waitlist." target="_blank" rel="noopener">Join the waitlist</a>
+          <p class="promo-soldout-text">All 4 July spots are taken. I’ll open an August waitlist soon, message me to get on it.</p>
+          <a class="btn-secondary" href="https://wa.me/5547996553649?text=Hi%20Maik%2C%20I%E2%80%99d%20like%20to%20join%20the%20August%20waitlist." target="_blank" rel="noopener">Join the waitlist</a>
         </div>
       </div>
     </div>
@@ -1654,7 +1663,10 @@
           <article class="plan-card">
             <h3 class="plan-name">Single</h3>
             <div class="plan-price">
-              <span class="plan-num">$180</span>
+              <div class="plan-price-row">
+                <span class="plan-was">$180</span>
+                <span class="plan-num">$177</span>
+              </div>
               <span class="plan-unit">per ad creative · USD</span>
             </div>
             <p class="plan-desc">A single piece, zero commitment.</p>
@@ -1672,8 +1684,14 @@
             <span class="plan-badge">Best value</span>
             <h3 class="plan-name">12-Pack</h3>
             <div class="plan-price">
-              <span class="plan-num" data-bill-show="mensal">$1,800</span>
-              <span class="plan-num" data-bill-show="trimestral">$1,584</span>
+              <div class="plan-price-row" data-bill-show="mensal">
+                <span class="plan-was">$1,800</span>
+                <span class="plan-num">$1,797</span>
+              </div>
+              <div class="plan-price-row" data-bill-show="trimestral">
+                <span class="plan-was">$1,584</span>
+                <span class="plan-num">$1,577</span>
+              </div>
               <span class="plan-unit">12 ad creatives · <strong>2 free</strong> · USD</span>
             </div>
             <p class="plan-desc">The lowest cost per piece when you produce at volume.</p>
@@ -1712,7 +1730,10 @@
           <article class="plan-card">
             <h3 class="plan-name">Single</h3>
             <div class="plan-price">
-              <span class="plan-num">$70</span>
+              <div class="plan-price-row">
+                <span class="plan-was">$70</span>
+                <span class="plan-num">$67</span>
+              </div>
               <span class="plan-unit">per reel · up to 60s · USD</span>
             </div>
             <p class="plan-desc">A single reel, zero commitment.</p>
@@ -1730,8 +1751,14 @@
             <span class="plan-badge">Best value</span>
             <h3 class="plan-name">12-Pack</h3>
             <div class="plan-price">
-              <span class="plan-num" data-bill-show="mensal">$700</span>
-              <span class="plan-num" data-bill-show="trimestral">$616</span>
+              <div class="plan-price-row" data-bill-show="mensal">
+                <span class="plan-was">$700</span>
+                <span class="plan-num">$697</span>
+              </div>
+              <div class="plan-price-row" data-bill-show="trimestral">
+                <span class="plan-was">$616</span>
+                <span class="plan-num">$607</span>
+              </div>
               <span class="plan-unit">12 reels · <strong>2 free</strong> · USD</span>
             </div>
             <p class="plan-desc">The lowest cost per reel when you produce at volume.</p>

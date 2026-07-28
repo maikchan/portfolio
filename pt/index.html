@@ -849,11 +849,19 @@
       color: var(--c-paper); margin: 0 0 1rem;
     }
     .plan-price { display: flex; flex-direction: column; gap: 0.2rem; min-height: 4.5rem; }
+    .plan-price-row { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
+    .plan-was {
+      font-family: 'Oswald', sans-serif; font-weight: 300;
+      font-size: clamp(1.05rem, 1.8vw, 1.35rem); line-height: 0.95;
+      color: rgba(235,235,235,0.32);
+      text-decoration: line-through; text-decoration-color: rgba(192,57,43,0.65);
+      text-decoration-thickness: 1.5px;
+    }
     .plan-num {
       font-family: 'Oswald', sans-serif;
       font-size: clamp(2.5rem, 4.5vw, 3.25rem);
       font-weight: 300; line-height: 0.95; letter-spacing: -0.01em;
-      color: var(--c-paper);
+      color: var(--c-brass);
     }
     .plan-num--sm { font-size: 1.75rem; font-weight: 400; color: var(--c-brass); }
     .plan-unit {
@@ -1262,7 +1270,8 @@
     }
     html.light .plan-badge { background: var(--c-oxblood); color: #FDFDFC; }
     html.light .plan-name { color: #131313; }
-    html.light .plan-num { color: #131313; }
+    html.light .plan-num { color: var(--c-oxblood); }
+    html.light .plan-was { color: rgba(19,19,19,0.35); text-decoration-color: rgba(192,57,43,0.55); }
     html.light .plan-num--sm { color: var(--c-oxblood); }
     html.light .plan-unit { color: #545d66; }
     html.light .plan-unit strong { color: var(--c-oxblood); }
@@ -1596,10 +1605,10 @@
       <span class="eyebrow">Serviços &amp; Preços</span>
       <h2 class="format-title">Escolha seu plano.</h2>
     </div>
-    <div class="promo-strip reveal" id="promo-strip" data-deadline="2026-08-31T23:59:59-03:00" data-slots-total="4" data-slots-filled="0" data-state="counting">
+    <div class="promo-strip reveal" id="promo-strip" data-deadline="2026-07-31T23:59:59-03:00" data-slots-total="4" data-slots-filled="0" data-state="counting">
       <div class="promo-info">
-        <span class="promo-eyebrow">Oferta de agosto</span>
-        <p class="promo-text">Os valores atuais são uma condição por tempo limitado para os 4 primeiros clientes novos do mês, garantida antes de subir em setembro.</p>
+        <span class="promo-eyebrow">Oferta de julho</span>
+        <p class="promo-text">Os valores atuais são uma condição por tempo limitado para os 4 primeiros clientes novos do mês, garantida antes de subir em agosto.</p>
       </div>
       <div class="promo-panel promo-active">
         <div class="promo-timer-col">
@@ -1620,8 +1629,8 @@
       </div>
       <div class="promo-soldout">
         <div class="promo-soldout-inner">
-          <p class="promo-soldout-text">As 4 vagas de agosto foram preenchidas. Em breve abro lista de espera pra setembro, me chama pra entrar nela.</p>
-          <a class="btn-secondary" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20entrar%20na%20lista%20de%20espera%20de%20setembro." target="_blank" rel="noopener">Entrar na lista de espera</a>
+          <p class="promo-soldout-text">As 4 vagas de julho foram preenchidas. Em breve abro lista de espera pra agosto, me chama pra entrar nela.</p>
+          <a class="btn-secondary" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20entrar%20na%20lista%20de%20espera%20de%20agosto." target="_blank" rel="noopener">Entrar na lista de espera</a>
         </div>
       </div>
     </div>
@@ -1654,7 +1663,10 @@
           <article class="plan-card">
             <h3 class="plan-name">Unidade</h3>
             <div class="plan-price">
-              <span class="plan-num">297</span>
+              <div class="plan-price-row">
+                <span class="plan-was">297</span>
+                <span class="plan-num">287</span>
+              </div>
               <span class="plan-unit">por criativo</span>
             </div>
             <p class="plan-desc">Uma peça avulsa, sem compromisso.</p>
@@ -1672,8 +1684,14 @@
             <span class="plan-badge">Melhor custo</span>
             <h3 class="plan-name">Pacote 12</h3>
             <div class="plan-price">
-              <span class="plan-num" data-bill-show="mensal">2.997</span>
-              <span class="plan-num" data-bill-show="trimestral">2.637</span>
+              <div class="plan-price-row" data-bill-show="mensal">
+                <span class="plan-was">2.997</span>
+                <span class="plan-num">2.987</span>
+              </div>
+              <div class="plan-price-row" data-bill-show="trimestral">
+                <span class="plan-was">2.637</span>
+                <span class="plan-num">2.627</span>
+              </div>
               <span class="plan-unit">por 12 criativos · <strong>2 grátis</strong></span>
             </div>
             <p class="plan-desc">O melhor custo por peça para quem produz em volume.</p>
@@ -1712,7 +1730,10 @@
           <article class="plan-card">
             <h3 class="plan-name">Unidade</h3>
             <div class="plan-price">
-              <span class="plan-num">197</span>
+              <div class="plan-price-row">
+                <span class="plan-was">197</span>
+                <span class="plan-num">187</span>
+              </div>
               <span class="plan-unit">por reel · até 60s</span>
             </div>
             <p class="plan-desc">Um reel avulso, sem compromisso.</p>
@@ -1730,8 +1751,14 @@
             <span class="plan-badge">Melhor custo</span>
             <h3 class="plan-name">Pacote 12</h3>
             <div class="plan-price">
-              <span class="plan-num" data-bill-show="mensal">1.997</span>
-              <span class="plan-num" data-bill-show="trimestral">1.757</span>
+              <div class="plan-price-row" data-bill-show="mensal">
+                <span class="plan-was">1.997</span>
+                <span class="plan-num">1.987</span>
+              </div>
+              <div class="plan-price-row" data-bill-show="trimestral">
+                <span class="plan-was">1.757</span>
+                <span class="plan-num">1.747</span>
+              </div>
               <span class="plan-unit">por 12 reels · <strong>2 grátis</strong></span>
             </div>
             <p class="plan-desc">O melhor custo por reel para quem produz em volume.</p>
