@@ -1329,24 +1329,37 @@
     .promo-strip[data-state="soldout"] .promo-active { display: none; }
     .promo-strip[data-state="soldout"] .promo-soldout { display: flex; }
 
-    .promo-timer-digits { display: flex; gap: 0.5rem; }
-    .promo-digit-group { display: flex; flex-direction: column; align-items: center; min-width: 2.6rem; }
+    .promo-timer-col { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .promo-timer-label {
+      font-family: 'Geist Mono', monospace; font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-red);
+    }
+    .promo-timer-digits {
+      display: flex; align-items: center; gap: 0.1rem;
+      padding: 0.5rem 0.85rem;
+      background: rgba(235,235,235,0.04);
+      border: 1px solid rgba(189,165,98,0.3);
+      border-radius: 0.55rem;
+      box-shadow: inset 0 1px 0 rgba(235,235,235,0.06), 0 0 20px rgba(102,20,14,0.14);
+    }
     .promo-num {
       font-family: 'Geist Mono', monospace; font-variant-numeric: tabular-nums;
-      font-size: 1.4rem; font-weight: 600; color: var(--c-paper);
-      background: rgba(235,235,235,0.05); border: 1px solid rgba(189,165,98,0.25);
-      border-radius: 0.4rem; padding: 0.3rem 0.2rem; width: 100%; text-align: center;
+      font-size: 1.55rem; font-weight: 600; color: var(--c-paper);
+      min-width: 1.7ch; text-align: center;
     }
-    .promo-unit {
-      display: block;
-      font-family: 'Geist Mono', monospace; font-size: 0.58rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--c-paper-dim); margin-top: 0.3rem; text-align: center;
+    .promo-num--sec { color: var(--c-brass); }
+    .promo-colon {
+      font-family: 'Geist Mono', monospace; font-weight: 600; font-size: 1.25rem;
+      color: rgba(189,165,98,0.4); padding: 0 0.05rem;
+      animation: promo-colon-blink 1.8s steps(1, end) infinite;
     }
-    .promo-timer-col { display: flex; flex-direction: column; align-items: center; }
-    .promo-timer-label {
-      display: block; margin-top: 0.55rem;
-      font-family: 'Geist Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--c-paper-dim); text-align: center; white-space: nowrap;
+    @keyframes promo-colon-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.2; } }
+    .promo-timer-units {
+      font-family: 'Geist Mono', monospace; font-size: 0.56rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-paper-dim);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .promo-colon { animation: none; opacity: 1; }
     }
 
     .promo-capacity { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
@@ -1369,8 +1382,12 @@
     html.light .promo-strip { border-color: rgba(102,20,14,0.35); background: linear-gradient(135deg, rgba(102,20,14,0.06), rgba(102,20,14,0.01) 60%); }
     html.light .promo-eyebrow { color: var(--c-oxblood); }
     html.light .promo-text { color: rgba(19,19,19,0.72); }
-    html.light .promo-num { color: #131313; background: rgba(19,19,19,0.04); border-color: rgba(102,20,14,0.3); }
-    html.light .promo-unit, html.light .promo-timer-label, html.light .promo-slots-label { color: #545d66; }
+    html.light .promo-timer-digits { background: rgba(19,19,19,0.035); border-color: rgba(102,20,14,0.35); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 0 16px rgba(102,20,14,0.08); }
+    html.light .promo-timer-label { color: var(--c-oxblood); }
+    html.light .promo-num { color: #131313; }
+    html.light .promo-num--sec { color: var(--c-oxblood); }
+    html.light .promo-colon { color: rgba(102,20,14,0.35); }
+    html.light .promo-timer-units, html.light .promo-slots-label { color: #545d66; }
     html.light .promo-dot { border-color: rgba(102,20,14,0.45); }
     html.light .promo-dot--filled { background: var(--c-oxblood); border-color: var(--c-oxblood); }
     html.light .promo-slots-left { color: var(--c-oxblood); }
@@ -1605,20 +1622,18 @@
       <span class="eyebrow">Serviços &amp; Preços</span>
       <h2 class="format-title">Escolha seu plano.</h2>
     </div>
-    <div class="promo-strip reveal" id="promo-strip" data-deadline="2026-07-31T23:59:59-03:00" data-slots-total="4" data-slots-filled="0" data-state="counting">
+    <div class="promo-strip reveal" id="promo-strip" data-deadline="2026-07-31T23:59:59-03:00" data-slots-total="4" data-slots-filled="2" data-state="counting">
       <div class="promo-info">
         <span class="promo-eyebrow">Oferta de julho</span>
         <p class="promo-text">Os valores atuais são uma condição por tempo limitado para os 4 primeiros clientes novos do mês, garantida antes de subir em agosto.</p>
       </div>
       <div class="promo-panel promo-active">
         <div class="promo-timer-col">
-          <div class="promo-timer-digits">
-            <div class="promo-digit-group"><span class="promo-num" data-unit="d">00</span><span class="promo-unit">d</span></div>
-            <div class="promo-digit-group"><span class="promo-num" data-unit="h">00</span><span class="promo-unit">h</span></div>
-            <div class="promo-digit-group"><span class="promo-num" data-unit="m">00</span><span class="promo-unit">m</span></div>
-            <div class="promo-digit-group"><span class="promo-num" data-unit="s">00</span><span class="promo-unit">s</span></div>
-          </div>
           <span class="promo-timer-label">Oferta termina em</span>
+          <div class="promo-timer-digits">
+            <span class="promo-num" data-unit="d">00</span><span class="promo-colon" aria-hidden="true">:</span><span class="promo-num" data-unit="h">00</span><span class="promo-colon" aria-hidden="true">:</span><span class="promo-num" data-unit="m">00</span><span class="promo-colon" aria-hidden="true">:</span><span class="promo-num promo-num--sec" data-unit="s">00</span>
+          </div>
+          <span class="promo-timer-units">dias : hrs : min : seg</span>
         </div>
         <div class="promo-capacity">
           <div class="promo-dots" aria-hidden="true">
@@ -1664,7 +1679,7 @@
             <h3 class="plan-name">Unidade</h3>
             <div class="plan-price">
               <div class="plan-price-row">
-                <span class="plan-was">297</span>
+                <span class="plan-was">2.200</span>
                 <span class="plan-num">287</span>
               </div>
               <span class="plan-unit">por criativo</span>
@@ -1685,11 +1700,11 @@
             <h3 class="plan-name">Pacote 12</h3>
             <div class="plan-price">
               <div class="plan-price-row" data-bill-show="mensal">
-                <span class="plan-was">2.997</span>
+                <span class="plan-was">26.400</span>
                 <span class="plan-num">2.987</span>
               </div>
               <div class="plan-price-row" data-bill-show="trimestral">
-                <span class="plan-was">2.637</span>
+                <span class="plan-was">26.400</span>
                 <span class="plan-num">2.627</span>
               </div>
               <span class="plan-unit">por 12 criativos · <strong>2 grátis</strong></span>
@@ -1731,7 +1746,7 @@
             <h3 class="plan-name">Unidade</h3>
             <div class="plan-price">
               <div class="plan-price-row">
-                <span class="plan-was">197</span>
+                <span class="plan-was">300</span>
                 <span class="plan-num">187</span>
               </div>
               <span class="plan-unit">por reel · até 60s</span>
@@ -1752,11 +1767,11 @@
             <h3 class="plan-name">Pacote 12</h3>
             <div class="plan-price">
               <div class="plan-price-row" data-bill-show="mensal">
-                <span class="plan-was">1.997</span>
+                <span class="plan-was">3.600</span>
                 <span class="plan-num">1.987</span>
               </div>
               <div class="plan-price-row" data-bill-show="trimestral">
-                <span class="plan-was">1.757</span>
+                <span class="plan-was">3.600</span>
                 <span class="plan-num">1.747</span>
               </div>
               <span class="plan-unit">por 12 reels · <strong>2 grátis</strong></span>
