@@ -232,11 +232,11 @@
 }
 
 @media (max-width: 760px) {
-  .concept .site-header--home { position: sticky; top: 0; z-index: 100; padding-top: env(safe-area-inset-top, 0px); overflow: clip; isolation: isolate; background: #080a0b; border-bottom-color: rgba(224, 204, 158, .15); backdrop-filter: none; }
+  .concept .site-header--home { position: sticky; top: 0; z-index: 100; overflow: clip; isolation: isolate; background: #080a0b; border-bottom-color: rgba(224, 204, 158, .15); backdrop-filter: none; }
   .concept .wrap { width: min(calc(100% - 2rem), var(--max)); }
   .concept .section { padding-block: 5rem; }
   .concept .nav { min-height: 80px; }
-  .concept .nav-links.is-open { top: calc(80px + env(safe-area-inset-top, 0px)); background: #080a0b; }
+  .concept .nav-links.is-open { top: 80px; background: #080a0b; }
   .concept .nav-links li { display: block; }
   .concept .nav-links li::before { margin-right: .6rem; }
   .concept .brand { font-size: 1.14rem; }
