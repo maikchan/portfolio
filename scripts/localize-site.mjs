@@ -149,6 +149,12 @@ for (const path of paths) {
   pt('html').attr('lang', 'pt-BR');
   pt('body').addClass('locale-pt');
   pt('[data-language-gate]').remove();
+  if (!pt('.whatsapp-float').length) {
+    pt('body').prepend('<a class="whatsapp-float" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20falar%20sobre%20um%20projeto." target="_blank" rel="noopener" aria-label="Falar com Maikon pelo WhatsApp" title="Falar no WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.25a12.72 12.72 0 0 0-10.86 19.3L3.4 28.6l6.2-1.7A12.75 12.75 0 1 0 16 3.25Zm0 23.2a10.42 10.42 0 0 1-5.3-1.45l-.38-.23-3.68 1.01.99-3.58-.25-.4A10.42 10.42 0 1 1 16 26.45Zm5.72-7.82c-.31-.16-1.84-.91-2.12-1.01-.29-.11-.5-.16-.71.16-.21.31-.81 1.01-.99 1.22-.18.21-.36.23-.67.08-.31-.16-1.31-.48-2.5-1.52a9.35 9.35 0 0 1-1.73-2.15c-.18-.31-.02-.48.14-.64.14-.14.31-.36.47-.54.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.71-.97-2.34-.25-.61-.51-.53-.71-.54h-.6c-.21 0-.55.08-.84.39-.29.31-1.1 1.07-1.1 2.61s1.13 3.03 1.29 3.24c.16.21 2.22 3.39 5.38 4.75.75.32 1.34.51 1.8.65.76.24 1.45.21 2 .13.61-.09 1.84-.75 2.1-1.47.26-.73.26-1.35.18-1.48-.08-.13-.29-.21-.6-.37Z"/></svg><span>WhatsApp</span></a>');
+  }
+  if (pt('.contact-social').length && !pt('.contact-social .whatsapp-link').length) {
+    pt('.contact-social').append('<a class="whatsapp-link" href="https://wa.me/5547996553649?text=Oi%20Maik%2C%20quero%20falar%20sobre%20um%20projeto." target="_blank" rel="noopener">WhatsApp</a>');
+  }
   pt('.language-switch').attr('aria-label', 'Idioma');
   pt('body *').contents().each((_, node) => {
     if (node.type !== 'text' || !node.parent || ['script', 'style', 'svg'].includes(node.parent.name)) return;
