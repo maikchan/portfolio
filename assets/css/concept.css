@@ -232,8 +232,11 @@
 }
 
 @media (max-width: 760px) {
+  /* Keep page content inside a viewport-sized scrollport so iOS Safari cannot
+     reveal the scrolling document behind its translucent status area. */
+  html:has(body.concept) { height: 100%; overflow: hidden; background: #080a0b; }
+  body.concept { position: fixed; inset: 0; width: 100%; overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; scroll-padding-top: 80px; }
   .concept .site-header--home { position: sticky; top: 0; z-index: 100; isolation: isolate; background: #080a0b; border-bottom-color: rgba(224, 204, 158, .15); backdrop-filter: none; }
-  .concept .site-header::before { position: absolute; right: 0; bottom: 100%; left: 0; height: 160px; background: #080a0b; content: ''; pointer-events: none; }
   .concept .wrap { width: min(calc(100% - 2rem), var(--max)); }
   .concept .section { padding-block: 5rem; }
   .concept .nav { min-height: 80px; }

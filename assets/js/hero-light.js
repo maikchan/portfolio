@@ -81,6 +81,7 @@
   }
   function scheduleScroll() { if (!scrollFrame) scrollFrame = requestAnimationFrame(() => updateScroll()); }
   window.addEventListener('scroll', scheduleScroll, { passive: true });
+  document.body.addEventListener('scroll', scheduleScroll, { passive: true });
   window.addEventListener('resize', scheduleScroll, { passive: true });
   mobile.addEventListener('change', scheduleScroll);
   reducedMotion.addEventListener('change', scheduleScroll);

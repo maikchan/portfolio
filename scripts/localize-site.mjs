@@ -128,7 +128,7 @@ for (const path of paths) {
   for (const $ of [en, pt]) {
     $('link[href^="/assets/css/concept.css"], script[src^="/assets/js/site.js"], script[src^="/assets/js/projects.js"], script[src^="/assets/js/showreel.js"]').each((_, element) => {
       const attribute = element.name === 'link' ? 'href' : 'src';
-      $(element).attr(attribute, $(element).attr(attribute).replace(/\?v=[^&]+$/, '?v=20260924-4'));
+      $(element).attr(attribute, $(element).attr(attribute).replace(/\?v=[^&]+$/, '?v=20260924-5'));
     });
     if (!$('.language-switch').length) {
       const switcher = `<div class="language-switch" aria-label="${$ === pt ? 'Idioma' : 'Language'}"><a href="${path}" lang="en" hreflang="en" data-language-choice="en">EN</a><span aria-hidden="true">/</span><a href="${pair}" lang="pt-BR" hreflang="pt-BR" data-language-choice="pt">PT</a></div>`;

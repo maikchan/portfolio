@@ -61,8 +61,9 @@
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 761px)');
   if (homeHeader && heroSection) {
-    const updateHeader = () => homeHeader.classList.toggle('is-past-hero', window.scrollY > heroSection.offsetHeight - 110);
+    const updateHeader = () => homeHeader.classList.toggle('is-past-hero', (window.matchMedia('(max-width: 760px)').matches ? document.body.scrollTop : window.scrollY) > heroSection.offsetHeight - 110);
     window.addEventListener('scroll', updateHeader, { passive: true });
+    document.body.addEventListener('scroll', updateHeader, { passive: true });
     window.addEventListener('resize', updateHeader, { passive: true });
     updateHeader();
   }
