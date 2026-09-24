@@ -17,7 +17,7 @@ const copy = {
   'Work': 'Trabalhos', 'Services': 'Serviços', 'About': 'Sobre', 'Contact': 'Contato',
   'Start a project': 'Vamos conversar', 'DIRECTOR & FILMMAKER': 'DIRETOR & FILMMAKER',
   'Director & Filmmaker': 'Diretor & Filmmaker',
-  'Turn ideas': 'Ideias que', 'into films.': 'viram filmes.',
+  'Turn ideas': 'Transforme', 'into films.': 'ideias em filmes.',
   'I develop, direct, shoot and finish audiovisual work. I can guide the whole project or step into the part of production that needs me.': 'Penso a ideia, dirijo, filmo e finalizo. Posso acompanhar o projeto inteiro ou entrar na etapa em que você precisa de mim.',
   'View work': 'Ver trabalhos', 'Direction': 'Direção', 'Cinematography': 'Fotografia', 'Post-Production': 'Pós-produção',
   'Showreel': 'Showreel', 'See the work': 'Veja o trabalho', 'in motion.': 'em movimento.',
@@ -25,21 +25,21 @@ const copy = {
   'Playing': 'Reproduzindo', 'Sound off': 'Som desligado', 'Open film ↗': 'Abrir filme ↗',
   'Selected work': 'Trabalhos selecionados', 'A closer look at the work.': 'Cada projeto conta uma história.',
   'View all work': 'Ver todos os trabalhos', 'Loading selected work...': 'Carregando trabalhos...',
-  'The right scope for the film.': 'O trabalho na medida do filme.',
+  'The right scope for the film.': 'Trabalhos sob medida.',
   'Direction and cinematography can stand alone or connect with post-production in one continuous process.': 'Direção e fotografia podem ser etapas independentes ou seguir comigo até a finalização.',
   'Commercials & Brand Films': 'Comerciais e filmes de marca',
   'Films built around a clear idea, shaped for the people and place where they will be seen.': 'Filmes construídos a partir de uma ideia clara, pensados para o público e os canais em que serão vistos.',
   'Social & Campaign Content': 'Conteúdo para redes e campanhas',
   'Planned production for individual pieces, campaign material and ongoing channels.': 'Produção planejada para vídeos avulsos, campanhas e canais com conteúdo recorrente.',
   'Direction & Cinematography': 'Direção e fotografia',
-  'Direction, performance direction, camera and lighting for productions that need those stages.': 'Direção, trabalho com quem está em cena, câmera e luz para produções que precisam dessas etapas.',
+  'Direction, performance direction, camera and lighting for productions that need those stages.': 'Direção de filme, performance do ator, câmera e luz para produções em geral.',
   'Editing, sound, motion, color and finishing for my own productions or footage created by other teams.': 'Montagem, som, motion, cor e finalização de projetos meus ou de imagens produzidas por outras equipes.',
   'Explore services': 'Conhecer serviços', 'One project. One vision.': 'Um projeto. Uma visão.',
   'Production decisions': 'Decisões na filmagem', 'already consider': 'já levam em conta',
   'performance, composition, sound and the edit.': 'atuação, composição, som e montagem.',
   'Working across production and post means I can see how a shot will cut, what needs to be solved on set and where the film needs room to breathe.': 'Por trabalhar na filmagem e na pós, consigo perceber como um plano vai funcionar na montagem, o que precisa ser resolvido no set e quando a cena precisa de espaço para respirar.',
   'How I can work with you': 'Como podemos trabalhar juntos', 'Join at the stage you need.': 'Entro na etapa de que seu projeto precisa.',
-  'Full Project': 'Projeto completo', 'Concept, production and final delivery shaped as one project.': 'Da ideia à entrega, com cada etapa pensada como parte do mesmo filme.',
+  'Full Project': 'Projeto completo', 'Concept, production and final delivery shaped as one project.': 'Da concepção à entrega, pré-produção, produção e pós-produção, amarradas em um projeto completo, do início ao fim.',
   'Production': 'Produção', 'Direction, performance direction, cinematography, camera and lighting.': 'Direção, trabalho com elenco, fotografia, câmera e luz.',
   'Editing and finishing for footage I shoot or material delivered by another team.': 'Montagem e finalização de imagens que filmei ou que outra equipe produziu.',
   'Ongoing Content': 'Conteúdo recorrente', 'A recurring collaboration planned around the work your channels need.': 'Uma parceria contínua, planejada a partir do que seus canais precisam comunicar.',
@@ -78,14 +78,14 @@ const copy = {
   'Visual development': 'Desenvolvimento visual', 'Storyboarding when applicable': 'Storyboard, quando fizer sentido',
   'Creative direction': 'Direção criativa', 'Performance direction': 'Direção de performance',
   'Camera operation': 'Operação de câmera', 'Lighting': 'Iluminação', 'Location production': 'Produção em locação',
-  'Post': 'Pós-produção', 'Editing': 'Edição', 'Sound design': 'Desenho de som',
+  'Post': 'Pós-produção', 'Editing': 'Edição', 'Sound design': 'Design de áudio',
   'Motion graphics': 'Motion graphics', 'Color grading': 'Tratamento de cor', 'Finishing': 'Finalização',
   'A scope built around the production.': 'O escopo acompanha o projeto.',
   'Development and execution across the full agreed scope.': 'Desenvolvimento e execução de todas as etapas combinadas.',
   'Direction, cinematography or both within a production.': 'Direção, fotografia ou as duas frentes dentro de uma produção.',
   'Finalization of my own material or footage supplied by another team.': 'Finalização de imagens minhas ou de material entregue por outra equipe.',
   'Recurring planning and production, with rhythm and deliverables defined for the work.': 'Planejamento e produção recorrentes, com frequência e entregas definidas conforme a necessidade.',
-  'Tell me what the film needs.': 'Me conte o que o filme precisa.',
+  'Tell me what the film needs.': 'Me conte como posso agregar na sua produção.',
   'Share the idea, stage and material you already have. We can define the right scope from there.': 'Compartilhe a ideia, em que etapa está e o material que já existe. A partir disso, definimos o escopo.',
   'I develop the idea, find the right way to tell the story, and guide the production from concept to final cut. That can include writing, directing, performance direction, cinematography, lighting, camera operation, editing, sound design, motion graphics, and color grading.': 'Desenvolvo a ideia, encontro a forma certa de contar a história e acompanho a produção do conceito ao corte final. Isso pode incluir roteiro, direção, trabalho com quem está em cena, fotografia, iluminação, operação de câmera, montagem, desenho de som, motion graphics e tratamento de cor.',
   'I’ve worked across different sides of production, from my own films and content to agencies, production companies, and commercial projects. Working on both production and post-production has taught me to think about the whole film while I’m on set, not just the individual shot in front of me.': 'Já trabalhei em diferentes lados de uma produção: nos meus próprios filmes e conteúdos, em agências, produtoras e projetos comerciais. A experiência na filmagem e na pós me ensinou a pensar no filme inteiro quando estou no set, e não só no plano que tenho diante de mim.',
@@ -192,6 +192,20 @@ for (const path of paths) {
     pt('.case-facts .tag-list').empty();
     for (const capability of localized.capabilities) pt('.case-facts .tag-list').append(pt('<li>').text(capability));
     pt('.case-layout__story > .button').text('← Voltar aos trabalhos');
+    pt('.case-meta span').text(`Duração: ${project.duration}`);
+  }
+  if (path === '/about/') {
+    const highlights = [
+      ['Isso pode incluir roteiro, direção, trabalho com quem está em cena, fotografia, iluminação, operação de câmera, montagem, desenho de som, motion graphics e tratamento de cor.', 'Isso pode incluir roteiro, direção, trabalho com quem está em cena, fotografia, iluminação, operação de câmera, montagem, design de áudio, motion graphics e tratamento de cor.'],
+      ['nos meus próprios filmes e conteúdos, em agências, produtoras e projetos comerciais.', 'nos meus próprios filmes e conteúdos, em agências, produtoras e projetos comerciais.'],
+      ['Com o tempo, enquadramento, movimento de câmera, luz, cor, som, ritmo e narrativa passaram a fazer parte de uma mesma forma de pensar o filme.', 'Com o tempo, enquadramento, movimento de câmera, luz, cor, som, ritmo e narrativa passaram a fazer parte de uma mesma forma de pensar o filme.'],
+      ['Trabalho como diretor e filmmaker, criando filmes, comerciais, campanhas e conteúdo de marca para marcas, criadores e equipes de produção.', 'Trabalho como diretor e filmmaker, criando filmes, comerciais, campanhas e conteúdo de marca para marcas, criadores e equipes de produção.']
+    ];
+    pt('.about-body p').each((_, element) => {
+      let html = pt(element).html();
+      for (const [source, replacement] of highlights) html = html.replace(source, `<strong class="copy-highlight">${replacement}</strong>`);
+      pt(element).html(html);
+    });
   }
   const [title, description, social] = project
     ? [`${translations[project.slug].title || project.title} · Maikon Winter`, translations[project.slug].cardDescription, translations[project.slug].cardDescription]

@@ -22,6 +22,7 @@
 .concept .display { font-weight: 700; letter-spacing: -.035em; line-height: .9; }
 .concept .title { max-width: 20ch; font-size: clamp(3rem, 5.5vw, 5.7rem); line-height: .96; letter-spacing: -.03em; }
 .concept .lede { color: #c5c5bf; }
+.concept .copy-highlight { color: var(--brass-light); font-weight: 500; }
 .concept .rule { width: 4rem; height: 2px; background: var(--oxblood); }
 .concept .button { border-radius: 2px; min-height: 50px; padding-inline: 1.55rem; letter-spacing: .12em; }
 .concept .button:hover { transform: translateY(-3px); }
