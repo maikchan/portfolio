@@ -1,7 +1,11 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": true,
   "redirects": [
     { "source": "/en", "destination": "/", "permanent": true },
     { "source": "/en/", "destination": "/", "permanent": true },
-    { "source": "/en/:path+", "destination": "/:path*", "permanent": true }
+    { "source": "/en/:path+", "destination": "/:path*", "permanent": true },
+    { "source": "/pt", "destination": "/", "permanent": false },
+    { "source": "/pt/", "destination": "/", "permanent": false }
   ]
 }

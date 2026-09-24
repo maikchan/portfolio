@@ -10,7 +10,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'npx serve . -p 3456 --no-clipboard',
+    command: 'python3 -m http.server 3456',
     url: 'http://localhost:3456',
     reuseExistingServer: true,
     timeout: 10000,
@@ -18,19 +18,19 @@ export default defineConfig({
   projects: [
     {
       name: 'mobile-portrait',
-      use: { ...devices['iPhone 13'] },
+      use: { ...devices['iPhone 13'], browserName: 'chromium' },
     },
     {
       name: 'mobile-landscape',
-      use: { ...devices['iPhone 13 landscape'] },
+      use: { ...devices['iPhone 13 landscape'], browserName: 'chromium' },
     },
     {
       name: 'tablet-portrait',
-      use: { ...devices['iPad (gen 7)'] },
+      use: { ...devices['iPad (gen 7)'], browserName: 'chromium' },
     },
     {
       name: 'tablet-landscape',
-      use: { ...devices['iPad (gen 7) landscape'] },
+      use: { ...devices['iPad (gen 7) landscape'], browserName: 'chromium' },
     },
     {
       name: 'notebook',
