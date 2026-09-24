@@ -18,7 +18,7 @@ const copy = {
   'Start a project': 'Vamos conversar', 'DIRECTOR & FILMMAKER': 'DIRETOR & FILMMAKER',
   'Director & Filmmaker': 'Diretor & Filmmaker',
   'Turn ideas': 'Transforme', 'into films.': 'ideias em filmes.',
-  'I develop, direct, shoot and finish audiovisual work. I can guide the whole project or step into the part of production that needs me.': 'Penso a ideia, dirijo, filmo e finalizo. Posso acompanhar o projeto inteiro ou entrar na etapa em que você precisa de mim.',
+  'I develop, direct, shoot and finish audiovisual work. I can guide the whole project or step into the part of production that needs me.': 'Planejo, dirijo, filmo e finalizo. Posso acompanhar o projeto inteiro ou entrar na etapa em que você precisa de mim.',
   'View work': 'Ver trabalhos', 'Direction': 'Direção', 'Cinematography': 'Fotografia', 'Post-Production': 'Pós-produção',
   'Showreel': 'Showreel', 'See the work': 'Veja o trabalho', 'in motion.': 'em movimento.',
   'Framing, camera movement, lighting, color, sound, pacing, and storytelling are part of the same way of thinking about a film.': 'Enquadramento, movimento, luz, cor, som e ritmo trabalham juntos para contar uma história.',
