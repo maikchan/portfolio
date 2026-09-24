@@ -1,4 +1,5 @@
 (function () {
+  const portuguese = document.documentElement.lang === 'pt-BR';
   const menuButton = document.querySelector('[data-menu-button]');
   const menu = document.querySelector('[data-menu]');
 
@@ -6,6 +7,7 @@
     if (!menuButton || !menu) return;
     menu.classList.remove('is-open');
     menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.setAttribute('aria-label', portuguese ? 'Abrir menu' : 'Open menu');
     if (returnFocus) menuButton.focus();
   }
 
@@ -14,6 +16,7 @@
       const willOpen = menuButton.getAttribute('aria-expanded') !== 'true';
       menu.classList.toggle('is-open', willOpen);
       menuButton.setAttribute('aria-expanded', String(willOpen));
+      menuButton.setAttribute('aria-label', portuguese ? (willOpen ? 'Fechar menu' : 'Abrir menu') : (willOpen ? 'Close menu' : 'Open menu'));
     });
     menu.addEventListener('click', (event) => {
       if (event.target.closest('a')) closeMenu(false);
@@ -112,7 +115,9 @@
     timelineToggle.addEventListener('click', () => {
       paused = !paused;
       timelineToggle.setAttribute('aria-pressed', String(paused));
-      timelineToggle.textContent = paused ? 'Resume timeline animation' : 'Pause timeline animation';
+      timelineToggle.textContent = portuguese
+        ? (paused ? 'Retomar animação da linha do tempo' : 'Pausar animação da linha do tempo')
+        : (paused ? 'Resume timeline animation' : 'Pause timeline animation');
       updateTimeline();
     });
     if ('IntersectionObserver' in window) {
@@ -128,7 +133,7 @@
     const iframe = document.createElement('iframe');
     const query = new URLSearchParams({ autoplay: '1', muted: muted ? '1' : '0', loop: loop ? '1' : '0', autopause: '0', background: preview ? '1' : '0', controls: preview ? '0' : '1', color: 'BDA562', title: '0', byline: '0', portrait: '0', api: '1' });
     iframe.src = `https://player.vimeo.com/video/${encodeURIComponent(id)}?${query}`;
-    iframe.title = title || 'Film by Maikon Winter';
+    iframe.title = title || (portuguese ? 'Filme de Maikon Winter' : 'Film by Maikon Winter');
     iframe.allow = 'autoplay; fullscreen; picture-in-picture';
     iframe.allowFullscreen = true;
     return iframe;

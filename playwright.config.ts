@@ -1,17 +1,19 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const port = process.env.PORTFOLIO_TEST_PORT || '3456';
+
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   reporter: [['html', { outputFolder: 'playwright-report' }], ['list']],
   use: {
-    baseURL: 'http://localhost:3456',
+    baseURL: `http://localhost:${port}`,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
   webServer: {
-    command: 'python3 -m http.server 3456',
-    url: 'http://localhost:3456',
+    command: `python3 -m http.server ${port}`,
+    url: `http://localhost:${port}`,
     reuseExistingServer: true,
     timeout: 10000,
   },

@@ -51,12 +51,13 @@ test('Project card descriptions have a touch equivalent', async ({ page, isMobil
 test('Mobile menu opens, closes and exposes all main links', async ({ page, isMobile }) => {
   test.skip(!isMobile, 'Mobile menu behavior');
   await page.goto('/');
+  await page.getByRole('link', { name: /English.*Explore in English/i }).click();
   const button = page.getByRole('button', { name: 'Open menu' });
   await button.click();
   await expect(button).toHaveAttribute('aria-expanded', 'true');
   await expect(page.locator('[data-menu]')).toHaveClass(/is-open/);
   await page.keyboard.press('Escape');
-  await expect(button).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByRole('button', { name: 'Open menu' })).toHaveAttribute('aria-expanded', 'false');
 });
 
 test('Case pages render verified role and capabilities', async ({ page }) => {

@@ -1,4 +1,5 @@
 (function () {
+  const portuguese = document.documentElement.lang === 'pt-BR';
   const stage = document.querySelector('[data-showreel]');
   const iframe = stage?.querySelector('[data-showreel-frame]');
   const playButton = stage?.querySelector('[data-reel-play]');
@@ -21,15 +22,15 @@
 
   function updatePlay() {
     playButton.dataset.state = playing ? 'playing' : 'paused';
-    playLabel.textContent = playing ? 'Playing' : 'Paused';
-    playButton.setAttribute('aria-label', playing ? 'Pause showreel' : 'Play showreel');
+    playLabel.textContent = portuguese ? (playing ? 'Reproduzindo' : 'Pausado') : (playing ? 'Playing' : 'Paused');
+    playButton.setAttribute('aria-label', portuguese ? (playing ? 'Pausar showreel' : 'Reproduzir showreel') : (playing ? 'Pause showreel' : 'Play showreel'));
     playButton.setAttribute('aria-pressed', String(playing));
   }
 
   function updateSound() {
     soundButton.dataset.state = muted ? 'off' : 'on';
-    soundLabel.textContent = muted ? 'Sound off' : 'Sound on';
-    soundButton.setAttribute('aria-label', muted ? 'Turn sound on' : 'Mute showreel');
+    soundLabel.textContent = portuguese ? (muted ? 'Som desligado' : 'Som ligado') : (muted ? 'Sound off' : 'Sound on');
+    soundButton.setAttribute('aria-label', portuguese ? (muted ? 'Ativar som' : 'Desativar som') : (muted ? 'Turn sound on' : 'Mute showreel'));
     soundButton.setAttribute('aria-pressed', String(!muted));
   }
 

@@ -4,13 +4,14 @@ import { load } from 'cheerio';
 
 const root = resolve(new URL('..', import.meta.url).pathname);
 const projects = JSON.parse(await readFile(join(root, 'assets/data/projects.json'), 'utf8'));
-const pages = [
+const englishPages = [
   'index.html',
   'work/index.html',
   'services/index.html',
   'about/index.html',
   ...projects.map((project) => `work/${project.slug}/index.html`)
 ];
+const pages = [...englishPages, ...englishPages.map((page) => `pt/${page}`)];
 const errors = [];
 
 async function exists(path) {
@@ -24,10 +25,18 @@ for (const page of pages) {
   if (!$('title').text().trim()) errors.push(`${page}: missing title`);
   if (!$('meta[name="description"]').attr('content')) errors.push(`${page}: missing meta description`);
   if (!$('link[rel="canonical"]').attr('href')) errors.push(`${page}: missing canonical`);
+  const portuguese = page.startsWith('pt/');
+  const route = '/' + (portuguese ? page.slice(3) : page).replace(/index\.html$/, '');
+  const localizedRoute = `/pt${route}`;
+  if ($('html').attr('lang') !== (portuguese ? 'pt-BR' : 'en')) errors.push(`${page}: incorrect language`);
+  if ($('link[rel="canonical"]').attr('href') !== `https://www.maikchan.com${portuguese ? localizedRoute : route}`) errors.push(`${page}: incorrect canonical`);
+  for (const [lang, href] of [['en', route], ['pt-BR', localizedRoute]]) {
+    if ($(`link[rel="alternate"][hreflang="${lang}"]`).attr('href') !== `https://www.maikchan.com${href}`) errors.push(`${page}: missing ${lang} alternate`);
+  }
   if ($('main').length !== 1) errors.push(`${page}: expected one main element`);
   if ($('h1').length !== 1) errors.push(`${page}: expected one h1 element`);
   if (/Video Editor|Editor & Colorist/i.test($('body').text())) errors.push(`${page}: old positioning remains`);
-  if (/[—–]/.test($('body').text())) errors.push(`${page}: public copy contains a dash`);
+  if (!portuguese && /[—–]/.test($('body').text())) errors.push(`${page}: public copy contains a dash`);
 
   for (const image of $('img').toArray()) {
     const element = $(image);
@@ -54,6 +63,7 @@ for (const id of requiredVideoIds) {
   if (!projects.some((project) => project.videoId === id)) errors.push(`Missing project video ${id}`);
 }
 if (new Set(projects.map((project) => project.slug)).size !== projects.length) errors.push('Project slugs must be unique');
+if (Object.keys(JSON.parse(await readFile(join(root, 'assets/data/projects.pt.json'), 'utf8'))).length !== projects.length) errors.push('Portuguese project copy is incomplete');
 
 if (errors.length) {
   console.error(errors.join('\n'));

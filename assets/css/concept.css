@@ -281,3 +281,43 @@
   .concept .vision-photo img, .concept .vision-copy { transform: none; will-change: auto; }
   .concept .project-card:hover, .concept .button:hover { transform: none; }
 }
+
+/* Language selection uses the site's existing type, image and brass accents. */
+.concept .language-switch { display: inline-flex; flex: none; align-items: center; gap: .45rem; margin-left: auto; color: var(--muted); font: 600 .64rem/1 var(--mono); letter-spacing: .13em; }
+.concept .language-switch a { padding: .7rem .15rem; color: var(--muted); text-decoration: none; transition: color .2s ease; }
+.concept .language-switch a:hover, .concept .language-switch a:focus-visible, .concept .language-switch a[aria-current='true'] { color: var(--brass-light); }
+.concept .language-switch a[aria-current='true'] { box-shadow: inset 0 -1px currentColor; }
+.concept.locale-pt .brand::after { content: 'DIRETOR / FILMMAKER'; }
+.concept .nav { gap: clamp(.8rem, 1.8vw, 1.8rem); }
+.concept .nav-links { gap: clamp(.9rem, 1.9vw, 2.1rem); }
+.concept.locale-pt .hero .display { max-width: 850px; font-size: clamp(4.3rem, 9.4vw, 9.5rem); line-height: .94; }
+.concept.locale-pt .title { max-width: 24ch; font-size: clamp(2.7rem, 5vw, 5.2rem); line-height: 1.02; }
+.concept.locale-pt .work-intro .display { max-width: 16ch; font-size: clamp(3.5rem, 7.2vw, 7.6rem); line-height: 1.04; }
+.concept.locale-pt .vision-title > span:first-child { max-width: 13ch; font-size: clamp(3.4rem, 5.2vw, 6rem); }
+.concept.locale-pt .vision-title__bridge { font-size: clamp(2rem, 3vw, 3.3rem); }
+.concept.locale-pt .reel-grid .title, .concept.locale-pt .about-preview .title, .concept.locale-pt .contact .title { max-width: 16ch; }
+.language-gate:not([open]) { display: none; }
+.language-gate[open] { position: fixed; inset: 0; z-index: 1000; display: grid; align-items: center; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; background: #080a0b; color: #f0ece4; overflow: auto; }
+.language-gate::backdrop { background: #080a0b; }
+.language-gate::before { position: fixed; inset: 0 0 0 34%; content: ''; background: linear-gradient(90deg, #080a0b 0%, rgba(8,10,11,.92) 23%, rgba(8,10,11,.35) 57%, rgba(8,10,11,.68) 100%), linear-gradient(0deg, #080a0b, transparent 33%), url('/assets/mm-21.jpg') 45% 45% / cover; opacity: .85; pointer-events: none; }
+.language-gate__inner { position: relative; width: min(100% - 4rem, 1200px); margin: auto; padding-block: 2.5rem; }
+.language-gate h2 { max-width: 1050px; margin: 1.2rem 0; font: 700 clamp(3.5rem, 6.4vw, 6.8rem)/.9 var(--display); letter-spacing: -.035em; text-transform: uppercase; }
+.language-gate h2 span { display: block; color: var(--brass-light); }
+.language-gate__inner > p:not(.eyebrow) { max-width: 44ch; color: #d6d7d2; font-size: clamp(1rem, 1.5vw, 1.2rem); }
+.language-gate__choices { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: clamp(2rem, 4vh, 3rem); }
+.language-gate__choices a { display: flex; flex-direction: column; justify-content: space-between; gap: 1.2rem; min-width: min(100%, 250px); min-height: 125px; padding: 1.4rem; border: 1px solid rgba(224,204,158,.35); color: #f0ece4; background: rgba(8,10,11,.72); font: 600 clamp(1.8rem, 3vw, 2.7rem)/1 var(--display); text-decoration: none; transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+.language-gate__choices a:hover, .language-gate__choices a:focus-visible { border-color: var(--brass-light); background: rgba(197,166,104,.14); transform: translateY(-3px); }
+.language-gate__choices a span { color: var(--brass-light); font: 600 .65rem/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+@media (max-width: 1100px) and (min-width: 761px) { .concept .nav > .button { display: none; } }
+@media (max-width: 760px) {
+  .concept .language-switch { margin-left: auto; margin-right: .3rem; }
+  .concept.locale-pt .hero .display { max-width: 10ch; font-size: clamp(3.1rem, 11.6vw, 5rem); }
+  .concept.locale-pt .work-intro .display { font-size: clamp(3.1rem, 12vw, 4.7rem); }
+  .concept.locale-pt .vision-title > span:first-child { font-size: clamp(3rem, 10vw, 4.5rem); }
+  .language-gate::before { inset: 0; background: linear-gradient(0deg, #080a0b 9%, rgba(8,10,11,.85) 55%, rgba(8,10,11,.42)), url('/assets/mm-33.jpg') center 20% / cover; }
+  .language-gate__inner { width: calc(100% - 2rem); padding-block: 2rem; }
+  .language-gate h2 { font-size: clamp(3rem, 10vw, 5rem); }
+  .language-gate__choices { gap: .6rem; }
+  .language-gate__choices a { min-width: 0; flex: 1 1 140px; min-height: 120px; padding: 1rem; font-size: 1.7rem; }
+}
+@media (prefers-reduced-motion: reduce) { .language-gate__choices a { transition: none; } }

@@ -1,0 +1,74 @@
+{
+  "social-media-creative": {
+    "role": "Direção, direção de performance, fotografia e pós-produção",
+    "capabilities": ["Direção", "Direção de performance", "Fotografia", "Iluminação", "Operação de câmera", "Edição", "Desenho de som", "Motion graphics", "Tipografia", "Tratamento de cor"],
+    "posterAlt": "Capa do filme Social Media Creative",
+    "cardDescription": "Um vídeo para redes sociais conduzido da captação à entrega. Enquadramento, luz e tipografia acompanham o ritmo de quem está em cena.",
+    "description": [
+      "Dirigi e produzi este vídeo para redes sociais, da captação à entrega final. O trabalho incluiu direção de performance, fotografia, iluminação, câmera, edição, desenho de som, motion graphics e tratamento de cor.",
+      "A proposta visual parte de um enquadramento próximo e controlado. Usei luz e composição para dar profundidade e personalidade a uma cena de fala direta para a câmera. Durante a gravação, trabalhei a presença, o ritmo e a forma de dizer o texto para chegar a uma performance mais natural.",
+      "Na pós-produção, a tipografia entra no ritmo da fala. Escala, posição, fonte e ênfase mudam nos momentos certos para conduzir o olhar, em vez de deixar a legenda apenas como uma transcrição."
+    ]
+  },
+  "why-do-people-stay": {
+    "role": "Conceito, roteiro, direção, atuação, fotografia e pós-produção",
+    "capabilities": ["Desenvolvimento de conceito", "Roteiro", "Direção", "Atuação", "Fotografia", "Iluminação", "Operação de câmera", "Edição", "Desenho de som", "Motion graphics", "Tratamento de cor"],
+    "posterAlt": "Capa do filme Why Do People Stay?",
+    "cardDescription": "Um filme independente que escrevi, interpretei e produzi por inteiro, da primeira ideia ao tratamento final de cor.",
+    "description": [
+      "Este filme nasceu de uma ideia minha e foi produzido inteiramente por mim. Escrevi o roteiro, dirigi, interpretei os personagens, cuidei da fotografia e da luz e finalizei a pós-produção.",
+      "Desenhei a linguagem visual, montei a luz, operei a câmera e interpretei os dois personagens. Depois, trabalhei a montagem, a tipografia, os elementos em movimento, o som e o tratamento de cor.",
+      "O filme foi escrito e interpretado em inglês, o que trouxe mais uma camada de trabalho criativo e técnico para uma produção independente."
+    ]
+  },
+  "beach-creative": {
+    "role": "Direção criativa, direção de performance, fotografia e pós-produção",
+    "capabilities": ["Direção criativa", "Direção de performance", "Fotografia", "Operação de câmera", "Iluminação", "Produção em locação", "Edição", "Desenho de som", "Tratamento de cor", "Efeitos visuais"],
+    "posterAlt": "Capa do filme Beach Creative",
+    "cardDescription": "Um comercial autoral gravado na praia com estrutura enxuta. O ambiente e a luz natural orientaram as imagens e a performance.",
+    "description": [
+      "Desenvolvi e produzi este comercial autoral, da filmagem à entrega final.",
+      "Conduzi a direção criativa e de performance, a fotografia, a câmera, a luz e a composição das cenas.",
+      "A gravação aconteceu na praia, com uma estrutura enxuta. Trabalhei os movimentos e a presença da pessoa em cena e construí os planos a partir do espaço e da luz natural disponível.",
+      "Também fiz toda a pós-produção: montagem, ritmo, desenho de som, tratamento de cor, transições, efeitos visuais e finalização da imagem."
+    ]
+  },
+  "creative-adao": {
+    "role": "Conceito, direção, fotografia e pós-produção",
+    "capabilities": ["Desenvolvimento de conceito", "Direção", "Direção de performance", "Fotografia", "Iluminação", "Operação de câmera", "Edição", "Desenho de som", "Motion graphics", "Tratamento de cor"],
+    "posterAlt": "Capa do filme Creative Adão",
+    "cardDescription": "Um projeto pensado e realizado da ideia à montagem, com escolhas de filmagem que já consideravam o material na edição.",
+    "description": [
+      "Desenvolvi e executei este projeto por inteiro, da ideia inicial ao corte final.",
+      "Fui responsável pelo conceito, direção, direção de performance, fotografia, luz e operação de câmera. Essas decisões definiram tanto a imagem quanto a atuação no set.",
+      "Enquadramentos, movimentos de câmera e iluminação foram pensados para aproveitar a locação e a pessoa em cena. A intenção era construir uma identidade visual própria, além de registrar a performance.",
+      "Também fiz a edição, o desenho de som, os motion graphics e o tratamento de cor. As escolhas na gravação já levavam em conta como cada plano funcionaria na montagem."
+    ]
+  },
+  "jeffrey-epstein-reel": {
+    "title": "Vídeo curto viral",
+    "role": "Pesquisa, conceito, roteiro, direção, atuação e pós-produção",
+    "capabilities": ["Pesquisa", "Desenvolvimento de conceito", "Roteiro", "Direção", "Atuação", "Fotografia", "Iluminação", "Operação de câmera", "Edição", "Desenho de som", "Motion graphics", "Tratamento de cor"],
+    "posterAlt": "Capa do projeto Vídeo curto viral",
+    "cardDescription": "Um projeto autoral que transformou um assunto em alta na internet em um vídeo curto com narrativa própria.",
+    "description": [
+      "Criei este projeto por iniciativa própria quando o assunto começava a ganhar força na internet.",
+      "Percebi o momento e desenvolvi um conceito original. Em vez de repetir o formato dos vídeos que já circulavam, construí uma história curta em torno do tema.",
+      "Cuidei de toda a produção: pesquisa, conceito, roteiro, direção, atuação, fotografia, luz, câmera, edição, desenho de som, motion graphics e tratamento de cor.",
+      "O vídeo foi pensado e produzido enquanto o assunto ainda mobilizava o público. A combinação entre ideia, execução e momento de publicação levou a um alcance orgânico viral."
+    ]
+  },
+  "instagram-reel": {
+    "role": "Pesquisa, conceito, roteiro, direção e pós-produção",
+    "capabilities": ["Pesquisa", "Desenvolvimento de conceito", "Roteiro", "Direção", "Direção de performance", "Fotografia", "Iluminação", "Operação de câmera", "Edição", "Desenho de som", "Motion graphics", "Tratamento de cor"],
+    "posterAlt": "Capa do filme Kasparov",
+    "cardDescription": "Um projeto pessoal que aproxima um episódio da carreira de Garry Kasparov, a neurociência e uma experiência cotidiana.",
+    "description": [
+      "Este projeto pessoal começou com uma pergunta: como transformar uma experiência cotidiana em uma história que prenda a atenção?",
+      "Parti de um momento da carreira de Garry Kasparov e o conectei à neurociência e a um comportamento que conhecemos no dia a dia. A referência histórica abre a narrativa e ajuda a chegar a algo mais próximo da nossa experiência.",
+      "Convidei um amigo para participar da gravação e dirigi sua performance, trabalhando fala, reações e tempo de cena para que os trechos roteirizados soassem naturais diante da câmera.",
+      "Fui responsável por pesquisa, conceito, roteiro, direção, direção de performance, fotografia, luz, câmera, montagem, ritmo, desenho de som, motion graphics e tratamento de cor.",
+      "O resultado combina imagens originais, atuação e material de arquivo para passar pela história e pela ciência sem perder a ligação com o cotidiano de quem assiste."
+    ]
+  }
+}

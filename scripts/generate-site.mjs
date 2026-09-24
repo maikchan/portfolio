@@ -66,3 +66,4 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 await writeFile(new URL('sitemap.xml', root), sitemap);
 
 console.log(`Generated ${projects.length} project pages and sitemap.xml`);
+await import('./localize-site.mjs');
